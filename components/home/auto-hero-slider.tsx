@@ -120,8 +120,8 @@ const SLIDES: SlideData[] = [
   },
 ];
 
-// Medium speed auto-slide duration: 5000ms (5 seconds)
-const SLIDE_DURATION = 5000;
+// Medium speed auto-slide duration: 4500ms (4.5 seconds)
+const SLIDE_DURATION = 4500;
 
 export function AutoHeroSlider() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -142,7 +142,7 @@ export function AutoHeroSlider() {
     setCurrentIndex(index);
   };
 
-  // Auto-slide interval timer (reliable medium speed, cycles every 5s)
+  // Auto-slide interval timer (reliable medium speed, cycles every 4.5s)
   React.useEffect(() => {
     if (isPaused) return;
 
@@ -161,12 +161,16 @@ export function AutoHeroSlider() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const diffX = touchStartX.current - e.changedTouches[0].clientX;
-    const threshold = 40;
+    const threshold = 35;
     if (diffX > threshold) {
       handleNext();
     } else if (diffX < -threshold) {
       handlePrev();
     }
+    touchStartX.current = null;
+  };
+
+  const handleTouchCancel = () => {
     touchStartX.current = null;
   };
 
@@ -184,9 +188,10 @@ export function AutoHeroSlider() {
 
       {/* Slider Frame */}
       <div
-        className="relative h-[560px] sm:h-[620px] lg:h-[680px] w-full rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-amber-900/15 bg-stone-950"
+        className="relative h-[540px] sm:h-[620px] lg:h-[680px] w-full rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-amber-900/15 bg-stone-950 touch-pan-y"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
       >
         {/* Slide Images with cross-fade & smooth scale effect */}
         {SLIDES.map((slide, idx) => {
@@ -203,7 +208,7 @@ export function AutoHeroSlider() {
                 src={slide.image}
                 alt={slide.alt}
                 fill
-                priority={idx === 0}
+                priority={true}
                 className={cn(
                   "object-cover object-center transition-transform duration-7000 ease-out",
                   isActive ? "scale-105" : "scale-100"
@@ -212,9 +217,9 @@ export function AutoHeroSlider() {
               />
 
               {/* Multi-layered cinematic scrim overlays for text contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/20" />
-              <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-950/40 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-950/30 via-transparent to-black/20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 via-45% to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-stone-950/80 via-stone-950/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-950/20 via-transparent to-black/20 pointer-events-none" />
             </div>
           );
         })}
@@ -386,20 +391,28 @@ export function AutoHeroSlider() {
           </div>
         </div>
 
-        {/* Prominent Floating Side Arrow Controls (Desktop / Tablet only) */}
+        {/* Prominent Floating Side Arrow Controls (All devices: mobile, tablet, desktop) */}
         <button
-          onClick={handlePrev}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePrev();
+          }}
           aria-label="Previous Slide"
-          className="hidden sm:flex absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-3.5 rounded-full bg-stone-900/60 hover:bg-amber-600 text-white border border-white/25 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 items-center justify-center shadow-xl cursor-pointer"
+          className="flex absolute left-2 sm:left-5 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-3.5 rounded-full bg-stone-950/75 hover:bg-amber-600 active:bg-amber-600 text-white border border-white/30 backdrop-blur-md transition-all duration-150 hover:scale-110 active:scale-90 items-center justify-center shadow-2xl cursor-pointer touch-manipulation"
         >
-          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+          <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
         </button>
         <button
-          onClick={handleNext}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleNext();
+          }}
           aria-label="Next Slide"
-          className="hidden sm:flex absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-3.5 rounded-full bg-stone-900/60 hover:bg-amber-600 text-white border border-white/25 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 items-center justify-center shadow-xl cursor-pointer"
+          className="flex absolute right-2 sm:right-5 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-3.5 rounded-full bg-stone-950/75 hover:bg-amber-600 active:bg-amber-600 text-white border border-white/30 backdrop-blur-md transition-all duration-150 hover:scale-110 active:scale-90 items-center justify-center shadow-2xl cursor-pointer touch-manipulation"
         >
-          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+          <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
         </button>
       </div>
     </section>
