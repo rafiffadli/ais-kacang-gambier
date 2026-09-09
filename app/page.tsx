@@ -1,3 +1,4 @@
+import { AutoHeroSlider } from "@/components/home/auto-hero-slider";
 import { HeroBanner } from "@/components/home/hero-banner";
 import { SignatureMenu } from "@/components/home/signature-menu";
 import { HeritageTeaser } from "@/components/home/heritage-teaser";
@@ -13,6 +14,10 @@ export default function HomePage() {
 
       {/* Main Page Content */}
       <div className="relative z-10">
+        {/* Auto-sliding hero banner with authentic IG Ais Kacang Gambier photography */}
+        <AutoHeroSlider />
+
+        {/* Curated Editorial & Taste Profile Bento */}
         <HeroBanner />
         <SignatureMenu />
         <HeritageTeaser />
