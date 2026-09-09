@@ -126,45 +126,32 @@ const SLIDE_DURATION = 5000;
 export function AutoHeroSlider() {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
   const touchStartX = React.useRef<number | null>(null);
 
   const currentSlide = SLIDES[currentIndex];
 
   const handleNext = React.useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
-    setProgress(0);
   }, []);
 
   const handlePrev = React.useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-    setProgress(0);
   }, []);
 
   const handleGoTo = (index: number) => {
     setCurrentIndex(index);
-    setProgress(0);
   };
 
-  // Auto-slide interval timer with smooth progress calculation
+  // Auto-slide interval timer (reliable medium speed, cycles every 5s)
   React.useEffect(() => {
     if (isPaused) return;
 
-    const intervalStep = 50; // update progress every 50ms
-    const totalSteps = SLIDE_DURATION / intervalStep;
-
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          handleNext();
-          return 0;
-        }
-        return prev + 100 / totalSteps;
-      });
-    }, intervalStep);
+      handleNext();
+    }, SLIDE_DURATION);
 
     return () => clearInterval(timer);
-  }, [isPaused, handleNext]);
+  }, [isPaused, handleNext, currentIndex]);
 
   // Touch handlers for mobile swipe gestures
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -174,7 +161,7 @@ export function AutoHeroSlider() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const diffX = touchStartX.current - e.changedTouches[0].clientX;
-    const threshold = 50;
+    const threshold = 40;
     if (diffX > threshold) {
       handleNext();
     } else if (diffX < -threshold) {
@@ -188,22 +175,27 @@ export function AutoHeroSlider() {
       className="relative pt-24 sm:pt-28 lg:pt-32 pb-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto select-none"
       aria-label="Hero Highlights Slider"
     >
+      <style>{`
+        @keyframes progressAnimation {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+      `}</style>
+
       {/* Slider Frame */}
       <div
-        className="relative h-[560px] sm:h-[620px] lg:h-[680px] w-full rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-amber-900/15 bg-stone-950 group"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
+        className="relative h-[560px] sm:h-[620px] lg:h-[680px] w-full rounded-3xl sm:rounded-4xl overflow-hidden shadow-2xl border border-amber-900/15 bg-stone-950"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Slide Images with cross-fade & subtle Ken Burns effect */}
+        {/* Slide Images with cross-fade & smooth scale effect */}
         {SLIDES.map((slide, idx) => {
           const isActive = idx === currentIndex;
           return (
             <div
               key={slide.id}
               className={cn(
-                "absolute inset-0 transition-opacity duration-1000 ease-in-out",
+                "absolute inset-0 transition-opacity duration-700 ease-in-out",
                 isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
               )}
             >
@@ -227,9 +219,12 @@ export function AutoHeroSlider() {
           );
         })}
 
-        {/* Content Overlay */}
-        <div className="relative z-20 h-full flex flex-col justify-end p-6 sm:p-10 lg:p-14 text-white">
-          <div className="max-w-3xl space-y-4 sm:space-y-5">
+        {/* Dynamic Text Content Overlay */}
+        <div className="relative z-20 h-full flex flex-col justify-end p-6 sm:p-10 lg:p-14 text-white pointer-events-none">
+          <div
+            key={currentSlide.id}
+            className="max-w-3xl space-y-4 sm:space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-500 pointer-events-auto"
+          >
             {/* Top metadata badge */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <Badge
@@ -240,7 +235,7 @@ export function AutoHeroSlider() {
                 {currentSlide.badge}
               </Badge>
 
-              <span className="text-xs sm:text-sm font-semibold tracking-wide text-amber-200/90 flex items-center gap-1.5 backdrop-blur-xs px-2.5 py-0.5 rounded-full bg-black/30 border border-white/10">
+              <span className="text-xs sm:text-sm font-semibold tracking-wide text-amber-200/90 flex items-center gap-1.5 backdrop-blur-xs px-2.5 py-0.5 rounded-full bg-black/40 border border-white/10">
                 <MapPin className="h-3 w-3 text-amber-400 shrink-0" />
                 {currentSlide.tag}
               </span>
@@ -271,7 +266,7 @@ export function AutoHeroSlider() {
                 >
                   <Button
                     size="lg"
-                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xl shadow-amber-950/40 gap-2"
+                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xl shadow-amber-950/40 gap-2 cursor-pointer"
                   >
                     <span>{currentSlide.primaryCta.label}</span>
                     <ArrowRight className="h-4 w-4" />
@@ -281,7 +276,7 @@ export function AutoHeroSlider() {
                 <a href={currentSlide.primaryCta.href}>
                   <Button
                     size="lg"
-                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xl shadow-amber-950/40 gap-2"
+                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xl shadow-amber-950/40 gap-2 cursor-pointer"
                   >
                     <span>{currentSlide.primaryCta.label}</span>
                     <ArrowRight className="h-4 w-4" />
@@ -298,7 +293,7 @@ export function AutoHeroSlider() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white border-white/25 backdrop-blur-md gap-2"
+                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-white/15 hover:bg-white/25 text-white border-white/30 backdrop-blur-md gap-2 cursor-pointer"
                   >
                     <PhoneCall className="h-4 w-4 text-amber-400" />
                     <span>{currentSlide.secondaryCta.label}</span>
@@ -309,7 +304,7 @@ export function AutoHeroSlider() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-white/10 hover:bg-white/20 text-white border-white/25 backdrop-blur-md gap-2"
+                    className="rounded-full px-6 sm:px-7 font-bold text-xs sm:text-sm bg-white/15 hover:bg-white/25 text-white border-white/30 backdrop-blur-md gap-2 cursor-pointer"
                   >
                     <Clock className="h-4 w-4 text-amber-400" />
                     <span>{currentSlide.secondaryCta.label}</span>
@@ -320,7 +315,7 @@ export function AutoHeroSlider() {
           </div>
 
           {/* Bottom Bar: Slide indicators, progress bars, pause/play, controls */}
-          <div className="mt-8 pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-4">
+          <div className="mt-8 pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-4 pointer-events-auto">
             {/* Slide selector tabs / Progress Pills */}
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               {SLIDES.map((slide, idx) => {
@@ -331,7 +326,7 @@ export function AutoHeroSlider() {
                     onClick={() => handleGoTo(idx)}
                     aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
                     className={cn(
-                      "group relative h-2.5 sm:h-3 rounded-full transition-all duration-300 overflow-hidden",
+                      "group relative h-2.5 sm:h-3 rounded-full transition-all duration-300 overflow-hidden cursor-pointer",
                       isActive
                         ? "w-16 sm:w-24 bg-white/30"
                         : "w-6 sm:w-8 bg-white/20 hover:bg-white/40"
@@ -340,8 +335,13 @@ export function AutoHeroSlider() {
                     {/* Animated Progress fill for the active slide */}
                     {isActive && (
                       <span
-                        className="absolute inset-y-0 left-0 bg-amber-400 rounded-full transition-all duration-75 ease-linear"
-                        style={{ width: `${progress}%` }}
+                        key={`prog-${currentIndex}-${isPaused}`}
+                        className="absolute inset-y-0 left-0 bg-amber-400 rounded-full h-full"
+                        style={{
+                          animation: isPaused
+                            ? "none"
+                            : `progressAnimation ${SLIDE_DURATION}ms linear forwards`,
+                        }}
                       />
                     )}
                   </button>
@@ -349,10 +349,10 @@ export function AutoHeroSlider() {
               })}
             </div>
 
-            {/* Slide controls: Slide Counter, Pause/Play toggle, and Arrows */}
+            {/* Slide controls: Slide Counter, Pause/Play toggle, and Chevrons */}
             <div className="flex items-center gap-3">
               {/* Slide Counter */}
-              <div className="text-xs font-semibold text-amber-300/80 font-mono px-2 py-1 rounded bg-black/30 border border-white/10">
+              <div className="text-xs font-semibold text-amber-300 font-mono px-2 py-1 rounded bg-black/50 border border-white/15">
                 0{currentIndex + 1} / 0{SLIDES.length}
               </div>
 
@@ -360,7 +360,7 @@ export function AutoHeroSlider() {
               <button
                 onClick={() => setIsPaused((prev) => !prev)}
                 aria-label={isPaused ? "Resume auto-slides" : "Pause auto-slides"}
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/15 backdrop-blur-md transition-colors"
+                className="p-2 rounded-full bg-white/15 hover:bg-white/30 text-white border border-white/20 backdrop-blur-md transition-colors cursor-pointer"
               >
                 {isPaused ? (
                   <Play className="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
@@ -374,14 +374,14 @@ export function AutoHeroSlider() {
                 <button
                   onClick={handlePrev}
                   aria-label="Previous Slide"
-                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/15 backdrop-blur-md transition-all hover:scale-105"
+                  className="p-2 rounded-full bg-white/15 hover:bg-amber-600 text-white border border-white/20 backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-md"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
                 <button
                   onClick={handleNext}
                   aria-label="Next Slide"
-                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/15 backdrop-blur-md transition-all hover:scale-105"
+                  className="p-2 rounded-full bg-white/15 hover:bg-amber-600 text-white border border-white/20 backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-md"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
@@ -390,20 +390,20 @@ export function AutoHeroSlider() {
           </div>
         </div>
 
-        {/* Floating Side Arrow Controls on Hover */}
+        {/* Prominent Floating Side Arrow Controls */}
         <button
           onClick={handlePrev}
           aria-label="Previous Slide"
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/40 hover:bg-amber-600/80 text-white border border-white/20 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hidden sm:flex items-center justify-center shadow-lg"
+          className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-3.5 rounded-full bg-stone-900/60 hover:bg-amber-600 text-white border border-white/25 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 flex items-center justify-center shadow-xl cursor-pointer"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
         <button
           onClick={handleNext}
           aria-label="Next Slide"
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/40 hover:bg-amber-600/80 text-white border border-white/20 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hidden sm:flex items-center justify-center shadow-lg"
+          className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-3.5 rounded-full bg-stone-900/60 hover:bg-amber-600 text-white border border-white/25 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-95 flex items-center justify-center shadow-xl cursor-pointer"
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
         </button>
       </div>
     </section>
