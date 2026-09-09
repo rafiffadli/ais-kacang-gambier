@@ -129,78 +129,7 @@ export function ScrollInteractiveBackground() {
         />
       </svg>
 
-      {/* =========================================================================
-          FLOATING STAGE INDICATOR PILL (Left margin)
-          Interactively tracks which culinary chapter the user is exploring
-      ========================================================================= */}
-      <div className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-30 flex-col items-start gap-3 pointer-events-auto">
-        <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-amber-900/15 shadow-xl space-y-2 text-xs">
-          <div className="flex items-center gap-2 pb-1 border-b border-stone-200">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500">
-              Interactive Story
-            </span>
-          </div>
 
-          <div className="space-y-1.5 font-semibold text-[11px]">
-            <div
-              className={cn(
-                "flex items-center gap-2 px-2 py-1 rounded-lg transition-all",
-                activeStage === "hero"
-                  ? "bg-amber-100 text-amber-900 font-bold"
-                  : "text-stone-400"
-              )}
-            >
-              <span>01</span>
-              <span>The Shaved Snow</span>
-            </div>
-            <div
-              className={cn(
-                "flex items-center gap-2 px-2 py-1 rounded-lg transition-all",
-                activeStage === "menu"
-                  ? "bg-amber-100 text-amber-900 font-bold"
-                  : "text-stone-400"
-              )}
-            >
-              <span>02</span>
-              <span>Gula Apong &amp; Laksa</span>
-            </div>
-            <div
-              className={cn(
-                "flex items-center gap-2 px-2 py-1 rounded-lg transition-all",
-                activeStage === "heritage"
-                  ? "bg-amber-100 text-amber-900 font-bold"
-                  : "text-stone-400"
-              )}
-            >
-              <span>03</span>
-              <span>Borneo Palm Craft</span>
-            </div>
-            <div
-              className={cn(
-                "flex items-center gap-2 px-2 py-1 rounded-lg transition-all",
-                activeStage === "visit"
-                  ? "bg-amber-100 text-amber-900 font-bold"
-                  : "text-stone-400"
-              )}
-            >
-              <span>04</span>
-              <span>Waterfront Sunset</span>
-            </div>
-          </div>
-
-          {/* Mini Scroll Progress Bar */}
-          <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden mt-1">
-            <div
-              className="bg-gradient-to-r from-amber-500 to-amber-700 h-full transition-all duration-150 rounded-full"
-              style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-            />
-          </div>
-        </div>
-      </div>
 
       {/* =========================================================================
           PICTURE 1: Authentic Signature Ais Kacang Dish
