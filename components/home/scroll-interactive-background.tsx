@@ -7,25 +7,43 @@ import { cn } from "@/lib/utils";
 
 export function ScrollInteractiveBackground() {
   const [scrollY, setScrollY] = React.useState(0);
+  const [scrollVelocity, setScrollVelocity] = React.useState(0);
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
   const [activeStage, setActiveStage] = React.useState<"hero" | "menu" | "heritage" | "visit">("hero");
 
   React.useEffect(() => {
     let ticking = false;
+    let lastScrollY = window.scrollY;
+    let lastTime = Date.now();
+    let velocityTimeout: NodeJS.Timeout;
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentY = window.scrollY;
+          const now = Date.now();
+          const dt = Math.max(now - lastTime, 16);
+          const rawVelocity = ((currentY - lastScrollY) / dt) * 16; // px per frame
+
+          lastScrollY = currentY;
+          lastTime = now;
 
           setScrollY(currentY);
+          // Clamp velocity between -20 and 20 for subtle, premium physics
+          setScrollVelocity(Math.min(Math.max(rawVelocity, -20), 20));
+
+          // Clear velocity when scrolling stops
+          clearTimeout(velocityTimeout);
+          velocityTimeout = setTimeout(() => {
+            setScrollVelocity(0);
+          }, 120);
 
           // Determine current reading stage based on scroll depth
-          if (currentY < 600) {
+          if (currentY < 550) {
             setActiveStage("hero");
-          } else if (currentY < 1600) {
+          } else if (currentY < 1500) {
             setActiveStage("menu");
-          } else if (currentY < 2600) {
+          } else if (currentY < 2500) {
             setActiveStage("heritage");
           } else {
             setActiveStage("visit");
@@ -39,40 +57,72 @@ export function ScrollInteractiveBackground() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 40;
-      const y = (e.clientY / innerHeight - 0.5) * 40;
+      const x = (e.clientX / innerWidth - 0.5) * 45;
+      const y = (e.clientY / innerHeight - 0.5) * 45;
       setMousePos({ x, y });
+    };
+
+    // Touch interaction for mobile: capture finger movements to drive horizontal parallax
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const x = (touch.clientX / window.innerWidth - 0.5) * 35;
+        const y = (touch.clientY / window.innerHeight - 0.5) * 35;
+        setMousePos({ x, y });
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+      clearTimeout(velocityTimeout);
     };
   }, []);
 
-  // CHOREOGRAPHED MULTI-STAGE PARALLAX EQUATIONS (Optimized for both Desktop & Mobile iPhone)
-  // 1. Signature Ais Kacang
-  const p1Y = scrollY * 0.35 + mousePos.y * 0.4;
-  const p1Rot = Math.sin(scrollY * 0.003) * 10 + 4;
-  const p1Scale = activeStage === "hero" || activeStage === "menu" ? 1.04 : 0.92;
+  // =========================================================================
+  // DYNAMIC PARALLAX PHYSICS ENGINE (High responsiveness on iPhone & MacBook)
+  //
+  // On mobile touchscreens (where mouse is absent), horizontal sway is powered
+  // by continuous trigonometric wave functions + touch delta + scroll momentum.
+  // =========================================================================
 
-  // 2. Gula Apong Soft Serve
-  const p2Y = (scrollY - 500) * -0.25 - mousePos.y * 0.4;
-  const p2Rot = -6 + Math.sin(scrollY * 0.004) * 8;
-  const p2Scale = activeStage === "menu" ? 1.05 : 0.94;
+  // Mobile scroll-driven horizontal swaying (ensures mobile is as lively as desktop mousemove)
+  const mobileSway1 = Math.sin(scrollY * 0.005) * 22;
+  const mobileSway2 = Math.cos(scrollY * 0.004) * -22;
+  const mobileSway3 = Math.sin(scrollY * 0.0045) * 20;
+  const mobileSway4 = Math.cos(scrollY * 0.0038) * -20;
 
-  // 3. Sarawak Laksa Bowl
-  const p3Y = (scrollY - 1200) * 0.3 + mousePos.y * 0.3;
-  const p3Rot = Math.cos(scrollY * 0.003) * 8 - 4;
-  const p3Scale = activeStage === "menu" || activeStage === "heritage" ? 1.05 : 0.92;
+  // Kinetic tilt induced by scroll velocity (tilts smoothly when flicking up/down)
+  const kineticTilt = scrollVelocity * 0.45;
 
-  // 4. Kuching Waterfront Sunset
-  const p4Y = (scrollY - 1900) * -0.2 - mousePos.y * 0.3;
-  const p4Rot = -4 + Math.sin(scrollY * 0.0025) * 6;
-  const p4Scale = activeStage === "heritage" || activeStage === "visit" ? 1.06 : 0.92;
+  // 1. Signature Ais Kacang (Floats around top sections)
+  const p1X = mousePos.x * 0.4 + mobileSway1;
+  const p1Y = scrollY * 0.55 + mousePos.y * 0.4 + scrollVelocity * 0.5;
+  const p1Rot = Math.sin(scrollY * 0.004) * 14 + kineticTilt + 4;
+  const p1Scale = activeStage === "hero" || activeStage === "menu" ? 1.05 : 0.92;
+
+  // 2. Artisanal Gula Apong Soft Serve (Counter-parallax floating on the left)
+  const p2X = -mousePos.x * 0.4 + mobileSway2;
+  const p2Y = (scrollY - 600) * -0.38 - mousePos.y * 0.4 - scrollVelocity * 0.5;
+  const p2Rot = -7 + Math.sin(scrollY * 0.0045) * 12 - kineticTilt;
+  const p2Scale = activeStage === "menu" ? 1.06 : 0.94;
+
+  // 3. Authentic Sarawak Laksa Bowl (Floats in mid-page menu/heritage)
+  const p3X = mousePos.x * 0.35 + mobileSway3;
+  const p3Y = (scrollY - 1300) * 0.45 + mousePos.y * 0.35 + scrollVelocity * 0.4;
+  const p3Rot = Math.cos(scrollY * 0.0038) * 12 + kineticTilt - 4;
+  const p3Scale = activeStage === "menu" || activeStage === "heritage" ? 1.06 : 0.92;
+
+  // 4. Kuching Waterfront Sunset (Panorama floating in lower sections)
+  const p4X = -mousePos.x * 0.35 + mobileSway4;
+  const p4Y = (scrollY - 2000) * -0.32 - mousePos.y * 0.35 - scrollVelocity * 0.4;
+  const p4Rot = -4 + Math.sin(scrollY * 0.003) * 10 - kineticTilt;
+  const p4Scale = activeStage === "heritage" || activeStage === "visit" ? 1.08 : 0.92;
 
   return (
     <div
@@ -83,17 +133,17 @@ export function ScrollInteractiveBackground() {
           CREATIVE FLUID CARAMEL RIVER RIBBON (Sarawak River & Gula Apong Trail)
       ========================================================================= */}
       <svg
-        className="absolute inset-0 w-full h-full opacity-25 sm:opacity-35"
+        className="absolute inset-0 w-full h-full opacity-30 sm:opacity-40 pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
-        viewBox="0 0 1200 3600"
+        viewBox="0 0 1200 3800"
       >
         <defs>
           <linearGradient id="caramelStream" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.4" />
-            <stop offset="35%" stopColor="#D97706" stopOpacity="0.6" />
-            <stop offset="70%" stopColor="#B45309" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#78350F" stopOpacity="0.3" />
+            <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.45" />
+            <stop offset="35%" stopColor="#D97706" stopOpacity="0.65" />
+            <stop offset="70%" stopColor="#B45309" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#78350F" stopOpacity="0.35" />
           </linearGradient>
           <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="16" result="blur" />
@@ -102,38 +152,38 @@ export function ScrollInteractiveBackground() {
         </defs>
 
         <path
-          d={`M 1100,200 Q ${700 + mousePos.x * 2},${800 + scrollY * 0.15} 100,1400 T 950,2400 T 200,3200`}
+          d={`M 1100,200 Q ${700 + p1X * 2},${800 + scrollY * 0.2} 100,1400 T 950,2400 T 200,3400`}
           fill="none"
           stroke="url(#caramelStream)"
-          strokeWidth="60"
+          strokeWidth="64"
           strokeLinecap="round"
           filter="url(#glow)"
         />
         <path
-          d={`M 1100,200 Q ${700 + mousePos.x * 2},${800 + scrollY * 0.15} 100,1400 T 950,2400 T 200,3200`}
+          d={`M 1100,200 Q ${700 + p1X * 2},${800 + scrollY * 0.2} 100,1400 T 950,2400 T 200,3400`}
           fill="none"
           stroke="#FEF3C7"
-          strokeWidth="6"
+          strokeWidth="7"
           strokeDasharray="16 24"
-          strokeDashoffset={-scrollY * 0.8}
+          strokeDashoffset={-scrollY * 0.85}
         />
       </svg>
 
       {/* =========================================================================
           PICTURE 1: Authentic Signature Ais Kacang Dish
-          Mobile: Positioned at top-[680px], visible right as you scroll past hero
-          Desktop: Floats elegantly in right gutter
+          Mobile: Positioned on right, prominently visible beside Taste Bento
+          Desktop: Floats in right gutter
       ========================================================================= */}
       <div
         style={{
-          transform: `translate3d(${mousePos.x * 0.3}px, ${p1Y}px, 0) rotate(${p1Rot}deg) scale(${p1Scale})`,
-          transition: "transform 0.1s cubic-bezier(0.1, 0, 0.2, 1)",
+          transform: `translate3d(${p1X}px, ${p1Y}px, 0) rotate(${p1Rot}deg) scale(${p1Scale})`,
+          willChange: "transform",
         }}
         className={cn(
-          "absolute top-[680px] sm:top-28 -right-8 sm:right-4 lg:right-12 w-48 sm:w-80 lg:w-96 rounded-full p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-all duration-500",
+          "absolute top-[520px] sm:top-28 right-[-10px] sm:right-4 lg:right-12 w-48 sm:w-80 lg:w-96 rounded-full p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-shadow duration-500",
           activeStage === "hero" || activeStage === "menu"
-            ? "bg-gradient-to-tr from-amber-400/50 via-rose-300/40 to-amber-200/60 ring-4 ring-amber-300/40 opacity-90 sm:opacity-95"
-            : "bg-white/40 opacity-70"
+            ? "bg-gradient-to-tr from-amber-400/60 via-rose-300/50 to-amber-200/70 ring-4 ring-amber-300/50 opacity-95"
+            : "bg-white/50 opacity-75"
         )}
       >
         <div className="relative aspect-square w-full rounded-full overflow-hidden border-2 sm:border-4 border-white shadow-2xl">
@@ -151,9 +201,9 @@ export function ScrollInteractiveBackground() {
         {/* Floating Tethered Interactive Badge */}
         <div
           style={{
-            transform: `translate3d(${-mousePos.x * 0.2}px, ${Math.sin(scrollY * 0.004) * 6}px, 0)`,
+            transform: `translate3d(${-p1X * 0.3}px, ${Math.sin(scrollY * 0.005) * 8}px, 0)`,
           }}
-          className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:left-2 bg-white/95 backdrop-blur-md px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-amber-300 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-amber-950"
+          className="absolute -bottom-3 -left-2 sm:-bottom-4 sm:left-2 bg-white/95 backdrop-blur-md px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-amber-300 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-amber-950"
         >
           <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-600" />
           <span>Shaved Snow • RM 8.50</span>
@@ -162,19 +212,19 @@ export function ScrollInteractiveBackground() {
 
       {/* =========================================================================
           PICTURE 2: Artisanal Gula Apong Soft Serve Cone
-          Mobile: Positioned at top-[1350px] on left
+          Mobile: Positioned on left, floats up into view beside Kopitiam section
           Desktop: Floats in left gutter
       ========================================================================= */}
       <div
         style={{
-          transform: `translate3d(${-mousePos.x * 0.3}px, ${p2Y}px, 0) rotate(${p2Rot}deg) scale(${p2Scale})`,
-          transition: "transform 0.1s cubic-bezier(0.1, 0, 0.2, 1)",
+          transform: `translate3d(${p2X}px, ${p2Y}px, 0) rotate(${p2Rot}deg) scale(${p2Scale})`,
+          willChange: "transform",
         }}
         className={cn(
-          "absolute top-[1350px] sm:top-[460px] -left-8 sm:left-4 lg:left-10 w-44 sm:w-72 lg:w-84 rounded-3xl p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-all duration-500",
+          "absolute top-[1150px] sm:top-[460px] left-[-10px] sm:left-4 lg:left-10 w-44 sm:w-72 lg:w-84 rounded-3xl p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-shadow duration-500",
           activeStage === "menu"
-            ? "bg-gradient-to-br from-amber-400/60 via-amber-200/50 to-amber-600/50 ring-4 ring-amber-400/50 opacity-90 sm:opacity-95"
-            : "bg-white/40 opacity-75"
+            ? "bg-gradient-to-br from-amber-400/60 via-amber-200/50 to-amber-600/60 ring-4 ring-amber-400/50 opacity-95"
+            : "bg-white/50 opacity-75"
         )}
       >
         <div className="relative aspect-square w-full rounded-2xl overflow-hidden border-2 sm:border-4 border-white shadow-2xl">
@@ -192,9 +242,9 @@ export function ScrollInteractiveBackground() {
         {/* Floating Tethered Badge */}
         <div
           style={{
-            transform: `translate3d(${mousePos.x * 0.2}px, ${Math.cos(scrollY * 0.004) * 6}px, 0)`,
+            transform: `translate3d(${p2X * 0.3}px, ${Math.cos(scrollY * 0.005) * 8}px, 0)`,
           }}
-          className="absolute -top-2.5 -right-2.5 sm:-top-3 sm:-right-3 bg-stone-900/90 text-amber-300 backdrop-blur-md px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-amber-400/40 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[11px] font-bold"
+          className="absolute -top-2.5 -right-2 sm:-top-3 sm:-right-3 bg-stone-900/90 text-amber-300 backdrop-blur-md px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-amber-400/40 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[11px] font-bold"
         >
           <Flame className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-amber-400" />
           <span>Warm Molasses • Churned Daily</span>
@@ -203,20 +253,19 @@ export function ScrollInteractiveBackground() {
 
       {/* =========================================================================
           PICTURE 3: Authentic Sarawak Laksa Bowl
-          Visible on BOTH Mobile and Desktop!
-          Mobile: Positioned around top-[2050px] on right
+          Mobile: Positioned on right, drifts beside Heritage section
           Desktop: Mid-page left gutter
       ========================================================================= */}
       <div
         style={{
-          transform: `translate3d(${mousePos.x * 0.25}px, ${p3Y + (typeof window !== "undefined" && window.innerWidth < 640 ? 100 : 850)}px, 0) rotate(${p3Rot}deg) scale(${p3Scale})`,
-          transition: "transform 0.1s cubic-bezier(0.1, 0, 0.2, 1)",
+          transform: `translate3d(${p3X}px, ${p3Y}px, 0) rotate(${p3Rot}deg) scale(${p3Scale})`,
+          willChange: "transform",
         }}
         className={cn(
-          "absolute top-[2050px] sm:top-[750px] -right-8 sm:left-2 lg:left-8 w-44 sm:w-64 lg:w-84 rounded-full p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-all duration-500",
+          "absolute top-[1850px] sm:top-[900px] right-[-10px] sm:left-2 lg:left-8 w-44 sm:w-64 lg:w-84 rounded-full p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-shadow duration-500",
           activeStage === "menu" || activeStage === "heritage"
-            ? "bg-gradient-to-tr from-amber-500/50 via-rose-400/40 to-emerald-300/40 ring-4 ring-rose-400/40 opacity-90 sm:opacity-95"
-            : "bg-white/40 opacity-70"
+            ? "bg-gradient-to-tr from-amber-500/60 via-rose-400/50 to-emerald-300/50 ring-4 ring-rose-400/40 opacity-95"
+            : "bg-white/50 opacity-75"
         )}
       >
         <div className="relative aspect-square w-full rounded-full overflow-hidden border-2 sm:border-4 border-white shadow-2xl">
@@ -233,9 +282,9 @@ export function ScrollInteractiveBackground() {
         {/* Floating Tethered Badge */}
         <div
           style={{
-            transform: `translate3d(${-mousePos.x * 0.2}px, ${Math.sin(scrollY * 0.0035) * 6}px, 0)`,
+            transform: `translate3d(${-p3X * 0.3}px, ${Math.sin(scrollY * 0.0045) * 8}px, 0)`,
           }}
-          className="absolute -bottom-2.5 -left-2.5 sm:-bottom-3 sm:right-4 bg-emerald-900/95 text-emerald-200 backdrop-blur-md px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-emerald-400/40 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[11px] font-bold"
+          className="absolute -bottom-2.5 -left-2 sm:-bottom-3 sm:right-4 bg-emerald-900/95 text-emerald-200 backdrop-blur-md px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-emerald-400/40 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[11px] font-bold"
         >
           <Heart className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-300 fill-emerald-300" />
           <span>Bourdain&apos;s Pick • RM 11.50</span>
@@ -244,20 +293,19 @@ export function ScrollInteractiveBackground() {
 
       {/* =========================================================================
           PICTURE 4: Scenic Kuching Waterfront at Sunset Panorama
-          Visible on BOTH Mobile and Desktop!
-          Mobile: Positioned around top-[2750px] on left
+          Mobile: Positioned on left, drifts beside Reviews and Visit sections
           Desktop: Lower page right gutter
       ========================================================================= */}
       <div
         style={{
-          transform: `translate3d(${-mousePos.x * 0.25}px, ${p4Y + (typeof window !== "undefined" && window.innerWidth < 640 ? 100 : 1250)}px, 0) rotate(${p4Rot}deg) scale(${p4Scale})`,
-          transition: "transform 0.1s cubic-bezier(0.1, 0, 0.2, 1)",
+          transform: `translate3d(${p4X}px, ${p4Y}px, 0) rotate(${p4Rot}deg) scale(${p4Scale})`,
+          willChange: "transform",
         }}
         className={cn(
-          "absolute top-[2750px] sm:top-[1250px] -left-8 sm:right-6 w-48 sm:w-84 lg:w-[420px] rounded-3xl p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-all duration-500",
+          "absolute top-[2550px] sm:top-[1450px] left-[-10px] sm:right-6 w-48 sm:w-84 lg:w-[420px] rounded-3xl p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md transition-shadow duration-500",
           activeStage === "heritage" || activeStage === "visit"
-            ? "bg-gradient-to-br from-amber-500/50 via-purple-400/30 to-rose-500/40 ring-4 ring-amber-400/50 opacity-90 sm:opacity-95"
-            : "bg-white/40 opacity-70"
+            ? "bg-gradient-to-br from-amber-500/60 via-purple-400/40 to-rose-500/50 ring-4 ring-amber-400/50 opacity-95"
+            : "bg-white/50 opacity-75"
         )}
       >
         <div className="relative aspect-square w-full rounded-2xl overflow-hidden border-2 sm:border-4 border-white shadow-2xl">
@@ -274,9 +322,9 @@ export function ScrollInteractiveBackground() {
         {/* Floating Tethered Badge */}
         <div
           style={{
-            transform: `translate3d(${mousePos.x * 0.2}px, ${Math.cos(scrollY * 0.0035) * 6}px, 0)`,
+            transform: `translate3d(${p4X * 0.3}px, ${Math.cos(scrollY * 0.0045) * 8}px, 0)`,
           }}
-          className="absolute -top-2.5 -right-2.5 sm:-top-3 sm:left-4 bg-stone-950/95 text-amber-300 backdrop-blur-md px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-amber-400/50 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-xs font-bold"
+          className="absolute -top-2.5 -right-2 sm:-top-3 sm:left-4 bg-stone-950/95 text-amber-300 backdrop-blur-md px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-amber-400/50 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-xs font-bold"
         >
           <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-400" />
           <span>Kuching Waterfront • Darul Hana</span>
