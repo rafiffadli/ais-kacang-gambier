@@ -122,7 +122,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jakartaSans.variable} ${playfairDisplay.variable} scroll-smooth`}
+      className={`${jakartaSans.variable} ${playfairDisplay.variable}`}
     >
       <head>
         <script
