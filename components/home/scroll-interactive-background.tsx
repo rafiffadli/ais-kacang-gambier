@@ -10,22 +10,14 @@ export function ScrollInteractiveBackground() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
 
   React.useEffect(() => {
-    let ticking = false;
-
     const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentY =
-            window.pageYOffset ||
-            window.scrollY ||
-            document.documentElement.scrollTop ||
-            document.body.scrollTop ||
-            0;
-          setScrollY(currentY);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      const currentY =
+        window.pageYOffset ||
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      setScrollY(currentY);
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -36,6 +28,14 @@ export function ScrollInteractiveBackground() {
     };
 
     const onTouchMove = (e: TouchEvent) => {
+      const currentY =
+        window.pageYOffset ||
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      setScrollY(currentY);
+
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         const x = (touch.clientX / window.innerWidth - 0.5) * 40;
@@ -48,13 +48,17 @@ export function ScrollInteractiveBackground() {
     onScroll();
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    document.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
+    document.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("scroll", onScroll);
       window.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
 
