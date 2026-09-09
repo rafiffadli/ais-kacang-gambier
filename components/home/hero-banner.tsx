@@ -77,7 +77,7 @@ export function HeroBanner() {
   const currentItem = tasteHighlights[activeTaste];
 
   return (
-    <section className="relative overflow-hidden bg-[#FFFDF9] pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 border-b border-amber-900/10">
+    <section className="relative overflow-hidden bg-transparent pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 border-b border-amber-900/10">
       {/* Background Ambient Glows */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] bg-gradient-to-b from-amber-200/25 via-amber-100/10 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-40 right-10 w-80 h-80 rounded-full bg-rose-200/20 blur-3xl pointer-events-none -z-10" />

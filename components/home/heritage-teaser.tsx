@@ -33,7 +33,7 @@ export function HeritageTeaser() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#FFFDF9] border-b border-amber-900/10">
+    <section className="py-20 lg:py-28 bg-transparent border-b border-amber-900/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl space-y-4">
