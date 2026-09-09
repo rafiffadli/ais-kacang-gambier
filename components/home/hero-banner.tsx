@@ -82,37 +82,6 @@ export function HeroBanner() {
       <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] bg-gradient-to-b from-amber-200/25 via-amber-100/10 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-40 right-10 w-80 h-80 rounded-full bg-rose-200/20 blur-3xl pointer-events-none -z-10" />
 
-      {/* Top Modern Marquee Ticker */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
-        <div className="flex items-center justify-between gap-4 p-2 sm:p-2.5 rounded-full bg-stone-900 text-stone-300 text-xs shadow-md border border-amber-500/20 overflow-hidden">
-          <div className="flex items-center gap-2 pl-3">
-            <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            <span className="font-semibold text-white tracking-wide uppercase text-[11px]">
-              Open Daily: 10:00 AM – 10:30 PM
-            </span>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-4 text-[11px] font-medium text-stone-400">
-            <span>📍 7, Jalan Gambier, Waterfront Kuching</span>
-            <span className="text-amber-500">•</span>
-            <span>⭐ 4.8 Rating on Google Reviews</span>
-            <span className="text-amber-500">•</span>
-            <span>🌴 100% Pure Sarawak Palm Sugar</span>
-          </div>
-
-          <a
-            href="https://wa.me/60168859657"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pr-2 text-[11px] font-bold text-amber-400 hover:text-amber-300 transition-colors shrink-0"
-          >
-            WhatsApp Us →
-          </a>
-        </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Headline Editorial Header */}
