@@ -125,3 +125,19 @@ body {
 .animate-gentle-pulse {
   animation: gentle-pulse 4s ease-in-out infinite;
 }
+
+/* Graceful degradation for scroll reveal when scripting is disabled or reduced motion is requested */
+@media (scripting: none) {
+  .scroll-reveal-container {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal-container {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
