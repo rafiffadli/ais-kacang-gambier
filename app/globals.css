@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fffdf9;
+  --foreground: #1c1917;
+  --cream-paper: #faf6ee;
+  --cream-card: #fdfbf7;
+  --apong-gold: #f59e0b;
+  --apong-amber: #d97706;
+  --apong-dark: #b45309;
+  --nyonya-rose: #be123c;
+  --pandan-emerald: #059669;
+  --border-heritage: #ebdccb;
+}
+
+@theme {
+  --color-cream-bg: #fffdf9;
+  --color-cream-paper: #faf6ee;
+  --color-cream-card: #fdfbf7;
+  --color-apong-50: #fffbeb;
+  --color-apong-100: #fef3c7;
+  --color-apong-200: #fde68a;
+  --color-apong-300: #fcd34d;
+  --color-apong-400: #fbbf24;
+  --color-apong-500: #f59e0b;
+  --color-apong-600: #d97706;
+  --color-apong-700: #b45309;
+  --color-apong-800: #92400e;
+  --color-apong-900: #78350f;
+  --color-nyonya-rose: #be123c;
+  --color-nyonya-ruby: #991b1b;
+  --color-pandan-green: #059669;
+  --color-heritage-charcoal: #1c1917;
+  --color-heritage-espresso: #292524;
+  --color-border-heritage: #ebdccb;
+}
+
+* {
+  border-color: var(--border-heritage);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fbf7ef;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4a373;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b45309;
+}
+
+/* Glassmorphism */
+.glass-nav {
+  background: rgba(255, 253, 249, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(217, 119, 6, 0.15);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(235, 220, 203, 0.8);
+}
+
+/* Subtle Shimmer & Animations (ReactBits touch) */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.05) 0%,
+    rgba(245, 158, 11, 0.25) 50%,
+    rgba(245, 158, 11, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes gentle-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.animate-gentle-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
