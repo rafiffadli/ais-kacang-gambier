@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 
 export function HeroBanner() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EA] to-[#FFFDF9] py-16 sm:py-24 lg:py-28 border-b border-amber-900/10">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EA] to-[#FFFDF9] pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 border-b border-amber-900/10">
       {/* Subtle decorative heritage radial glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-br from-amber-200/30 via-rose-100/20 to-transparent blur-3xl pointer-events-none -z-10" />
 

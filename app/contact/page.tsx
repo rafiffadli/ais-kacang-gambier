@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE] to-[#FFFDF9] py-14 sm:py-20 border-b border-amber-900/10">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FAF6EE] to-[#FFFDF9] pt-28 sm:pt-36 lg:pt-40 pb-14 sm:pb-20 border-b border-amber-900/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <Badge variant="signature" className="mx-auto">

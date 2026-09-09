@@ -49,8 +49,9 @@ This document preserves the comprehensive architecture, brand context, design to
   - Nyonya Rose / Ruby: `#BE123C` / `#991B1B`
   - Pandan Emerald: `#059669` / `#047857`
   - Heritage Charcoal / Text: `#1C1917` / `#292524`
-- **Glassmorphism**:
-  - Frosted Navbar: `rgba(255, 253, 249, 0.92)` with `backdrop-filter: blur(16px)`
+- **Glassmorphism & Floating Capsule**:
+  - Floating Island Navbar: `fixed inset-x-0 z-50 rounded-full bg-white/90 backdrop-blur-xl border border-amber-900/15 shadow-xl` (mamee.com inspired floating capsule)
+  - Pill Navigation Tabs: inner rounded-full pill buttons with active amber pill state
 
 ---
 
