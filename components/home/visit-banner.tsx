@@ -1,6 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { MapPin, PhoneCall, Clock, Navigation, Sparkles, ArrowRight } from "lucide-react";
 
 export function VisitBanner() {
@@ -11,7 +12,8 @@ export function VisitBanner() {
       <div className="absolute top-1/2 -right-20 -translate-y-1/2 w-96 h-96 rounded-full bg-rose-600/15 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-br from-stone-900/90 via-stone-900 to-amber-950/40 p-8 sm:p-14 lg:p-16 backdrop-blur-xl shadow-2xl">
+        <ScrollReveal duration={1000} distance={32}>
+          <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-br from-stone-900/90 via-stone-900 to-amber-950/40 p-8 sm:p-14 lg:p-16 backdrop-blur-xl shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Content */}
             <div className="lg:col-span-7 space-y-6">
@@ -111,6 +113,7 @@ export function VisitBanner() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

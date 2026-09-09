@@ -5,7 +5,6 @@ import { HeritageTeaser } from "@/components/home/heritage-teaser";
 import { ReviewSlider } from "@/components/home/review-slider";
 import { VisitBanner } from "@/components/home/visit-banner";
 import { ScrollInteractiveBackground } from "@/components/home/scroll-interactive-background";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export default function HomePage() {
   return (
@@ -19,29 +18,19 @@ export default function HomePage() {
         <AutoHeroSlider />
 
         {/* Curated Editorial & Taste Profile Bento */}
-        <ScrollReveal duration={1100} distance={32} rootMargin="0px 0px 100px 0px">
-          <HeroBanner />
-        </ScrollReveal>
+        <HeroBanner />
 
         {/* Artisanal Heritage Menu */}
-        <ScrollReveal duration={1100} distance={32} rootMargin="0px 0px 100px 0px">
-          <SignatureMenu />
-        </ScrollReveal>
+        <SignatureMenu />
 
         {/* Heritage Craftsmanship Story Teaser */}
-        <ScrollReveal duration={1100} distance={32} rootMargin="0px 0px 100px 0px">
-          <HeritageTeaser />
-        </ScrollReveal>
+        <HeritageTeaser />
 
         {/* Google Reviews & Community Praise */}
-        <ScrollReveal duration={1100} distance={32} rootMargin="0px 0px 100px 0px">
-          <ReviewSlider />
-        </ScrollReveal>
+        <ReviewSlider />
 
         {/* Waterfront Visit Landmark Banner */}
-        <ScrollReveal duration={1100} distance={32} rootMargin="0px 0px 100px 0px">
-          <VisitBanner />
-        </ScrollReveal>
+        <VisitBanner />
       </div>
     </div>
   );

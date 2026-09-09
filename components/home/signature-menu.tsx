@@ -4,6 +4,7 @@ import * as React from "react";
 import { MENU_ITEMS, CATEGORIES, MenuItem } from "@/data/menu-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import {
   Sparkles,
   Heart,
@@ -43,29 +44,32 @@ export function SignatureMenu() {
     <section id="menu" className="py-20 lg:py-28 bg-transparent scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-stone-300/80">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-amber-800">
-              <Sparkles className="h-3.5 w-3.5 text-amber-600" />
-              <span>Artisanal Heritage Menu</span>
+        <ScrollReveal duration={1000} distance={32}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-stone-300/80">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-amber-800">
+                <Sparkles className="h-3.5 w-3.5 text-amber-600" />
+                <span>Artisanal Heritage Menu</span>
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight">
+                Crafted with Borneo&apos;s Purest Palm Sugar
+              </h2>
+              <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
+                Every dish tells the story of Jalan Gambier—where century-old
+                Sarawakian recipes meet modern boutique craftsmanship.
+              </p>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight">
-              Crafted with Borneo&apos;s Purest Palm Sugar
-            </h2>
-            <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
-              Every dish tells the story of Jalan Gambier—where century-old
-              Sarawakian recipes meet modern boutique craftsmanship.
-            </p>
-          </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold text-stone-700 bg-white/80 px-4 py-2 rounded-full border border-stone-200 shrink-0 shadow-xs">
-            <ShieldCheck className="h-4 w-4 text-emerald-600" />
-            <span>100% Halal Ingredients Guaranteed</span>
+            <div className="flex items-center gap-2 text-xs font-semibold text-stone-700 bg-white/80 px-4 py-2 rounded-full border border-stone-200 shrink-0 shadow-xs">
+              <ShieldCheck className="h-4 w-4 text-emerald-600" />
+              <span>100% Halal Ingredients Guaranteed</span>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* CROWN JEWELS BENTO GRID */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-6">
+        <ScrollReveal duration={1000} distance={32} delay={80}>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-6">
           {/* Bento Tile 1: Signature Ais Kacang (Large 7-cols) */}
           <div className="lg:col-span-7 rounded-3xl bg-white border border-amber-900/15 p-7 sm:p-9 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-2xl pointer-events-none" />
@@ -333,11 +337,13 @@ export function SignatureMenu() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* FULL FILTERABLE MENU DIRECTORY */}
-        <div className="mt-20 pt-16 border-t border-stone-300">
-          <div className="text-center max-w-xl mx-auto space-y-3">
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
+        <ScrollReveal duration={1000} distance={32} delay={80}>
+          <div className="mt-20 pt-16 border-t border-stone-300">
+            <div className="text-center max-w-xl mx-auto space-y-3">
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
               Browse All Culinary Offerings
             </h3>
             <p className="text-xs sm:text-sm text-stone-700">
@@ -435,6 +441,7 @@ export function SignatureMenu() {
             ))}
           </div>
         </div>
+        </ScrollReveal>
 
         <div className="mt-12 text-center text-xs text-stone-700">
           * All desserts and beverages are prepared using Halal-certified ingredients. Vegetarian-friendly options available upon request.

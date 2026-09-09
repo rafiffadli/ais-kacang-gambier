@@ -2,6 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import { BRAND_STATS } from "@/data/reviews-data";
 import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Check, ShieldCheck, Flame, Compass, ArrowRight } from "lucide-react";
 
 export function HeritageTeaser() {
@@ -36,60 +37,65 @@ export function HeritageTeaser() {
     <section className="py-20 lg:py-28 bg-transparent border-b border-amber-900/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-700 text-xs font-semibold uppercase tracking-wider">
-            <ShieldCheck className="h-3.5 w-3.5 text-amber-700" />
-            <span>Jalan Gambier Heritage Legacy</span>
+        <ScrollReveal duration={1000} distance={32}>
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-300 text-stone-700 text-xs font-semibold uppercase tracking-wider">
+              <ShieldCheck className="h-3.5 w-3.5 text-amber-700" />
+              <span>Jalan Gambier Heritage Legacy</span>
+            </div>
+
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 leading-tight">
+              Where Kuching’s River Breeze Meets Sweet Memories.
+            </h2>
+
+            <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
+              Jalan Gambier has long stood as the heartbeat of Kuching’s spice
+              and produce trade. Ships docked along the Sarawak River bringing
+              fresh harvests, while street hawkers fed generation after
+              generation of locals.
+            </p>
+
+            <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
+              Established in 2019, <strong>IG Ais Kacang Gambier</strong> was
+              born to preserve that nostalgic warmth. We combine traditional
+              Sarawakian recipes with contemporary boutique cleanliness, ensuring
+              every scoop of ice cream and bowl of shaved ice celebrates Borneo’s
+              inimitable heritage.
+            </p>
           </div>
-
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 leading-tight">
-            Where Kuching’s River Breeze Meets Sweet Memories.
-          </h2>
-
-          <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
-            Jalan Gambier has long stood as the heartbeat of Kuching’s spice
-            and produce trade. Ships docked along the Sarawak River bringing
-            fresh harvests, while street hawkers fed generation after
-            generation of locals.
-          </p>
-
-          <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
-            Established in 2019, <strong>IG Ais Kacang Gambier</strong> was
-            born to preserve that nostalgic warmth. We combine traditional
-            Sarawakian recipes with contemporary boutique cleanliness, ensuring
-            every scoop of ice cream and bowl of shaved ice celebrates Borneo’s
-            inimitable heritage.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* 4-Step Modern Process Line */}
-        <div className="mt-14 pt-12 border-t border-stone-200">
-          <p className="text-xs font-bold uppercase tracking-widest text-amber-800 mb-8">
-            The Artisanal Shaved Ice Journey:
-          </p>
+        <ScrollReveal duration={1000} distance={32} delay={80}>
+          <div className="mt-14 pt-12 border-t border-stone-200">
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-800 mb-8">
+              The Artisanal Shaved Ice Journey:
+            </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {craftSteps.map((step, idx) => (
-              <div
-                key={idx}
-                className="relative p-6 rounded-2xl bg-white border border-stone-200 shadow-xs hover:border-amber-400 hover:shadow-md transition-all space-y-3 group"
-              >
-                <span className="font-serif text-3xl font-black text-amber-600/40 group-hover:text-amber-600 transition-colors">
-                  {step.number}
-                </span>
-                <h4 className="font-serif text-lg font-bold text-stone-900">
-                  {step.title}
-                </h4>
-                <p className="text-xs text-stone-700 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {craftSteps.map((step, idx) => (
+                <div
+                  key={idx}
+                  className="relative p-6 rounded-2xl bg-white border border-stone-200 shadow-xs hover:border-amber-400 hover:shadow-md transition-all space-y-3 group"
+                >
+                  <span className="font-serif text-3xl font-black text-amber-600/40 group-hover:text-amber-600 transition-colors">
+                    {step.number}
+                  </span>
+                  <h4 className="font-serif text-lg font-bold text-stone-900">
+                    {step.title}
+                  </h4>
+                  <p className="text-xs text-stone-700 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Modern Bento Callout with Heritage Guarantees & Stats */}
-        <div className="mt-12 rounded-3xl bg-stone-900 text-white p-8 sm:p-12 border border-amber-500/20 shadow-xl">
+        <ScrollReveal duration={1000} distance={32} delay={100}>
+          <div className="mt-12 rounded-3xl bg-stone-900 text-white p-8 sm:p-12 border border-amber-500/20 shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Palm Sugar Story */}
             <div className="lg:col-span-7 space-y-4">
@@ -156,6 +162,7 @@ export function HeritageTeaser() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

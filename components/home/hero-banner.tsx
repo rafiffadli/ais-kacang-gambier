@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 
 export function HeroBanner() {
@@ -85,51 +86,54 @@ export function HeroBanner() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Headline Editorial Header */}
-        <div className="max-w-4xl mx-auto text-center space-y-5">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100/90 border border-amber-300/80 text-amber-950 text-xs font-semibold shadow-xs">
-            <Sparkles className="h-3.5 w-3.5 text-amber-700" />
-            <span>Kuching Waterfront&apos;s Iconic Shaved Ice &amp; Kopitiam Landmark</span>
+        <ScrollReveal duration={1000} distance={32}>
+          <div className="max-w-4xl mx-auto text-center space-y-5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100/90 border border-amber-300/80 text-amber-950 text-xs font-semibold shadow-xs">
+              <Sparkles className="h-3.5 w-3.5 text-amber-700" />
+              <span>Kuching Waterfront&apos;s Iconic Shaved Ice &amp; Kopitiam Landmark</span>
+            </div>
+
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-stone-900 leading-[1.08]">
+              Where Authentic{" "}
+              <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 bg-clip-text text-transparent">
+                  Gula Apong
+                </span>
+                <span className="absolute left-0 bottom-1 w-full h-2 bg-amber-300/40 -z-10 -rotate-1 rounded-sm" />
+              </span>{" "}
+              Meets Shaved Snow.
+            </h1>
+
+            <p className="text-base sm:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
+              Savor Borneo&apos;s finest nipa palm sweetness along Jalan Gambier.
+              Handcrafted fluffy snow shaved ice, artisanal soft-serve, and
+              soulful Sarawak Kopitiam recipes since 2019.
+            </p>
+
+            {/* Action CTAs */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3.5">
+              <a href="#menu">
+                <Button size="lg" className="rounded-full px-7 shadow-lg shadow-amber-900/15">
+                  <span>Discover the Menu</span>
+                  <ArrowRight className="h-4 w-4 ml-1" />
+                </Button>
+              </a>
+              <Link href="/contact">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full px-7 bg-white/80 hover:bg-white"
+                >
+                  <span>Find Location &amp; Hours</span>
+                </Button>
+              </Link>
+            </div>
           </div>
-
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-stone-900 leading-[1.08]">
-            Where Authentic{" "}
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 bg-clip-text text-transparent">
-                Gula Apong
-              </span>
-              <span className="absolute left-0 bottom-1 w-full h-2 bg-amber-300/40 -z-10 -rotate-1 rounded-sm" />
-            </span>{" "}
-            Meets Shaved Snow.
-          </h1>
-
-          <p className="text-base sm:text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed font-normal">
-            Savor Borneo&apos;s finest nipa palm sweetness along Jalan Gambier.
-            Handcrafted fluffy snow shaved ice, artisanal soft-serve, and
-            soulful Sarawak Kopitiam recipes since 2019.
-          </p>
-
-          {/* Action CTAs */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-3.5">
-            <a href="#menu">
-              <Button size="lg" className="rounded-full px-7 shadow-lg shadow-amber-900/15">
-                <span>Discover the Menu</span>
-                <ArrowRight className="h-4 w-4 ml-1" />
-              </Button>
-            </a>
-            <Link href="/contact">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full px-7 bg-white/80 hover:bg-white"
-              >
-                <span>Find Location &amp; Hours</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
+        </ScrollReveal>
 
         {/* Modern Interactive Taste Showcase Bento */}
-        <div className="mt-14 sm:mt-20 max-w-5xl mx-auto">
+        <ScrollReveal duration={1000} distance={32} delay={100}>
+          <div className="mt-14 sm:mt-20 max-w-5xl mx-auto">
           {/* Taste Switcher Tabs */}
           <div className="flex items-center justify-center gap-2 p-1.5 rounded-full bg-stone-200/70 max-w-md mx-auto mb-6 backdrop-blur-xs">
             <button
@@ -271,42 +275,45 @@ export function HeroBanner() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Proof Badges Bar */}
-        <div className="mt-12 pt-8 border-t border-stone-200/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div className="p-3">
-            <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              4.8 ★
-            </p>
-            <p className="text-xs text-stone-600 font-medium mt-0.5">
-              Google Customer Rating
-            </p>
+        <ScrollReveal duration={1000} distance={32} delay={100}>
+          <div className="mt-12 pt-8 border-t border-stone-200/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="p-3">
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
+                4.8 ★
+              </p>
+              <p className="text-xs text-stone-600 font-medium mt-0.5">
+                Google Customer Rating
+              </p>
+            </div>
+            <div className="p-3">
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
+                100%
+              </p>
+              <p className="text-xs text-stone-600 font-medium mt-0.5">
+                Pure Borneo Palm Sugar
+              </p>
+            </div>
+            <div className="p-3">
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
+                250k+
+              </p>
+              <p className="text-xs text-stone-600 font-medium mt-0.5">
+                Bowls &amp; Cones Served
+              </p>
+            </div>
+            <div className="p-3">
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
+                Est. 2019
+              </p>
+              <p className="text-xs text-stone-600 font-medium mt-0.5">
+                Jalan Gambier Landmark
+              </p>
+            </div>
           </div>
-          <div className="p-3">
-            <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              100%
-            </p>
-            <p className="text-xs text-stone-600 font-medium mt-0.5">
-              Pure Borneo Palm Sugar
-            </p>
-          </div>
-          <div className="p-3">
-            <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              250k+
-            </p>
-            <p className="text-xs text-stone-600 font-medium mt-0.5">
-              Bowls &amp; Cones Served
-            </p>
-          </div>
-          <div className="p-3">
-            <p className="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
-              Est. 2019
-            </p>
-            <p className="text-xs text-stone-600 font-medium mt-0.5">
-              Jalan Gambier Landmark
-            </p>
-          </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

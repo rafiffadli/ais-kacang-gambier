@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 export interface ScrollRevealProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   delay?: number; // Delay in ms (e.g. for staggered cards)
-  duration?: number; // Duration in ms (default: 1100ms for slow, graceful emergence)
-  distance?: number; // Distance to glide up in px (default: 28)
-  threshold?: number; // Intersection threshold (default: 0 so it triggers the moment it nears the viewport)
-  rootMargin?: string; // Margin to trigger when scrolling near (default: "0px 0px 100px 0px")
+  duration?: number; // Duration in ms (default: 1000ms for slow, graceful emergence)
+  distance?: number; // Distance to glide up in px (default: 36)
+  threshold?: number; // Intersection threshold (default: 0.05)
+  rootMargin?: string; // Margin to trigger when scrolling into view (default: "0px 0px -40px 0px")
   once?: boolean; // If true, stays visible once revealed (default: true)
   className?: string;
 }
@@ -17,10 +17,10 @@ export interface ScrollRevealProps extends React.HTMLAttributes<HTMLDivElement> 
 export function ScrollReveal({
   children,
   delay = 0,
-  duration = 1100,
-  distance = 28,
-  threshold = 0,
-  rootMargin = "0px 0px 100px 0px",
+  duration = 1000,
+  distance = 36,
+  threshold = 0.05,
+  rootMargin = "0px 0px -40px 0px",
   once = true,
   className,
   style,
