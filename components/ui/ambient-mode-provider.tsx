@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-export type AmbientTheme = "afternoon" | "sunset" | "night";
-export type AmbientModeSetting = "auto" | "afternoon" | "sunset" | "night";
+export type AmbientTheme = "afternoon";
+export type AmbientModeSetting = "afternoon";
 
 interface AmbientContextType {
   modeSetting: AmbientModeSetting;
@@ -29,23 +29,19 @@ export function getKuchingHour(): number {
   }
 }
 
-export function computeThemeFromHour(hour: number): AmbientTheme {
-  // Sunset twilight around Kuching Waterfront: 18:00 - 19:30
-  if (hour >= 18 && hour < 20) return "sunset";
-  // Night lantern & Darul Hana fountain glow: 20:00 - 06:00
-  if (hour >= 20 || hour < 6) return "night";
-  // Daytime afternoon river sun: 06:00 - 18:00
+export function computeThemeFromHour(_hour?: number): AmbientTheme {
+  // Locked to day time ("afternoon") only per brand requirements
   return "afternoon";
 }
 
 export function AmbientModeProvider({ children }: { children: React.ReactNode }) {
-  const [modeSetting, setModeSetting] = React.useState<AmbientModeSetting>("auto");
-  const [activeTheme, setActiveTheme] = React.useState<AmbientTheme>("afternoon");
+  const [modeSetting] = React.useState<AmbientModeSetting>("afternoon");
+  const [activeTheme] = React.useState<AmbientTheme>("afternoon");
   const [kuchingTime, setKuchingTime] = React.useState<string>("");
 
-  // Update Kuching Time & resolve auto theme
+  // Update Kuching Time for live waterfront status display
   React.useEffect(() => {
-    const updateTimeAndTheme = () => {
+    const updateTime = () => {
       try {
         const now = new Date();
         const timeStr = new Intl.DateTimeFormat("en-US", {
@@ -55,36 +51,26 @@ export function AmbientModeProvider({ children }: { children: React.ReactNode })
           hour12: true,
         }).format(now);
         setKuchingTime(timeStr);
-
-        const currentHour = getKuchingHour();
-        if (modeSetting === "auto") {
-          setActiveTheme(computeThemeFromHour(currentHour));
-        } else {
-          setActiveTheme(modeSetting);
-        }
       } catch {
-        // Fallback
         setKuchingTime("Kuching Waterfront");
       }
     };
 
-    updateTimeAndTheme();
-    const interval = setInterval(updateTimeAndTheme, 30000);
+    updateTime();
+    const interval = setInterval(updateTime, 30000);
     return () => clearInterval(interval);
-  }, [modeSetting]);
+  }, []);
 
-  // Apply to document attribute for global CSS styling
+  // Ensure document attribute is permanently locked to daytime "afternoon"
   React.useEffect(() => {
     if (typeof document !== "undefined") {
-      document.documentElement.setAttribute("data-ambient", activeTheme);
+      document.documentElement.setAttribute("data-ambient", "afternoon");
+      document.documentElement.classList.remove("dark");
     }
-  }, [activeTheme]);
+  }, []);
 
-  const cycleNextMode = () => {
-    const modes: AmbientModeSetting[] = ["auto", "afternoon", "sunset", "night"];
-    const nextIdx = (modes.indexOf(modeSetting) + 1) % modes.length;
-    setModeSetting(modes[nextIdx]);
-  };
+  const cycleNextMode = () => {};
+  const setModeSetting = () => {};
 
   return (
     <AmbientContext.Provider

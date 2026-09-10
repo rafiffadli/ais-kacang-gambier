@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   --background: #fffdf9;
   --foreground: #1c1917;
   --cream-paper: #faf6ee;
@@ -15,29 +16,16 @@
   --border-heritage: #ebdccb;
 }
 
-/* Ambient Mode Theme Overrides */
-html[data-ambient="afternoon"] {
+/* Day Time Only Theme (Dark Mode Auto-Switch Disabled) */
+html,
+html[data-ambient],
+body {
+  color-scheme: light;
   --background: #fffdf9;
   --foreground: #1c1a17;
   --cream-paper: #faf6ee;
   --cream-card: #fdfbf7;
   --border-heritage: #ebdccb;
-}
-
-html[data-ambient="sunset"] {
-  --background: #1f1726;
-  --foreground: #faf6ee;
-  --cream-paper: #281b33;
-  --cream-card: #332142;
-  --border-heritage: #52316b;
-}
-
-html[data-ambient="night"] {
-  --background: #141210;
-  --foreground: #faf6ee;
-  --cream-paper: #1c1a17;
-  --cream-card: #24201c;
-  --border-heritage: #3d3428;
 }
 
 @theme {

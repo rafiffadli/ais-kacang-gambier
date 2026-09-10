@@ -42,7 +42,7 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
           <div className="lg:col-span-7 space-y-6 text-left">
             <ScrollReveal duration={1000} distance={28}>
               {/* Waterfront Live Status Pill */}
-              <div className="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/90 dark:bg-stone-900/90 border border-amber-400/50 text-amber-950 dark:text-amber-300 text-xs font-semibold shadow-xs">
+              <div className="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100/90 border border-amber-400/50 text-amber-950 text-xs font-semibold shadow-xs">
                 <span className="flex h-2 w-2 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -50,7 +50,7 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
                 <span>Open Now • 10:00 AM – 10:30 PM</span>
                 <span className="text-amber-400">•</span>
                 <span className="flex items-center gap-1 font-mono">
-                  <Clock className="h-3 w-3 text-amber-700 dark:text-amber-400" />
+                  <Clock className="h-3 w-3 text-amber-700" />
                   {kuchingTime || "Kuching Waterfront"}
                 </span>
               </div>

@@ -77,8 +77,8 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
           className={cn(
             "pointer-events-auto w-full max-w-7xl rounded-full transition-all duration-300 border flex items-center justify-between",
             isScrolled
-              ? "bg-white/95 dark:bg-stone-950/90 backdrop-blur-xl shadow-xl shadow-stone-900/10 border-amber-900/20 py-2 px-3 sm:px-5"
-              : "bg-[#FFFDF9]/95 dark:bg-stone-950/85 backdrop-blur-lg shadow-lg shadow-stone-900/5 border-amber-900/15 py-2.5 sm:py-3 px-3 sm:px-6"
+              ? "bg-white/95 backdrop-blur-xl shadow-xl shadow-stone-900/10 border-amber-900/20 py-2 px-3 sm:px-5"
+              : "bg-[#FFFDF9]/95 backdrop-blur-lg shadow-lg shadow-stone-900/5 border-amber-900/15 py-2.5 sm:py-3 px-3 sm:px-6"
           )}
         >
           {/* Brand Logo & Landmark */}
@@ -95,10 +95,10 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="font-serif text-xs sm:text-sm lg:text-base font-bold tracking-tight text-stone-900 dark:text-white leading-tight">
-                IG Ais Kacang <span className="text-amber-700 dark:text-amber-400">Gambier</span>
+              <span className="font-serif text-xs sm:text-sm lg:text-base font-bold tracking-tight text-stone-900 leading-tight">
+                IG Ais Kacang <span className="text-amber-700">Gambier</span>
               </span>
-              <span className="text-[8px] sm:text-[9px] font-semibold uppercase tracking-wider text-stone-600 dark:text-stone-400 flex items-center gap-0.5">
+              <span className="text-[8px] sm:text-[9px] font-semibold uppercase tracking-wider text-stone-600 flex items-center gap-0.5">
                 <MapPin className="h-2 w-2 text-amber-700 shrink-0" />
                 Kuching Waterfront
               </span>
@@ -106,7 +106,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 bg-stone-100/80 dark:bg-stone-900/80 p-1 rounded-full border border-stone-200/70 dark:border-stone-800">
+          <nav className="hidden lg:flex items-center gap-1 bg-stone-100/80 p-1 rounded-full border border-stone-200/70">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -118,7 +118,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
                     "px-3.5 py-1 text-xs font-semibold tracking-wide rounded-full transition-all duration-200",
                     isActive
                       ? "bg-amber-600 text-white shadow-xs font-bold"
-                      : "text-stone-700 dark:text-stone-300 hover:text-amber-900 dark:hover:text-amber-400 hover:bg-white/80 dark:hover:bg-stone-800"
+                      : "text-stone-700 hover:text-amber-900 hover:bg-white/80"
                   )}
                 >
                   {link.name}
@@ -145,7 +145,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle navigation menu"
               aria-expanded={isOpen}
-              className="p-1.5 rounded-full text-stone-700 dark:text-stone-300 hover:text-amber-900 hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors"
+              className="p-1.5 rounded-full text-stone-700 hover:text-amber-900 hover:bg-stone-100 transition-colors"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -163,7 +163,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
 
       <div
         className={cn(
-          "fixed top-18 inset-x-4 z-40 max-w-lg mx-auto sm:hidden rounded-3xl bg-white/95 dark:bg-stone-950/95 backdrop-blur-2xl border border-amber-900/15 p-5 shadow-2xl transition-all duration-300",
+          "fixed top-18 inset-x-4 z-40 max-w-lg mx-auto sm:hidden rounded-3xl bg-white/95 backdrop-blur-2xl border border-amber-900/15 p-5 shadow-2xl transition-all duration-300",
           isOpen
             ? "translate-y-0 opacity-100 scale-100 pointer-events-auto"
             : "-translate-y-4 opacity-0 scale-95 pointer-events-none"
@@ -181,8 +181,8 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
                   className={cn(
                     "flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs font-bold transition-all",
                     isActive
-                      ? "bg-amber-100/90 dark:bg-amber-950/80 text-amber-950 dark:text-amber-200"
-                      : "text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-900"
+                      ? "bg-amber-100/90 text-amber-950"
+                      : "text-stone-700 hover:bg-stone-100"
                   )}
                 >
                   <span>{link.name}</span>
@@ -192,7 +192,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
             })}
           </div>
 
-          <div className="pt-3 border-t border-stone-200/80 dark:border-stone-800 space-y-2.5">
+          <div className="pt-3 border-t border-stone-200/80 space-y-2.5">
             <Button
               onClick={() => {
                 setIsOpen(false);
@@ -204,7 +204,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
               <span>Open Quick Order Ticket</span>
             </Button>
             <div className="text-center pt-1">
-              <p className="text-[10px] text-stone-600 dark:text-stone-400">
+              <p className="text-[10px] text-stone-600">
                 📍 7, Jalan Gambier, Kuching Waterfront, Sarawak
               </p>
               <p className="text-[9px] text-stone-500 mt-0.5">
