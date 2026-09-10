@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, PhoneCall, Sparkles, MapPin, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AmbientModeSwitcher } from "@/components/ui/ambient-mode-switcher";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -124,11 +123,8 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
             })}
           </nav>
 
-          {/* Sensory Controls & Order Action */}
+          {/* Order Action */}
           <div className="hidden sm:flex items-center gap-2">
-            {/* Sunset-to-Night Atmosphere Switcher */}
-            <AmbientModeSwitcher />
-
             {/* WhatsApp Quick Order Action */}
             {onOpenOrderDrawer ? (
               <Button
@@ -208,11 +204,6 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
                 </Link>
               );
             })}
-          </div>
-
-          <div className="pt-2 flex items-center justify-between border-t border-stone-200/60 dark:border-stone-800">
-            <span className="text-xs text-stone-600 dark:text-stone-300 font-semibold">Atmosphere:</span>
-            <AmbientModeSwitcher />
           </div>
 
           <div className="pt-3 border-t border-stone-200/80 dark:border-stone-800 space-y-2.5">
