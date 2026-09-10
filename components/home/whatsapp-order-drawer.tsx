@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import {
   X,
   PhoneCall,
@@ -40,6 +41,7 @@ export function WhatsAppOrderDrawer({
   onAddItem,
   onRemoveItem,
 }: WhatsAppOrderDrawerProps) {
+  const router = useRouter();
   const [internalItems, setInternalItems] = React.useState<OrderItem[]>(() => {
     if (initialItems && initialItems.length > 0) return initialItems;
     return [];
@@ -141,6 +143,27 @@ Hello IG Ais Krim team! Please confirm my order ticket.`;
     window.open(`https://wa.me/60168859657?text=${encoded}`, "_blank");
   };
 
+  const handlePickNow = () => {
+    onClose();
+    if (typeof window !== "undefined") {
+      if (window.location.pathname === "/") {
+        const element = document.getElementById("menu");
+        if (element) {
+          const navOffset = 85;
+          const targetY =
+            element.getBoundingClientRect().top + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: targetY,
+            behavior: "smooth",
+          });
+          window.history.pushState(null, "", "#menu");
+        }
+      } else {
+        router.push("/#menu");
+      }
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -189,9 +212,26 @@ Hello IG Ais Krim team! Please confirm my order ticket.`;
             </div>
 
             {items.length === 0 ? (
-              <div className="p-6 rounded-2xl bg-stone-900/60 border border-dashed border-stone-800 text-center text-stone-400 text-xs">
-                Your order is currently empty. Add your favorite dessert below!
-              </div>
+              <button
+                type="button"
+                onClick={handlePickNow}
+                className="w-full py-4 px-4 rounded-2xl bg-amber-950/30 hover:bg-amber-950/60 border border-dashed border-amber-500/40 hover:border-amber-400 text-stone-200 transition-all group flex items-center justify-between text-left active:scale-[0.99] cursor-pointer shadow-xs"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-amber-600/20 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform shrink-0">
+                    <Plus className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-amber-300 group-hover:text-amber-200">
+                      No items selected. Pick now?
+                    </p>
+                    <p className="text-[11px] text-stone-400 mt-0.5">
+                      Browse full artisan menu &amp; heritage specials
+                    </p>
+                  </div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-amber-400 group-hover:translate-x-1 transition-transform shrink-0 ml-2" />
+              </button>
             ) : (
               <div className="space-y-2">
                 {items.map((item) => (
