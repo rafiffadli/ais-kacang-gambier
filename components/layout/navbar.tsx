@@ -138,7 +138,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
 
           {/* Mobile Actions: Audio + Hamburger */}
           <div className="flex sm:hidden items-center gap-1.5">
-            <WaterfrontSoundscape />
+            <WaterfrontSoundscape compact />
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle navigation menu"
@@ -189,8 +189,13 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
             })}
           </div>
 
+          <div className="pt-2 flex items-center justify-between border-t border-stone-200/60 dark:border-stone-800">
+            <span className="text-xs text-stone-600 dark:text-stone-300 font-semibold">River Audio:</span>
+            <WaterfrontSoundscape />
+          </div>
+
           <div className="pt-2 flex items-center justify-between">
-            <span className="text-xs text-stone-500 font-medium">Atmosphere:</span>
+            <span className="text-xs text-stone-600 dark:text-stone-300 font-semibold">Atmosphere:</span>
             <AmbientModeSwitcher />
           </div>
 
