@@ -5,6 +5,8 @@ import {
   Sparkles,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
+  ChevronUp,
   Flame,
   Droplets,
   Compass,
@@ -30,6 +32,32 @@ interface JourneyStage {
 
 export function MangroveJourneyTimeline() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [isExpandedOnMobile, setIsExpandedOnMobile] = React.useState(false);
+
+  // Auto-expand on mobile if user navigates to #heritage-journey or #journey
+  React.useEffect(() => {
+    const handleCheckHash = () => {
+      if (
+        typeof window !== "undefined" &&
+        (window.location.hash === "#heritage-journey" || window.location.hash === "#journey")
+      ) {
+        setIsExpandedOnMobile(true);
+      }
+    };
+    handleCheckHash();
+    window.addEventListener("hashchange", handleCheckHash);
+    return () => window.removeEventListener("hashchange", handleCheckHash);
+  }, []);
+
+  const handleCollapseJourney = () => {
+    setIsExpandedOnMobile(false);
+    const journeyElem = document.getElementById("heritage-journey");
+    if (journeyElem) {
+      const navOffset = 85;
+      const y = journeyElem.getBoundingClientRect().top + window.pageYOffset - navOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   const stages: JourneyStage[] = [
     {
@@ -106,7 +134,10 @@ export function MangroveJourneyTimeline() {
   };
 
   return (
-    <section className="py-20 lg:py-28 bg-stone-900 text-white relative overflow-hidden border-b border-amber-900/20">
+    <section
+      id="heritage-journey"
+      className="scroll-mt-24 py-16 sm:py-20 lg:py-28 bg-stone-900 text-white relative overflow-hidden border-b border-amber-900/20"
+    >
       {/* Dynamic Background Glows */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-violet-950/20 rounded-full blur-3xl pointer-events-none" />
@@ -129,8 +160,26 @@ export function MangroveJourneyTimeline() {
               </p>
             </div>
 
-            {/* Stepper Controls */}
+            {/* Stepper Controls & Mobile Fold Toggle */}
             <div className="flex items-center gap-2 shrink-0">
+              {/* Mobile Quick Fold Toggle Pill */}
+              <button
+                onClick={() => setIsExpandedOnMobile(!isExpandedOnMobile)}
+                className="md:hidden flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold bg-amber-600 hover:bg-amber-500 text-stone-950 shadow-md active:scale-95 transition-all"
+              >
+                {isExpandedOnMobile ? (
+                  <>
+                    <span>Fold</span>
+                    <ChevronUp className="h-3.5 w-3.5" />
+                  </>
+                ) : (
+                  <>
+                    <span>Unfold (4 Stages)</span>
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  </>
+                )}
+              </button>
+
               <button
                 onClick={() => handleStepChange(Math.max(0, activeStep - 1))}
                 disabled={activeStep === 0}
@@ -151,8 +200,68 @@ export function MangroveJourneyTimeline() {
           </div>
         </ScrollReveal>
 
-        {/* Interactive Stepper Navigation Bar */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+        {/* Mobile Compact Teaser Card (When Journey is Folded) */}
+        {!isExpandedOnMobile && (
+          <div className="md:hidden mt-8">
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-stone-950 via-stone-900 to-amber-950/40 border border-amber-500/30 text-center space-y-4 shadow-xl">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                  <Compass className="h-3.5 w-3.5 text-amber-400" />
+                  <span>4 Artisanal Stages</span>
+                </span>
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
+                  Asajaya to Gambier
+                </span>
+              </div>
+
+              <div className="space-y-1 text-left">
+                <h3 className="font-serif text-lg font-bold text-white">
+                  From Tidal Estuaries to Waterfront Bowl
+                </h3>
+                <p className="text-xs text-stone-300 leading-relaxed">
+                  Discover how 100% pure Borneo nipa palm sap transforms into thick amber caramel and 0.25mm shaved mountain snow.
+                </p>
+              </div>
+
+              {/* 4 Stages Mini Stepper Badges */}
+              <div className="grid grid-cols-2 gap-2 text-left">
+                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
+                  <span className="text-[10px] font-mono text-amber-400 block font-bold">01 • Tapping</span>
+                  <p className="text-[11px] text-stone-300 font-medium">Asajaya Mangroves</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
+                  <span className="text-[10px] font-mono text-amber-400 block font-bold">02 • Boiling</span>
+                  <p className="text-[11px] text-stone-300 font-medium">6-Hour Woodfire</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
+                  <span className="text-[10px] font-mono text-amber-400 block font-bold">03 • Shaving</span>
+                  <p className="text-[11px] text-stone-300 font-medium">0.25mm Micro-Snow</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
+                  <span className="text-[10px] font-mono text-amber-400 block font-bold">04 • Darul Hana</span>
+                  <p className="text-[11px] text-stone-300 font-medium">8:30 PM Fountain</p>
+                </div>
+              </div>
+
+              {/* Unfold Action Button */}
+              <div className="pt-1">
+                <button
+                  onClick={() => setIsExpandedOnMobile(true)}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full font-bold text-xs bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-lg shadow-amber-950/40 transition-all active:scale-95"
+                >
+                  <Compass className="h-4 w-4" />
+                  <span>Unfold Heritage Journey (4 Stages)</span>
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Full Journey Stages (Always visible on desktop, toggleable on mobile) */}
+        <div className={cn(!isExpandedOnMobile && "hidden md:block")}>
+          {/* Interactive Stepper Navigation Bar */}
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
           {stages.map((st, idx) => {
             const isCurrent = idx === activeStep;
             return (
@@ -310,6 +419,20 @@ export function MangroveJourneyTimeline() {
             </div>
           </div>
         </div>
+        </div>
+
+        {/* Mobile Collapse Button (When Journey is Unfolded) */}
+        {isExpandedOnMobile && (
+          <div className="md:hidden mt-8 text-center">
+            <button
+              onClick={handleCollapseJourney}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-xs font-bold bg-stone-950 hover:bg-stone-850 text-amber-300 border border-amber-500/30 shadow-md active:scale-95 transition-all w-full"
+            >
+              <span>Fold Heritage Journey (Show Less)</span>
+              <ChevronUp className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
