@@ -7,16 +7,21 @@ import {
   VolumeX,
   RotateCcw,
   ArrowRight,
-  Flame,
-  Award,
   Check,
   Plus,
-  Minus,
   ChevronDown,
   ChevronUp,
+  Droplets,
+  Bean,
+  Gem,
+  Layers,
+  Crown,
+  Nut,
+  Sun,
+  Leaf,
+  Cookie,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { soundscape } from "@/lib/audio/soundscape";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
@@ -139,6 +144,31 @@ export const TOPPINGS: Topping[] = [
     flavorEffect: { sweetness: 20, creaminess: 10, crunch: 35, chill: 0 },
   },
 ];
+
+function getToppingIcon(id: string) {
+  switch (id) {
+    case "gula-apong":
+      return <Droplets className="h-4 w-4" />;
+    case "red-beans":
+      return <Bean className="h-4 w-4" />;
+    case "attap-seed":
+      return <Gem className="h-4 w-4" />;
+    case "grass-jelly":
+      return <Layers className="h-4 w-4" />;
+    case "d24-durian":
+      return <Crown className="h-4 w-4" />;
+    case "roasted-peanuts":
+      return <Nut className="h-4 w-4" />;
+    case "sweet-corn":
+      return <Sun className="h-4 w-4" />;
+    case "cendol":
+      return <Leaf className="h-4 w-4" />;
+    case "biscoff":
+      return <Cookie className="h-4 w-4" />;
+    default:
+      return <Sparkles className="h-4 w-4" />;
+  }
+}
 
 interface CurateMangroveBowlProps {
   onOpenOrderDrawer?: (customBowlDescription: string, price: number) => void;
@@ -269,6 +299,30 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
     };
   }, [selectedToppings]);
 
+  // Minimalist dot rating (1 to 5 scale)
+  const getDots = (value: number) => {
+    return Math.max(1, Math.min(5, Math.round(value / 20)));
+  };
+
+  // Dynamic sensory profile descriptor text
+  const sensorySummary = React.useMemo(() => {
+    const count = Object.keys(selectedToppings).length;
+    if (count === 0) return "Pure mountain ice awaiting your ingredient selection";
+    if (selectedToppings["d24-durian"]) {
+      return "Rich and decadent with bold durian warmth and palm molasses";
+    }
+    if (selectedToppings["biscoff"] && selectedToppings["roasted-peanuts"]) {
+      return "Layered caramelized crunch balanced over cool coconut snow";
+    }
+    if (selectedToppings["biscoff"] || selectedToppings["roasted-peanuts"]) {
+      return "Delicate golden crunch paired with sweet palm nectar";
+    }
+    if (selectedToppings["cendol"] || selectedToppings["grass-jelly"]) {
+      return "Cooling herbal undertones with refreshing pandan aromas";
+    }
+    return "Balanced Sarawak palm sweetness with traditional slow-cooked toppings";
+  }, [selectedToppings]);
+
   const handleOrderCustomBowl = () => {
     const toppingNames = Object.keys(selectedToppings)
       .map((id) => TOPPINGS.find((t) => t.id === id)?.name)
@@ -290,65 +344,69 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
   const hasTopping = (id: string) => !!selectedToppings[id];
 
   return (
-    <section id="bowl-builder" className="scroll-mt-24 py-20 lg:py-28 bg-stone-950 text-white relative overflow-hidden border-y border-amber-900/30">
-      {/* Background Ambience */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-[500px] h-[500px] bg-emerald-950/20 rounded-full blur-3xl pointer-events-none" />
+    <section id="bowl-builder" className="scroll-mt-24 py-20 lg:py-28 bg-stone-950 text-white relative overflow-hidden border-y border-stone-800">
+      {/* Subtle Background Radial Ambience */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-stone-900/60 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <ScrollReveal duration={1000} distance={32}>
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-950/80 border border-amber-500/40 text-amber-300 text-xs font-semibold">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-900 border border-stone-800 text-stone-300 text-xs font-normal font-sans">
+              <Sparkles className="h-3.5 w-3.5 text-stone-400" />
               <span>Tactile Shaved Ice Customizer</span>
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-              Curate Your <span className="text-amber-400 italic">Mangrove Bowl</span>
+            {/* Strict Two-Font: Serif used exclusively for primary header */}
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+              Curate Your Mangrove Bowl
             </h2>
 
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              Select your artisanal toppings and watch your bespoke mountain of crystal shaved snow come to life.
-              Crafted with authentic Borneo ingredients and 100% wild nipa palm molasses.
+            {/* Clean Sans-serif Body Text */}
+            <p className="text-stone-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-sans">
+              Select artisanal ingredients to craft your bespoke shaved ice. Prepared with wild Borneo nipa palm molasses.
             </p>
 
-            {/* Presets & Sound Toggle */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-2">
-              <span className="text-xs text-stone-400 mr-1">Curated Presets:</span>
+            {/* Presets & Audio Toggle (Disciplined Color Palette) */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-2 font-sans text-xs">
+              <span className="text-stone-500 mr-1">Presets:</span>
               <button
+                type="button"
                 onClick={() => applyPreset("waterfront")}
-                className="text-xs px-3 py-1 rounded-full bg-stone-900 border border-stone-700 hover:border-amber-400 text-stone-200 transition-colors"
+                className="px-3 py-1 rounded-full bg-stone-900/80 border border-stone-800 hover:border-stone-600 hover:text-white text-stone-300 transition-colors"
               >
                 Waterfront Classic
               </button>
               <button
+                type="button"
                 onClick={() => applyPreset("durian")}
-                className="text-xs px-3 py-1 rounded-full bg-stone-900 border border-stone-700 hover:border-amber-400 text-stone-200 transition-colors"
+                className="px-3 py-1 rounded-full bg-stone-900/80 border border-stone-800 hover:border-stone-600 hover:text-white text-stone-300 transition-colors"
               >
-                Durian Royale 👑
+                Durian Royale
               </button>
               <button
+                type="button"
                 onClick={() => applyPreset("biscoff")}
-                className="text-xs px-3 py-1 rounded-full bg-stone-900 border border-stone-700 hover:border-amber-400 text-stone-200 transition-colors"
+                className="px-3 py-1 rounded-full bg-stone-900/80 border border-stone-800 hover:border-stone-600 hover:text-white text-stone-300 transition-colors"
               >
                 Biscoff Crunch
               </button>
 
               <button
+                type="button"
                 onClick={() => setIsSoundActive(!isSoundActive)}
-                className="text-xs px-3 py-1 rounded-full bg-stone-900 border border-amber-500/30 text-amber-300 hover:bg-stone-800 transition-colors flex items-center gap-1.5 ml-2"
+                className="px-3 py-1 rounded-full bg-stone-900/80 border border-stone-800 text-stone-400 hover:text-stone-200 hover:border-stone-600 transition-colors flex items-center gap-1.5 ml-2"
                 title="Toggle tactile sound effects"
               >
                 {isSoundActive ? (
                   <>
                     <Volume2 className="h-3 w-3 text-amber-400" />
-                    <span>SFX: ON</span>
+                    <span>Audio On</span>
                   </>
                 ) : (
                   <>
                     <VolumeX className="h-3 w-3 text-stone-500" />
-                    <span>SFX: OFF</span>
+                    <span>Audio Off</span>
                   </>
                 )}
               </button>
@@ -357,8 +415,9 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
             {/* Mobile Quick Fold Toggle Pill */}
             <div className="md:hidden pt-2 flex justify-center">
               <button
+                type="button"
                 onClick={() => setIsExpandedOnMobile(!isExpandedOnMobile)}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold bg-amber-600 hover:bg-amber-500 text-stone-950 shadow-md active:scale-95 transition-all"
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-medium bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 shadow-sm active:scale-95 transition-all font-sans"
               >
                 {isExpandedOnMobile ? (
                   <>
@@ -367,7 +426,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
                   </>
                 ) : (
                   <>
-                    <span>Unfold 3D Customizer</span>
+                    <span>Unfold Customizer</span>
                     <ChevronDown className="h-3.5 w-3.5" />
                   </>
                 )}
@@ -376,16 +435,16 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
           </div>
         </ScrollReveal>
 
-        {/* Mobile Compact Teaser Card (When Bowl Builder is Folded) */}
+        {/* Mobile Compact Teaser Card (When Customizer is Folded) */}
         {!isExpandedOnMobile && (
           <div className="md:hidden mt-8">
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-stone-900 via-stone-900/95 to-amber-950/40 border border-amber-500/30 text-center space-y-4 shadow-xl">
+            <div className="p-6 rounded-3xl bg-stone-900/70 border border-stone-800 text-center space-y-4 shadow-xl font-sans">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
-                  <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                <span className="text-xs text-stone-400 font-medium flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-stone-400" />
                   <span>Curated Bowl Preview</span>
                 </span>
-                <span className="font-serif text-xl font-bold text-amber-400 bg-amber-500/10 px-3 py-0.5 rounded-xl border border-amber-500/20">
+                <span className="text-sm font-semibold text-white bg-stone-800 px-3 py-0.5 rounded-xl border border-stone-700">
                   RM {totalPrice.toFixed(2)}
                 </span>
               </div>
@@ -394,8 +453,8 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
                 <h3 className="font-serif text-lg font-bold text-white">
                   Bespoke Mountain of Crystal Snow
                 </h3>
-                <p className="text-xs text-stone-300 leading-relaxed">
-                  Crafted with wild Borneo Gula Apong and fresh condiments. Unfold on your phone to customize toppings in 3D.
+                <p className="text-xs text-stone-400 leading-relaxed">
+                  Crafted with wild Borneo Gula Apong and fresh condiments. Tap unfold to curate ingredients.
                 </p>
               </div>
 
@@ -407,7 +466,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
                   return (
                     <span
                       key={id}
-                      className="text-[11px] font-semibold bg-amber-950/80 text-amber-200 border border-amber-500/40 px-2.5 py-1 rounded-full flex items-center gap-1"
+                      className="text-xs font-medium bg-stone-800/80 text-stone-300 border border-stone-700 px-2.5 py-1 rounded-full flex items-center gap-1"
                     >
                       <Check className="h-3 w-3 text-amber-400" />
                       <span>{topping.name}</span>
@@ -420,18 +479,19 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
               <div className="space-y-2 pt-2">
                 <Button
                   onClick={() => setIsExpandedOnMobile(true)}
-                  className="w-full rounded-full font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-lg shadow-amber-950/40 justify-center gap-2 py-3.5"
+                  className="w-full rounded-full font-semibold bg-amber-600 hover:bg-amber-500 text-stone-950 shadow-md justify-center gap-2 py-3 text-xs"
                 >
                   <Sparkles className="h-4 w-4" />
-                  <span>Unfold 3D Bowl Customizer ({TOPPINGS.length} Toppings)</span>
+                  <span>Unfold 3D Customizer ({TOPPINGS.length} Toppings)</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
 
                 <button
+                  type="button"
                   onClick={handleOrderCustomBowl}
-                  className="w-full py-2 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors flex items-center justify-center gap-1"
+                  className="w-full py-2 text-xs font-medium text-stone-400 hover:text-stone-200 transition-colors flex items-center justify-center gap-1"
                 >
-                  <span>Quick Order This Bowl (RM {totalPrice.toFixed(2)}) via WhatsApp</span>
+                  <span>Quick Order (RM {totalPrice.toFixed(2)}) via WhatsApp</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -442,31 +502,33 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
         {/* Builder Workstation (Always visible on desktop, toggleable on mobile) */}
         <div
           className={cn(
-            "mt-8 sm:mt-14 grid-cols-1 lg:grid-cols-12 gap-8 items-start",
+            "mt-8 sm:mt-14 grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start",
             !isExpandedOnMobile ? "hidden md:grid" : "grid"
           )}
         >
-          {/* Left Column: Interactive Visual Shaved Ice Bowl Canvas */}
-          <div className="lg:col-span-6 rounded-3xl bg-gradient-to-b from-stone-900 via-stone-900/90 to-stone-950 border border-amber-500/20 p-6 sm:p-8 flex flex-col items-center justify-between relative shadow-2xl overflow-hidden min-h-[440px]">
-            {/* Ambient Bowl Glow */}
-            <div className="absolute inset-0 bg-radial from-amber-500/10 via-transparent to-transparent pointer-events-none" />
+          {/* Left Column: Central "Jalan Gambier Clay Bowl" Visual (Increased Padding & Spacing) */}
+          <div className="lg:col-span-6 rounded-3xl bg-stone-900/40 border border-stone-800 p-8 sm:p-12 lg:p-14 flex flex-col items-center justify-between relative shadow-2xl overflow-hidden min-h-[480px]">
+            {/* Ambient Subtle Glow */}
+            <div className="absolute inset-0 bg-radial from-stone-800/20 via-transparent to-transparent pointer-events-none" />
 
-            <div className="w-full flex items-center justify-between text-xs text-stone-400 z-10">
-              <span className="font-serif italic text-amber-300">Jalan Gambier Clay Bowl</span>
+            {/* Visual Header */}
+            <div className="w-full flex items-center justify-between text-xs text-stone-400 z-10 font-sans">
+              <span className="font-normal text-stone-400">Jalan Gambier Clay Bowl</span>
               <button
+                type="button"
                 onClick={clearBowl}
-                className="flex items-center gap-1 text-stone-400 hover:text-rose-400 transition-colors"
+                className="flex items-center gap-1 text-stone-500 hover:text-stone-300 transition-colors font-sans"
               >
                 <RotateCcw className="h-3 w-3" />
                 <span>Reset Bowl</span>
               </button>
             </div>
 
-            {/* Stylized Interactive 3D Shaved Ice Dome */}
-            <div className="relative w-64 h-64 sm:w-72 sm:h-72 my-6 flex items-center justify-center">
+            {/* Stylized Interactive 3D Shaved Ice Dome (Widened Vertical Margins) */}
+            <div className="relative w-64 h-64 sm:w-72 sm:h-72 my-8 sm:my-10 flex items-center justify-center">
               {/* Earthen Bowl Rim */}
-              <div className="absolute bottom-4 w-56 sm:w-64 h-24 rounded-b-[100px] bg-gradient-to-b from-amber-950 to-stone-950 border-2 border-amber-700/60 shadow-2xl shadow-black/80 flex items-center justify-center">
-                <span className="text-[10px] tracking-widest text-amber-500/60 uppercase font-mono">
+              <div className="absolute bottom-4 w-56 sm:w-64 h-24 rounded-b-[100px] bg-gradient-to-b from-stone-800 to-stone-950 border border-stone-700/80 shadow-2xl shadow-black/80 flex items-center justify-center">
+                <span className="text-[10px] tracking-wider text-stone-500 font-sans font-medium">
                   IG AIS KACANG GAMBIER
                 </span>
               </div>
@@ -474,7 +536,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
               {/* Shaved Ice Snow Mountain */}
               <div
                 className={cn(
-                  "relative w-48 sm:w-56 h-48 sm:h-56 rounded-full bg-gradient-to-t from-stone-100 via-white to-amber-50 shadow-inner border border-white/60 transition-all duration-500 flex items-center justify-center overflow-hidden",
+                  "relative w-48 sm:w-56 h-48 sm:h-56 rounded-full bg-gradient-to-t from-stone-200 via-stone-50 to-amber-50/50 shadow-inner border border-white/60 transition-all duration-500 flex items-center justify-center overflow-hidden",
                   lastAdded && "scale-105"
                 )}
               >
@@ -517,7 +579,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
                 {hasTopping("d24-durian") && (
                   <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-30 animate-in zoom-in-75 duration-300">
                     <div className="w-14 h-12 rounded-full bg-gradient-to-br from-yellow-300 via-amber-400 to-amber-500 shadow-lg border border-yellow-200 flex items-center justify-center">
-                      <span className="text-xs">👑</span>
+                      <Crown className="h-4 w-4 text-stone-950" />
                     </div>
                   </div>
                 )}
@@ -576,77 +638,53 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
               </div>
             </div>
 
-            {/* Live Sensory Flavor Profile Bars */}
-            <div className="w-full bg-stone-950/80 rounded-2xl p-4 border border-stone-800 space-y-2.5 z-10">
-              <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-amber-400">
-                <span>Sensory Balance Meter</span>
-                <span className="text-stone-400 font-normal">
-                  {Object.keys(selectedToppings).length} Toppings Added
+            {/* Sensory Balance: Simplified Minimalist Dot Indicator & Dynamic String */}
+            <div className="w-full bg-stone-900/50 rounded-2xl p-5 border border-stone-800/80 space-y-3 z-10 font-sans">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-medium text-stone-300">Sensory Balance</span>
+                <span className="text-stone-500">
+                  {Object.keys(selectedToppings).length} {Object.keys(selectedToppings).length === 1 ? "ingredient" : "ingredients"}
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div>
-                  <div className="flex justify-between text-[10px] text-stone-400 mb-1">
-                    <span>Sweetness</span>
-                    <span className="text-amber-300 font-bold">{flavorMeters.sweetness}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all duration-300"
-                      style={{ width: `${flavorMeters.sweetness}%` }}
-                    />
-                  </div>
-                </div>
+              {/* Dynamic Sensory Text String */}
+              <p className="text-xs text-stone-400 leading-relaxed font-sans">
+                {sensorySummary}
+              </p>
 
-                <div>
-                  <div className="flex justify-between text-[10px] text-stone-400 mb-1">
-                    <span>Creaminess</span>
-                    <span className="text-amber-300 font-bold">{flavorMeters.creaminess}%</span>
+              {/* Minimalist Dot Scale (1 to 5) */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-1">
+                {[
+                  { label: "Sweetness", score: getDots(flavorMeters.sweetness) },
+                  { label: "Creaminess", score: getDots(flavorMeters.creaminess) },
+                  { label: "Crunch", score: getDots(flavorMeters.crunch) },
+                  { label: "Chill", score: getDots(flavorMeters.chill) },
+                ].map((m) => (
+                  <div key={m.label} className="space-y-1.5">
+                    <span className="text-[11px] text-stone-400 block">{m.label}</span>
+                    <div className="flex items-center gap-1.5">
+                      {[1, 2, 3, 4, 5].map((dot) => (
+                        <span
+                          key={dot}
+                          className={cn(
+                            "w-1.5 h-1.5 rounded-full transition-colors duration-300",
+                            dot <= m.score ? "bg-amber-400" : "bg-stone-800"
+                          )}
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-yellow-600 to-yellow-300 rounded-full transition-all duration-300"
-                      style={{ width: `${flavorMeters.creaminess}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-[10px] text-stone-400 mb-1">
-                    <span>Crunch</span>
-                    <span className="text-amber-300 font-bold">{flavorMeters.crunch}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-orange-600 to-orange-400 rounded-full transition-all duration-300"
-                      style={{ width: `${flavorMeters.crunch}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-[10px] text-stone-400 mb-1">
-                    <span>Chill Factor</span>
-                    <span className="text-cyan-300 font-bold">{flavorMeters.chill}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-cyan-600 to-cyan-400 rounded-full transition-all duration-300"
-                      style={{ width: `${flavorMeters.chill}%` }}
-                    />
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
-            {/* Total Price & WhatsApp CTA */}
-            <div className="w-full mt-4 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-stone-800 z-10">
+            {/* Total Price & Primary Call to Action */}
+            <div className="w-full mt-4 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-stone-800/80 z-10 font-sans">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-stone-400 block font-bold">
-                  Bespoke Bowl Total
+                <span className="text-xs text-stone-400 block font-normal">
+                  Curated Total
                 </span>
-                <span className="font-serif text-3xl font-black text-amber-400">
+                <span className="text-2xl sm:text-3xl font-bold text-white font-sans">
                   RM {totalPrice.toFixed(2)}
                 </span>
               </div>
@@ -654,7 +692,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
               <Button
                 onClick={handleOrderCustomBowl}
                 size="lg"
-                className="w-full sm:w-auto rounded-full font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-lg shadow-amber-900/40 px-6 gap-2"
+                className="w-full sm:w-auto rounded-full font-semibold bg-amber-600 hover:bg-amber-500 text-stone-950 shadow-md px-6 py-3 gap-2 font-sans"
               >
                 <span>Order Bowl via WhatsApp</span>
                 <ArrowRight className="h-4 w-4" />
@@ -662,60 +700,95 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
             </div>
           </div>
 
-          {/* Right Column: Toppings Selector Grid */}
-          <div className="lg:col-span-6 space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-stone-800">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                Choose Artisan Ingredients:
+          {/* Right Column: Decluttered Ingredient Cards with Dynamic Pane Reveal */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-stone-800/80 font-sans">
+              <span className="text-xs font-medium text-stone-400">
+                Artisan Ingredients
               </span>
-              <span className="text-xs text-stone-400">Tap to toggle on/off</span>
+              <span className="text-xs text-stone-500">Tap to add or remove</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {/* Widened Grid Gaps & Generous Margins */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               {TOPPINGS.map((topping) => {
                 const selected = hasTopping(topping.id);
                 return (
                   <button
                     key={topping.id}
+                    type="button"
                     onClick={() => toggleTopping(topping)}
                     className={cn(
-                      "flex flex-col text-left p-3.5 rounded-2xl border transition-all duration-200 relative group overflow-hidden",
+                      "group text-left p-4 sm:p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden font-sans",
                       selected
-                        ? "bg-amber-950/40 border-amber-500 text-white shadow-md shadow-amber-900/20"
-                        : "bg-stone-900/70 border-stone-800 text-stone-300 hover:border-amber-500/50 hover:bg-stone-900"
+                        ? "bg-amber-950/25 border-amber-500/80 shadow-lg shadow-amber-950/20 text-white"
+                        : "bg-stone-900/50 border-stone-800/80 text-stone-300 hover:border-stone-700 hover:bg-stone-900/80"
                     )}
                   >
-                    <div className="flex items-center justify-between w-full mb-1">
-                      <span className="font-serif font-bold text-sm text-white group-hover:text-amber-300 transition-colors">
-                        {topping.name}
-                      </span>
+                    {/* Default State: Primary Name + Elegant Icon + Select Indicator */}
+                    <div className="flex items-center justify-between gap-3 w-full">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className={cn(
+                            "w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300",
+                            selected
+                              ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                              : "bg-stone-800/80 text-stone-400 border border-stone-700/40 group-hover:text-stone-200 group-hover:border-stone-600"
+                          )}
+                        >
+                          {getToppingIcon(topping.id)}
+                        </div>
+                        <span
+                          className={cn(
+                            "font-sans font-medium text-sm leading-snug truncate transition-colors duration-200",
+                            selected ? "text-white" : "text-stone-300 group-hover:text-stone-100"
+                          )}
+                        >
+                          {topping.name}
+                        </span>
+                      </div>
+
                       <div
                         className={cn(
-                          "w-5 h-5 rounded-full flex items-center justify-center text-xs transition-colors shrink-0",
+                          "w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 transition-all duration-200 border",
                           selected
-                            ? "bg-amber-500 text-stone-950 font-bold"
-                            : "bg-stone-800 text-stone-400"
+                            ? "bg-amber-500 border-amber-400 text-stone-950 font-bold shadow-xs"
+                            : "bg-stone-800/80 border-stone-700/60 text-stone-400 group-hover:border-stone-600 group-hover:text-stone-200"
                         )}
                       >
-                        {selected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+                        {selected ? (
+                          <Check className="h-3 w-3 stroke-[2.5]" />
+                        ) : (
+                          <Plus className="h-3 w-3 stroke-[2]" />
+                        )}
                       </div>
                     </div>
 
-                    <span className="text-[11px] italic text-amber-400/80 mb-1">
-                      {topping.malayName}
-                    </span>
-
-                    <span className="text-[10px] text-stone-400 line-clamp-1">
-                      {topping.provenance}
-                    </span>
-
-                    <div className="mt-2 flex items-center justify-between text-xs pt-1.5 border-t border-stone-800/80">
-                      <span className="font-serif font-semibold text-amber-400">
-                        +RM {topping.price.toFixed(2)}
-                      </span>
-                      <span className="text-[9px] uppercase tracking-wider text-stone-400 bg-stone-800 px-1.5 py-0.5 rounded">
-                        {topping.category}
-                      </span>
+                    {/* Hidden Dynamic Pane: Reveals on hover or when selected */}
+                    <div
+                      className={cn(
+                        "overflow-hidden transition-all duration-300 ease-out",
+                        selected
+                          ? "max-h-24 opacity-100 mt-3 pt-3 border-t border-amber-500/20"
+                          : "max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 group-hover:mt-3 group-hover:pt-3 group-hover:border-t group-hover:border-stone-800/80"
+                      )}
+                    >
+                      <div className="space-y-1 font-sans">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-stone-400 font-medium">{topping.malayName}</span>
+                          <span
+                            className={cn(
+                              "font-semibold font-mono",
+                              selected ? "text-amber-400" : "text-stone-300"
+                            )}
+                          >
+                            +RM {topping.price.toFixed(2)}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-stone-500 leading-relaxed truncate">
+                          {topping.provenance}
+                        </p>
+                      </div>
                     </div>
                   </button>
                 );
@@ -728,10 +801,11 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
         {isExpandedOnMobile && (
           <div className="md:hidden mt-8 text-center">
             <button
+              type="button"
               onClick={handleCollapseCustomizer}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-xs font-bold bg-stone-900 hover:bg-stone-800 text-amber-300 border border-amber-500/30 shadow-md active:scale-95 transition-all w-full"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-xs font-medium bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 shadow-md active:scale-95 transition-all w-full font-sans"
             >
-              <span>Fold Bowl Customizer (Show Less)</span>
+              <span>Fold Customizer</span>
               <ChevronUp className="h-4 w-4" />
             </button>
           </div>
@@ -740,3 +814,4 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
     </section>
   );
 }
+
