@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AmbientModeProvider } from "@/components/ui/ambient-mode-provider";
+import { OrderDrawerProvider } from "@/components/ui/order-drawer-provider";
 import { ArtisanCursor } from "@/components/ui/artisan-cursor";
 import { ScrollToTopOnReload } from "@/components/ui/scroll-to-top-on-reload";
 
@@ -152,10 +153,12 @@ export default function RootLayout({
       >
         <ScrollToTopOnReload />
         <AmbientModeProvider>
-          <ArtisanCursor />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <OrderDrawerProvider>
+            <ArtisanCursor />
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </OrderDrawerProvider>
         </AmbientModeProvider>
       </body>
     </html>

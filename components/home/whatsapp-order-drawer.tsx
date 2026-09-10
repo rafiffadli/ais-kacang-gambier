@@ -7,15 +7,10 @@ import {
   Plus,
   Minus,
   Trash2,
-  Clock,
-  Sparkles,
-  MapPin,
-  ShoppingBag,
   ArrowRight,
-  Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MENU_ITEMS } from "@/data/menu-data";
+import { MENU_ITEMS, MenuItem } from "@/data/menu-data";
 import { cn } from "@/lib/utils";
 
 export interface OrderItem {
@@ -26,39 +21,50 @@ export interface OrderItem {
   notes?: string;
 }
 
-interface WhatsAppOrderDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface WhatsAppOrderDrawerProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  items?: OrderItem[];
   initialItems?: OrderItem[];
+  onUpdateQuantity?: (id: string, delta: number) => void;
+  onAddItem?: (menuItem: MenuItem) => void;
+  onRemoveItem?: (id: string) => void;
 }
 
 export function WhatsAppOrderDrawer({
-  isOpen,
-  onClose,
+  isOpen = false,
+  onClose = () => {},
+  items: controlledItems,
   initialItems = [],
+  onUpdateQuantity,
+  onAddItem,
+  onRemoveItem,
 }: WhatsAppOrderDrawerProps) {
-  const [items, setItems] = React.useState<OrderItem[]>([
-    {
-      id: "gula-apong-ais-kacang",
-      name: "Signature Gula Apong Ais Kacang",
-      price: 8.5,
-      quantity: 1,
-    },
-  ]);
+  const [internalItems, setInternalItems] = React.useState<OrderItem[]>(() => {
+    if (initialItems && initialItems.length > 0) return initialItems;
+    return [
+      {
+        id: "gula-apong-ais-kacang",
+        name: "Signature Gula Apong Ais Kacang",
+        price: 8.5,
+        quantity: 1,
+      },
+    ];
+  });
+
+  const isControlled = controlledItems !== undefined;
+  const items = isControlled ? controlledItems : internalItems;
 
   const [diningMode, setDiningMode] = React.useState<"dine-in" | "takeaway">("takeaway");
   const [pickupTime, setPickupTime] = React.useState("ASAP (15-20 mins)");
   const [specialInstructions, setSpecialInstructions] = React.useState("");
 
-  // Sync initialItems if provided
-  React.useEffect(() => {
-    if (initialItems && initialItems.length > 0) {
-      setItems(initialItems);
-    }
-  }, [initialItems]);
-
   const updateQuantity = (id: string, delta: number) => {
-    setItems((prev) =>
+    if (onUpdateQuantity) {
+      onUpdateQuantity(id, delta);
+      return;
+    }
+    setInternalItems((prev) =>
       prev
         .map((item) => {
           if (item.id === id) {
@@ -71,9 +77,13 @@ export function WhatsAppOrderDrawer({
     );
   };
 
-  const addItemFromMenu = (menuItem: (typeof MENU_ITEMS)[0]) => {
+  const addItemFromMenu = (menuItem: MenuItem) => {
+    if (onAddItem) {
+      onAddItem(menuItem);
+      return;
+    }
     const numericPrice = parseFloat(menuItem.price.replace("RM ", "")) || 8.5;
-    setItems((prev) => {
+    setInternalItems((prev) => {
       const existing = prev.find((i) => i.id === menuItem.id);
       if (existing) {
         return prev.map((i) =>
@@ -93,7 +103,11 @@ export function WhatsAppOrderDrawer({
   };
 
   const removeItem = (id: string) => {
-    setItems((prev) => prev.filter((i) => i.id !== id));
+    if (onRemoveItem) {
+      onRemoveItem(id);
+      return;
+    }
+    setInternalItems((prev) => prev.filter((i) => i.id !== id));
   };
 
   const totalPrice = React.useMemo(() => {

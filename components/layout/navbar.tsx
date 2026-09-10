@@ -3,8 +3,9 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, PhoneCall, Sparkles, MapPin, ArrowUpRight } from "lucide-react";
+import { Menu, X, PhoneCall, Sparkles, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useOrderDrawer } from "@/components/ui/order-drawer-provider";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -12,6 +13,8 @@ interface NavbarProps {
 }
 
 export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
+  const { openOrderDrawer } = useOrderDrawer();
+  const handleOpenOrder = onOpenOrderDrawer || openOrderDrawer;
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -24,9 +27,11 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  React.useEffect(() => {
+  const [prevPathname, setPrevPathname] = React.useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setIsOpen(false);
-  }, [pathname]);
+  }
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -125,32 +130,14 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
 
           {/* Order Action */}
           <div className="hidden sm:flex items-center gap-2">
-            {/* WhatsApp Quick Order Action */}
-            {onOpenOrderDrawer ? (
-              <Button
-                size="sm"
-                onClick={onOpenOrderDrawer}
-                className="rounded-full px-4 gap-1.5 text-xs font-bold bg-amber-700 hover:bg-amber-800 text-white shadow-md shadow-amber-900/20"
-              >
-                <PhoneCall className="h-3.5 w-3.5" />
-                <span>Order</span>
-              </Button>
-            ) : (
-              <a
-                href="https://wa.me/60168859657?text=Hello%20IG%20Ais%20Kacang%20Gambier!"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button
-                  size="sm"
-                  className="rounded-full px-4 gap-1.5 text-xs font-bold bg-amber-700 hover:bg-amber-800 text-white shadow-md shadow-amber-900/20"
-                >
-                  <PhoneCall className="h-3.5 w-3.5" />
-                  <span>Order</span>
-                  <ArrowUpRight className="h-3 w-3 opacity-70" />
-                </Button>
-              </a>
-            )}
+            <Button
+              size="sm"
+              onClick={() => handleOpenOrder()}
+              className="rounded-full px-4 gap-1.5 text-xs font-bold bg-amber-700 hover:bg-amber-800 text-white shadow-md shadow-amber-900/20"
+            >
+              <PhoneCall className="h-3.5 w-3.5" />
+              <span>Order</span>
+            </Button>
           </div>
 
           {/* Mobile Actions: Hamburger */}
@@ -207,30 +194,16 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
           </div>
 
           <div className="pt-3 border-t border-stone-200/80 dark:border-stone-800 space-y-2.5">
-            {onOpenOrderDrawer ? (
-              <Button
-                onClick={() => {
-                  setIsOpen(false);
-                  onOpenOrderDrawer();
-                }}
-                className="w-full rounded-full justify-center gap-2 py-3 text-xs font-bold bg-amber-700 text-white shadow-md"
-              >
-                <PhoneCall className="h-4 w-4" />
-                <span>Open Quick Order Ticket</span>
-              </Button>
-            ) : (
-              <a
-                href="https://wa.me/60168859657?text=Hello%20IG%20Ais%20Kacang%20Gambier!"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <Button className="w-full rounded-full justify-center gap-2 py-3 text-xs font-bold bg-amber-700 text-white shadow-md">
-                  <PhoneCall className="h-4 w-4" />
-                  <span>WhatsApp Order (+60 16-885 9657)</span>
-                </Button>
-              </a>
-            )}
+            <Button
+              onClick={() => {
+                setIsOpen(false);
+                handleOpenOrder();
+              }}
+              className="w-full rounded-full justify-center gap-2 py-3 text-xs font-bold bg-amber-700 hover:bg-amber-800 text-white shadow-md transition-all active:scale-95"
+            >
+              <PhoneCall className="h-4 w-4" />
+              <span>Open Quick Order Ticket</span>
+            </Button>
             <div className="text-center pt-1">
               <p className="text-[10px] text-stone-600 dark:text-stone-400">
                 📍 7, Jalan Gambier, Kuching Waterfront, Sarawak

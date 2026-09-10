@@ -10,15 +10,14 @@ import { HeritageTeaser } from "@/components/home/heritage-teaser";
 import { ReviewSlider } from "@/components/home/review-slider";
 import { VisitBanner } from "@/components/home/visit-banner";
 import { ScrollInteractiveBackground } from "@/components/home/scroll-interactive-background";
-import { WhatsAppOrderDrawer, OrderItem } from "@/components/home/whatsapp-order-drawer";
+import { useOrderDrawer } from "@/components/ui/order-drawer-provider";
 import { MenuItem } from "@/data/menu-data";
 
 export default function HomePage() {
-  const [isOrderDrawerOpen, setIsOrderDrawerOpen] = React.useState(false);
-  const [drawerInitialItems, setDrawerInitialItems] = React.useState<OrderItem[]>([]);
+  const { openOrderDrawer } = useOrderDrawer();
 
   const handleOpenCustomBowlInDrawer = (customBowlDescription: string, price: number) => {
-    setDrawerInitialItems([
+    openOrderDrawer([
       {
         id: `custom-bowl-${Date.now()}`,
         name: customBowlDescription,
@@ -26,11 +25,10 @@ export default function HomePage() {
         quantity: 1,
       },
     ]);
-    setIsOrderDrawerOpen(true);
   };
 
   const handleAddLaksaToDrawer = () => {
-    setDrawerInitialItems([
+    openOrderDrawer([
       {
         id: "sarawak-laksa",
         name: "Authentic Sarawak Laksa (Breakfast of the Gods)",
@@ -38,12 +36,11 @@ export default function HomePage() {
         quantity: 1,
       },
     ]);
-    setIsOrderDrawerOpen(true);
   };
 
   const handleAddMenuItemToDrawer = (item: MenuItem) => {
     const priceNum = parseFloat(item.price.replace("RM ", "")) || 8.5;
-    setDrawerInitialItems([
+    openOrderDrawer([
       {
         id: item.id,
         name: item.name,
@@ -51,7 +48,6 @@ export default function HomePage() {
         quantity: 1,
       },
     ]);
-    setIsOrderDrawerOpen(true);
   };
 
   return (
@@ -62,7 +58,7 @@ export default function HomePage() {
       {/* Main Page Content Layers */}
       <div className="relative z-10">
         {/* 1. Rich Cinemagraph Hero: Thick Gula Apong Syrup Drizzle & Ambient Mist */}
-        <CinematicHero onOpenOrderDrawer={() => setIsOrderDrawerOpen(true)} />
+        <CinematicHero onOpenOrderDrawer={() => openOrderDrawer()} />
 
         {/* 2. Interactive Shaved Ice Builder: "Curate Your Mangrove Bowl" */}
         <CurateMangroveBowl onOpenOrderDrawer={handleOpenCustomBowlInDrawer} />
@@ -85,13 +81,6 @@ export default function HomePage() {
         {/* 8. Waterfront Visit Landmark & Opening Hours Banner */}
         <VisitBanner />
       </div>
-
-      {/* WhatsApp Quick-Order Drawer with Preset Order Builder */}
-      <WhatsAppOrderDrawer
-        isOpen={isOrderDrawerOpen}
-        onClose={() => setIsOrderDrawerOpen(false)}
-        initialItems={drawerInitialItems}
-      />
     </div>
   );
 }
