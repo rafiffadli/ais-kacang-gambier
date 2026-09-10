@@ -170,6 +170,21 @@ body {
   animation: gentle-pulse 4s ease-in-out infinite;
 }
 
+/* Little Heritage House-inspired 360° Spinning Plate Animation */
+@keyframes spin-plate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-plate {
+  animation: spin-plate 40s linear infinite;
+  will-change: transform;
+}
+
 /* Graceful degradation for scroll reveal when scripting is disabled or reduced motion is requested */
 @media (scripting: none) {
   .scroll-reveal-container {

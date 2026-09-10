@@ -101,13 +101,12 @@ export function ScrollInteractiveBackground() {
         );
       }
 
-      // 2. Dish 1: Authentic Signature Ais Kacang
+      // 2. Dish 1: Authentic Signature Ais Kacang (Top-down & Spinning)
       if (p1Ref.current) {
-        const p1X = Math.sin(currentScrollY * 0.0045) * 26 + Math.cos(time) * 7 + pointer.x * 0.4;
-        const p1Y = currentScrollY * -0.3 + Math.sin(time * 0.9) * 9 + pointer.y * 0.3;
-        const p1Rot = Math.sin(currentScrollY * 0.0035 + time * 0.4) * 12 + 4;
-        const p1Scale = 1 + Math.sin(time * 0.75) * 0.035;
-        p1Ref.current.style.transform = `translate3d(${p1X.toFixed(1)}px, ${p1Y.toFixed(1)}px, 0) rotate(${p1Rot.toFixed(1)}deg) scale(${p1Scale.toFixed(3)})`;
+        const p1X = Math.sin(currentScrollY * 0.0045) * 24 + Math.cos(time) * 6 + pointer.x * 0.35;
+        const p1Y = currentScrollY * -0.28 + Math.sin(time * 0.85) * 8 + pointer.y * 0.25;
+        const p1Scale = 1 + Math.sin(time * 0.75) * 0.025;
+        p1Ref.current.style.transform = `translate3d(${p1X.toFixed(1)}px, ${p1Y.toFixed(1)}px, 0) scale(${p1Scale.toFixed(3)})`;
       }
 
       // 3. Dish 2: Artisanal Gula Apong Soft Serve
@@ -215,29 +214,35 @@ export function ScrollInteractiveBackground() {
       </svg>
 
       {/* =========================================================================
-          PICTURE 1: Authentic Signature Ais Kacang Dish
+          PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down & Spinning)
+          Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
       ========================================================================= */}
       <div
         ref={p1Ref}
         style={{ willChange: "transform" }}
-        className="absolute top-[580px] sm:top-28 right-0 sm:right-6 lg:right-12 w-48 sm:w-80 lg:w-96 rounded-full p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md bg-gradient-to-tr from-amber-400/60 via-rose-300/50 to-amber-200/70 ring-4 ring-amber-300/50 opacity-95"
+        className="absolute top-[560px] sm:top-24 right-1 sm:right-6 lg:right-12 w-52 sm:w-80 lg:w-[380px] pointer-events-auto group"
       >
-        <div className="relative aspect-square w-full rounded-full overflow-hidden border-2 sm:border-4 border-white shadow-2xl">
-          <Image
-            src="/images/ais-kacang.jpg"
-            alt="Authentic Ais Kacang Gambier"
-            fill
-            sizes="(max-width: 640px) 192px, (max-width: 1024px) 320px, 384px"
-            className="object-cover scale-105"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-amber-950/30 via-transparent to-transparent" />
+        {/* Soft Amber Halo Backdrop Glow */}
+        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-amber-400/20 via-amber-600/15 to-transparent blur-2xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
+
+        {/* Spinning Circular Antique Porcelain Bowl (Top-down Bird's-Eye View) */}
+        <div className="relative aspect-square w-full filter drop-shadow-[0_22px_28px_rgba(70,30,10,0.22)] drop-shadow-[0_8px_12px_rgba(0,0,0,0.14)]">
+          <div className="w-full h-full animate-spin-plate">
+            <Image
+              src="/images/ais-kacang-topdown.png"
+              alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
+              fill
+              sizes="(max-width: 640px) 208px, (max-width: 1024px) 320px, 380px"
+              className="object-contain select-none pointer-events-none"
+              priority
+            />
+          </div>
         </div>
 
         {/* Floating Tethered Interactive Badge */}
-        <div className="absolute -bottom-3 -left-1 sm:-bottom-4 sm:left-2 bg-white/95 backdrop-blur-md px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-amber-300 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-amber-950">
-          <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-amber-600" />
-          <span>Shaved Snow • RM 8.50</span>
+        <div className="absolute -bottom-3 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-300 shadow-xl flex items-center gap-1.5 text-[10px] sm:text-xs font-bold text-amber-950 whitespace-nowrap z-20 group-hover:border-amber-400 group-hover:scale-105 transition-all">
+          <Sparkles className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+          <span>Signature Ais Kacang • RM 8.50</span>
         </div>
       </div>
 
