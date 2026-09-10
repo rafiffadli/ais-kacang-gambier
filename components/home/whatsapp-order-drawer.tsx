@@ -113,25 +113,25 @@ export function WhatsAppOrderDrawer({
     const itemsList = items
       .map(
         (item) =>
-          `• ${item.quantity}x ${item.name} (RM ${(item.price * item.quantity).toFixed(2)})`
+          `- ${item.quantity}x ${item.name} (RM ${(item.price * item.quantity).toFixed(2)})`
       )
       .join("\n");
 
     const modeText =
       diningMode === "dine-in"
-        ? "🥢 Dine-In at 7 Jalan Gambier"
-        : "🚶 Riverfront Takeaway (Waterfront Stroll)";
+        ? "Dine-In at 7 Jalan Gambier"
+        : "Riverfront Takeaway (Waterfront Stroll)";
 
-    const message = `🍧 *ORDER TICKET — IG AIS KACANG GAMBIER* 🍧
+    const message = `*ORDER TICKET — IG AIS KACANG GAMBIER*
 -------------------------------------------
-📍 *Flagship:* 7, Jalan Gambier, Kuching Waterfront
-🕒 *Preferred Time:* ${pickupTime}
-🍽️ *Dining Mode:* ${modeText}
+*Flagship:* 7, Jalan Gambier, Kuching Waterfront
+*Preferred Time:* ${pickupTime}
+*Dining Mode:* ${modeText}
 
 *Order Items:*
-${itemsList || "• (No items selected)"}
+${itemsList || "- (No items selected)"}
 
-${specialInstructions ? `📝 *Notes:* ${specialInstructions}\n` : ""}💰 *Estimated Total:* RM ${totalPrice.toFixed(2)}
+${specialInstructions ? `*Notes:* ${specialInstructions}\n` : ""}*Estimated Total:* RM ${totalPrice.toFixed(2)}
 -------------------------------------------
 Hello IG Ais Krim team! Please confirm my order ticket.`;
 
