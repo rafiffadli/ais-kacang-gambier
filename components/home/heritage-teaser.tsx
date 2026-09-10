@@ -1,11 +1,50 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
 import { BRAND_STATS } from "@/data/reviews-data";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { Check, ShieldCheck, Flame, Compass, ArrowRight } from "lucide-react";
+import {
+  Check,
+  ShieldCheck,
+  Flame,
+  Compass,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function HeritageTeaser() {
+  const [isExpandedOnMobile, setIsExpandedOnMobile] = React.useState(false);
+
+  // Auto-expand on mobile if user navigates to #artisanal-journey-steps
+  React.useEffect(() => {
+    const handleCheckHash = () => {
+      if (
+        typeof window !== "undefined" &&
+        (window.location.hash === "#artisanal-journey-steps" ||
+          window.location.hash === "#craft-steps")
+      ) {
+        setIsExpandedOnMobile(true);
+      }
+    };
+    handleCheckHash();
+    window.addEventListener("hashchange", handleCheckHash);
+    return () => window.removeEventListener("hashchange", handleCheckHash);
+  }, []);
+
+  const handleCollapseJourney = () => {
+    setIsExpandedOnMobile(false);
+    const elem = document.getElementById("artisanal-journey-steps");
+    if (elem) {
+      const navOffset = 85;
+      const y = elem.getBoundingClientRect().top + window.pageYOffset - navOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   const craftSteps = [
     {
       number: "01",
@@ -67,12 +106,97 @@ export function HeritageTeaser() {
 
         {/* 4-Step Modern Process Line */}
         <ScrollReveal duration={1000} distance={32} delay={80}>
-          <div className="mt-14 pt-12 border-t border-stone-200">
-            <p className="text-xs font-bold uppercase tracking-widest text-amber-800 mb-8">
-              The Artisanal Shaved Ice Journey:
-            </p>
+          <div
+            id="artisanal-journey-steps"
+            className="scroll-mt-24 mt-14 pt-12 border-t border-stone-200"
+          >
+            <div className="flex items-center justify-between gap-3 mb-6">
+              <p className="text-xs font-bold uppercase tracking-widest text-amber-800 flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-amber-600" />
+                <span>The Artisanal Shaved Ice Journey:</span>
+              </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Mobile quick toggle pill */}
+              <button
+                type="button"
+                onClick={() => setIsExpandedOnMobile(!isExpandedOnMobile)}
+                className="md:hidden flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-100/90 hover:bg-amber-200 text-amber-900 border border-amber-300 shadow-xs active:scale-95 transition-all"
+                aria-expanded={isExpandedOnMobile}
+              >
+                {isExpandedOnMobile ? (
+                  <>
+                    <span>Fold</span>
+                    <ChevronUp className="h-3.5 w-3.5" />
+                  </>
+                ) : (
+                  <>
+                    <span>Unfold (4 Steps)</span>
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Mobile Compact Teaser Card (When Steps are Folded) */}
+            {!isExpandedOnMobile && (
+              <div className="md:hidden mb-6">
+                <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-xs space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1.5">
+                      <Compass className="h-3.5 w-3.5 text-amber-600" />
+                      <span>4 Artisanal Steps</span>
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-100/70 text-amber-900 border border-amber-300/60 font-bold">
+                      01 → 04
+                    </span>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="font-serif text-base font-bold text-stone-900">
+                      From Estuary Palms to Waterfront Joy
+                    </h4>
+                    <p className="text-xs text-stone-600 leading-relaxed">
+                      Discover the 4 traditional steps behind our 100% pure Gula Apong and micro-calibrated shaved ice.
+                    </p>
+                  </div>
+
+                  {/* 4 Mini Stepper Chips */}
+                  <div className="grid grid-cols-2 gap-2 text-left">
+                    {craftSteps.map((step) => (
+                      <div
+                        key={step.number}
+                        className="p-2.5 rounded-xl bg-amber-50/50 border border-amber-200/50 space-y-0.5"
+                      >
+                        <span className="text-[10px] font-mono font-bold text-amber-700 block">
+                          {step.number} • Step
+                        </span>
+                        <p className="text-[11px] font-medium text-stone-800 truncate">
+                          {step.title}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Unfold Action Button */}
+                  <button
+                    type="button"
+                    onClick={() => setIsExpandedOnMobile(true)}
+                    className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full font-bold text-xs bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition-all active:scale-95"
+                  >
+                    <span>Unfold 4 Shaved Ice Journey Steps</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 4 Cards: Always shown on desktop, toggleable on mobile */}
+            <div
+              className={cn(
+                !isExpandedOnMobile && "hidden md:grid",
+                "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              )}
+            >
               {craftSteps.map((step, idx) => (
                 <div
                   key={idx}
@@ -90,6 +214,20 @@ export function HeritageTeaser() {
                 </div>
               ))}
             </div>
+
+            {/* Mobile Collapse Button (When Steps are Unfolded) */}
+            {isExpandedOnMobile && (
+              <div className="md:hidden mt-6 text-center">
+                <button
+                  type="button"
+                  onClick={handleCollapseJourney}
+                  className="inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold bg-white hover:bg-stone-50 text-stone-800 border border-stone-300 shadow-xs active:scale-95 transition-all w-full"
+                >
+                  <span>Fold Journey Steps (Show Less)</span>
+                  <ChevronUp className="h-4 w-4" />
+                </button>
+              </div>
+            )}
           </div>
         </ScrollReveal>
 
