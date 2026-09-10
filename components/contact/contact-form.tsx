@@ -93,7 +93,6 @@ export function ContactForm() {
           </label>
           <Input
             id="fullName"
-            placeholder="e.g. Dayang Zulaikha"
             hasError={Boolean(errors.fullName)}
             {...register("fullName")}
           />
@@ -117,7 +116,7 @@ export function ContactForm() {
             <Input
               id="email"
               type="email"
-              placeholder="e.g. zulaikha@example.com"
+              placeholder="e.g. name@example.com"
               hasError={Boolean(errors.email)}
               {...register("email")}
             />
