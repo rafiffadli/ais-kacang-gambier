@@ -6,11 +6,38 @@
   --cream-paper: #faf6ee;
   --cream-card: #fdfbf7;
   --apong-gold: #f59e0b;
-  --apong-amber: #d97706;
+  --apong-amber: #c97a2b;
   --apong-dark: #b45309;
   --nyonya-rose: #be123c;
   --pandan-emerald: #059669;
+  --river-teal: #0d9488;
+  --sunset-violet: #581c87;
   --border-heritage: #ebdccb;
+}
+
+/* Ambient Mode Theme Overrides */
+html[data-ambient="afternoon"] {
+  --background: #fffdf9;
+  --foreground: #1c1a17;
+  --cream-paper: #faf6ee;
+  --cream-card: #fdfbf7;
+  --border-heritage: #ebdccb;
+}
+
+html[data-ambient="sunset"] {
+  --background: #1f1726;
+  --foreground: #faf6ee;
+  --cream-paper: #281b33;
+  --cream-card: #332142;
+  --border-heritage: #52316b;
+}
+
+html[data-ambient="night"] {
+  --background: #141210;
+  --foreground: #faf6ee;
+  --cream-paper: #1c1a17;
+  --cream-card: #24201c;
+  --border-heritage: #3d3428;
 }
 
 @theme {
@@ -23,14 +50,16 @@
   --color-apong-300: #fcd34d;
   --color-apong-400: #fbbf24;
   --color-apong-500: #f59e0b;
-  --color-apong-600: #d97706;
+  --color-apong-600: #c97a2b;
   --color-apong-700: #b45309;
   --color-apong-800: #92400e;
   --color-apong-900: #78350f;
   --color-nyonya-rose: #be123c;
   --color-nyonya-ruby: #991b1b;
   --color-pandan-green: #059669;
-  --color-heritage-charcoal: #1c1917;
+  --color-river-teal: #0d9488;
+  --color-sunset-violet: #581c87;
+  --color-heritage-charcoal: #1c1a17;
   --color-heritage-espresso: #292524;
   --color-border-heritage: #ebdccb;
 }
@@ -42,6 +71,7 @@
 html {
   background-color: var(--background);
   color: var(--foreground);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 @media (prefers-reduced-motion: no-preference) and (pointer: fine) {
@@ -56,6 +86,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /* Custom Scrollbar */
@@ -77,12 +108,28 @@ body {
   background: #b45309;
 }
 
+/* Subtle Woven Nipah Palm Pattern Texture */
+.bg-nipah-weave {
+  background-image: radial-gradient(rgba(201, 122, 43, 0.08) 1px, transparent 0);
+  background-size: 16px 16px;
+}
+
+/* Subtle Woodgrain / Paper Texture */
+.bg-woodgrain {
+  background-image: linear-gradient(
+    90deg,
+    rgba(201, 122, 43, 0.03) 0%,
+    transparent 50%,
+    rgba(201, 122, 43, 0.03) 100%
+  );
+}
+
 /* Glassmorphism */
 .glass-nav {
   background: rgba(255, 253, 249, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(217, 119, 6, 0.15);
+  border-bottom: 1px solid rgba(201, 122, 43, 0.15);
 }
 
 .glass-card {
@@ -92,7 +139,14 @@ body {
   border: 1px solid rgba(235, 220, 203, 0.8);
 }
 
-/* Subtle Shimmer & Animations (ReactBits touch) */
+/* Drizzle dash animation */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -160;
+  }
+}
+
+/* Subtle Shimmer & Animations */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;

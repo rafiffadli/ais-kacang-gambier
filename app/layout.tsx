@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { AmbientModeProvider } from "@/components/ui/ambient-mode-provider";
+import { ArtisanCursor } from "@/components/ui/artisan-cursor";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -130,11 +132,15 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased bg-[#FFFDF9] text-stone-900 min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="font-sans antialiased min-h-screen flex flex-col transition-colors duration-500">
+        <AmbientModeProvider>
+          <ArtisanCursor />
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </AmbientModeProvider>
       </body>
     </html>
   );
 }
+
