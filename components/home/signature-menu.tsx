@@ -125,9 +125,19 @@ export function SignatureMenu({ onSelectItemForOrder }: SignatureMenuProps) {
 
         {/* CROWN JEWELS BENTO GRID */}
         <ScrollReveal duration={1000} distance={32} delay={80}>
-          <div className="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-6">
-            {/* Bento Tile 1: Signature Ais Kacang (Always visible on mobile & desktop) */}
-            <div className="lg:col-span-7 rounded-3xl bg-white border border-amber-900/15 p-6 sm:p-9 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
+          <div
+            className={cn(
+              "mt-8 sm:mt-12 grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-6",
+              !isExpandedOnMobile ? "hidden md:grid" : "grid"
+            )}
+          >
+            {/* Bento Tile 1: Signature Ais Kacang (Foldable on mobile, always visible on desktop) */}
+            <div
+              className={cn(
+                "lg:col-span-7 rounded-3xl bg-white border border-amber-900/15 p-6 sm:p-9 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden",
+                !isExpandedOnMobile && "hidden md:flex"
+              )}
+            >
               <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="space-y-4 relative z-10">
@@ -349,6 +359,24 @@ export function SignatureMenu({ onSelectItemForOrder }: SignatureMenuProps) {
             </div>
           </div>
         </ScrollReveal>
+
+        {/* Mobile Expand Teaser Card (When Menu is Folded) */}
+        {!isExpandedOnMobile && (
+          <div className="md:hidden mt-6">
+            <div className="p-5 rounded-3xl bg-amber-50/80 border border-amber-300/80 text-center space-y-3 shadow-sm">
+              <p className="text-xs text-stone-700 font-medium leading-relaxed">
+                Explore our full menu of <strong>Gula Apong Ais Kacang, Soft-Serve, Cendol, Sarawak Laksa, and Artisanal Kopitiam Drinks</strong>.
+              </p>
+              <Button
+                onClick={() => setIsExpandedOnMobile(true)}
+                className="w-full rounded-full font-bold bg-amber-700 hover:bg-amber-800 text-white shadow-md justify-center gap-2 py-3"
+              >
+                <span>Unfold Full Artisanal Menu ({MENU_ITEMS.length} Offerings)</span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Category Filters Bar (Foldable on mobile, always visible on desktop) */}
         <div className={cn(!isExpandedOnMobile && "hidden md:block")}>
