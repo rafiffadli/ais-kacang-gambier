@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { AmbientModeProvider } from "@/components/ui/ambient-mode-provider";
 import { ArtisanCursor } from "@/components/ui/artisan-cursor";
+import { ScrollToTopOnReload } from "@/components/ui/scroll-to-top-on-reload";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -128,11 +129,24 @@ export default function RootLayout({
     >
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if ('scrollRestoration' in history) {
+                  history.scrollRestoration = 'manual';
+                }
+                window.scrollTo(0, 0);
+              } catch (e) {}
+            `,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="font-sans antialiased min-h-screen flex flex-col transition-colors duration-500">
+        <ScrollToTopOnReload />
         <AmbientModeProvider>
           <ArtisanCursor />
           <Navbar />
