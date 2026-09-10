@@ -2,14 +2,11 @@
 
 import * as React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Sparkles,
-  MapPin,
   Clock,
   ArrowRight,
   Droplets,
-  Flame,
   Award,
   Waves,
 } from "lucide-react";
@@ -24,7 +21,7 @@ interface CinematicHeroProps {
 }
 
 export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
-  const { kuchingTime, activeTheme } = useAmbientMode();
+  const { kuchingTime } = useAmbientMode();
   const [drizzleCount, setDrizzleCount] = React.useState(0);
   const [isDrizzling, setIsDrizzling] = React.useState(false);
 
@@ -81,13 +78,13 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
             {/* CTAs */}
             <ScrollReveal duration={1000} distance={32} delay={140}>
               <div className="pt-2 flex flex-wrap items-center gap-3.5">
-                <a href="#bowl-builder">
+                <a href="#menu">
                   <Button
                     size="lg"
                     className="rounded-full px-7 shadow-lg shadow-amber-900/20 font-bold bg-amber-700 hover:bg-amber-800 text-white gap-2"
                   >
                     <Sparkles className="h-4 w-4" />
-                    <span>Curate Mangrove Bowl</span>
+                    <span>Explore Artisan Menu</span>
                   </Button>
                 </a>
 
@@ -194,7 +191,10 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
 
                   <button
                     onClick={triggerInteractiveDrizzle}
-                    className="flex items-center gap-1 px-3 py-1 rounded-full bg-stone-950/80 text-amber-300 border border-amber-400/60 text-xs font-bold hover:bg-stone-900 transition-all shadow-md active:scale-95"
+                    className={cn(
+                      "flex items-center gap-1 px-3 py-1 rounded-full bg-stone-950/80 text-amber-300 border border-amber-400/60 text-xs font-bold hover:bg-stone-900 transition-all shadow-md active:scale-95",
+                      isDrizzling && "scale-105 border-amber-300 text-amber-200"
+                    )}
                     title="Click to add more golden Gula Apong drizzle"
                   >
                     <Droplets className="h-3.5 w-3.5 text-amber-400" />

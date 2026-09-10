@@ -35,7 +35,6 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Curate Bowl", href: "/#bowl-builder" },
     { name: "Artisan Menu", href: "/#menu" },
     { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
