@@ -350,24 +350,6 @@ export function SignatureMenu({ onSelectItemForOrder }: SignatureMenuProps) {
           </div>
         </ScrollReveal>
 
-        {/* Mobile Expand Teaser Card (When Menu is Folded) */}
-        {!isExpandedOnMobile && (
-          <div className="md:hidden mt-6">
-            <div className="p-5 rounded-3xl bg-amber-50/80 border border-amber-300/80 text-center space-y-3 shadow-sm">
-              <p className="text-xs text-stone-700 font-medium leading-relaxed">
-                Showing primary crown jewel. Unfold to view <strong>Soft-Serve, Cendol, Sarawak Laksa, and Artisanal Kopitiam Drinks</strong>.
-              </p>
-              <Button
-                onClick={() => setIsExpandedOnMobile(true)}
-                className="w-full rounded-full font-bold bg-amber-700 hover:bg-amber-800 text-white shadow-md justify-center gap-2 py-3"
-              >
-                <span>Unfold Full Artisanal Menu ({MENU_ITEMS.length} Offerings)</span>
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
         {/* Category Filters Bar (Foldable on mobile, always visible on desktop) */}
         <div className={cn(!isExpandedOnMobile && "hidden md:block")}>
           <ScrollReveal duration={1000} distance={32} delay={100}>
