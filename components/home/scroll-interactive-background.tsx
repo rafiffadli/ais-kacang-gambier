@@ -149,7 +149,7 @@ export function ScrollInteractiveBackground() {
           PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down, Centered & Spinning)
           Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
       ========================================================================= */}
-      <div className="absolute top-[600px] sm:top-[420px] lg:top-[380px] -translate-y-1/2 right-0 sm:right-4 lg:right-8 xl:right-16 pointer-events-auto">
+      <div className="absolute top-[640px] sm:top-[460px] lg:top-[440px] -translate-y-1/2 right-0 sm:right-4 lg:right-8 xl:right-16 pointer-events-auto">
         <div
           ref={p1Ref}
           style={{ willChange: "transform" }}
