@@ -290,7 +290,7 @@ export function ScrollInteractiveBackground() {
         {/* Floating Tethered Badge */}
         <div className="absolute -bottom-2.5 -left-1 sm:-bottom-3 sm:right-4 bg-emerald-900/95 text-emerald-200 backdrop-blur-md px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-emerald-400/40 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[11px] font-bold">
           <Heart className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-300 fill-emerald-300" />
-          <span>Bourdain&apos;s Pick • RM 11.50</span>
+          <span>Sarawak Laksa • RM 11.50</span>
         </div>
       </div>
 

@@ -3,7 +3,6 @@
 import * as React from "react";
 import { CinematicHero } from "@/components/home/cinematic-hero";
 import { MangroveJourneyTimeline } from "@/components/home/mangrove-journey-timeline";
-import { BourdainsCorner } from "@/components/home/bourdains-corner";
 import { SignatureMenu } from "@/components/home/signature-menu";
 import { HeritageTeaser } from "@/components/home/heritage-teaser";
 import { ReviewSlider } from "@/components/home/review-slider";
@@ -14,17 +13,6 @@ import { MenuItem } from "@/data/menu-data";
 
 export default function HomePage() {
   const { openOrderDrawer } = useOrderDrawer();
-
-  const handleAddLaksaToDrawer = () => {
-    openOrderDrawer([
-      {
-        id: "sarawak-laksa",
-        name: "Authentic Sarawak Laksa (Breakfast of the Gods)",
-        price: 11.5,
-        quantity: 1,
-      },
-    ]);
-  };
 
   const handleAddMenuItemToDrawer = (item: MenuItem) => {
     const priceNum = parseFloat(item.price.replace("RM ", "")) || 8.5;
@@ -51,10 +39,7 @@ export default function HomePage() {
         {/* 2. "From Nipah Mangrove to Waterfront Bowl" Interactive Horizontal Timeline */}
         <MangroveJourneyTimeline />
 
-        {/* 3. "Bourdain's Corner": Vintage Kopitiam Sarawak Laksa Spotlight */}
-        <BourdainsCorner onAddLaksaToOrder={handleAddLaksaToDrawer} />
-
-        {/* 4. Artisanal Heritage Menu Bento Showcase */}
+        {/* 3. Artisanal Heritage Menu Bento Showcase */}
         <SignatureMenu onSelectItemForOrder={handleAddMenuItemToDrawer} />
 
         {/* 5. Jalan Gambier Heritage Legacy & Craft Principles */}
