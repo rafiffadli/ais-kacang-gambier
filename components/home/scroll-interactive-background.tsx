@@ -153,7 +153,7 @@ export function ScrollInteractiveBackground() {
         <div
           ref={p1Ref}
           style={{ willChange: "transform" }}
-          className="relative w-[285px] sm:w-[445px] md:w-[495px] lg:w-[554px] xl:w-[614px] group"
+          className="relative w-[276px] sm:w-[432px] md:w-[480px] lg:w-[537px] xl:w-[596px] group"
         >
           {/* Soft Amber Halo Backdrop Glow */}
           <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-400/30 via-amber-600/20 to-transparent blur-3xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
@@ -165,7 +165,7 @@ export function ScrollInteractiveBackground() {
                 src="/images/ais-kacang-topdown.png"
                 alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
                 fill
-                sizes="(max-width: 640px) 285px, (max-width: 1024px) 495px, 614px"
+                sizes="(max-width: 640px) 276px, (max-width: 1024px) 480px, 596px"
                 className="object-contain select-none pointer-events-none"
                 priority
               />
