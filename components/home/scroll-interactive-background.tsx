@@ -146,18 +146,14 @@ export function ScrollInteractiveBackground() {
       </svg>
 
       {/* =========================================================================
-          PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down & Spinning)
-          Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
-      ========================================================================= */}
-      {/* =========================================================================
-          PICTURE 1: Authentic Signature Ais Kacang Dish (Enlarged, Vertically Centered & Spinning)
+          PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down, Centered & Spinning)
           Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
       ========================================================================= */}
       <div className="absolute top-[600px] sm:top-[420px] lg:top-[380px] -translate-y-1/2 right-0 sm:right-4 lg:right-8 xl:right-16 pointer-events-auto">
         <div
           ref={p1Ref}
           style={{ willChange: "transform" }}
-          className="relative w-72 sm:w-[450px] md:w-[500px] lg:w-[560px] xl:w-[620px] group"
+          className="relative w-[285px] sm:w-[445px] md:w-[495px] lg:w-[554px] xl:w-[614px] group"
         >
           {/* Soft Amber Halo Backdrop Glow */}
           <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-400/30 via-amber-600/20 to-transparent blur-3xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
@@ -169,7 +165,7 @@ export function ScrollInteractiveBackground() {
                 src="/images/ais-kacang-topdown.png"
                 alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
                 fill
-                sizes="(max-width: 640px) 288px, (max-width: 1024px) 500px, 620px"
+                sizes="(max-width: 640px) 285px, (max-width: 1024px) 495px, 614px"
                 className="object-contain select-none pointer-events-none"
                 priority
               />
