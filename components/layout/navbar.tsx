@@ -38,6 +38,30 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
     { name: "Contact", href: "/contact" },
   ];
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href.includes("#")) {
+      const [path, hash] = href.split("#");
+      const isTargetPage = pathname === "/" || pathname === path || !path;
+      if (isTargetPage) {
+        e.preventDefault();
+        setIsOpen(false);
+        const element = document.getElementById(hash);
+        if (element) {
+          const navOffset = 85;
+          const targetY = element.getBoundingClientRect().top + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: targetY,
+            behavior: "smooth",
+          });
+          window.history.pushState(null, "", `#${hash}`);
+        }
+      }
+    }
+  };
+
   return (
     <>
       {/* Floating Island Container (Mamee-style floating pill) */}
@@ -87,6 +111,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
                 <Link
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className={cn(
                     "px-3.5 py-1 text-xs font-semibold tracking-wide rounded-full transition-all duration-200",
                     isActive
@@ -175,6 +200,7 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
                 <Link
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className={cn(
                     "flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs font-bold transition-all",
                     isActive

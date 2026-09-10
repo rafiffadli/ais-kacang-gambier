@@ -265,7 +265,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
   const hasTopping = (id: string) => !!selectedToppings[id];
 
   return (
-    <section id="bowl-builder" className="py-20 lg:py-28 bg-stone-950 text-white relative overflow-hidden border-y border-amber-900/30">
+    <section id="bowl-builder" className="scroll-mt-24 py-20 lg:py-28 bg-stone-950 text-white relative overflow-hidden border-y border-amber-900/30">
       {/* Background Ambience */}
       <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-10 w-[500px] h-[500px] bg-emerald-950/20 rounded-full blur-3xl pointer-events-none" />
