@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, PhoneCall, Sparkles, MapPin, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { WaterfrontSoundscape } from "@/components/ui/waterfront-soundscape";
 import { AmbientModeSwitcher } from "@/components/ui/ambient-mode-switcher";
 import { cn } from "@/lib/utils";
 
@@ -127,9 +126,6 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
 
           {/* Sensory Controls & Order Action */}
           <div className="hidden sm:flex items-center gap-2">
-            {/* Waterfront River Audio Soundscape Pill */}
-            <WaterfrontSoundscape />
-
             {/* Sunset-to-Night Atmosphere Switcher */}
             <AmbientModeSwitcher />
 
@@ -161,9 +157,8 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
             )}
           </div>
 
-          {/* Mobile Actions: Audio + Hamburger */}
+          {/* Mobile Actions: Hamburger */}
           <div className="flex sm:hidden items-center gap-1.5">
-            <WaterfrontSoundscape compact />
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle navigation menu"
@@ -216,11 +211,6 @@ export function Navbar({ onOpenOrderDrawer }: NavbarProps) {
           </div>
 
           <div className="pt-2 flex items-center justify-between border-t border-stone-200/60 dark:border-stone-800">
-            <span className="text-xs text-stone-600 dark:text-stone-300 font-semibold">River Audio:</span>
-            <WaterfrontSoundscape />
-          </div>
-
-          <div className="pt-2 flex items-center justify-between">
             <span className="text-xs text-stone-600 dark:text-stone-300 font-semibold">Atmosphere:</span>
             <AmbientModeSwitcher />
           </div>

@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { soundscape } from "@/lib/audio/soundscape";
 import { useAmbientMode } from "@/components/ui/ambient-mode-provider";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
@@ -32,7 +31,6 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
   const triggerInteractiveDrizzle = () => {
     setIsDrizzling(true);
     setDrizzleCount((prev) => prev + 1);
-    soundscape.playSyrupDrizzle();
     setTimeout(() => setIsDrizzling(false), 1200);
   };
 

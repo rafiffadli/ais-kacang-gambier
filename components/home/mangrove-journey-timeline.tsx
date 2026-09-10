@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import {
-  Sparkles,
   ChevronRight,
   ChevronLeft,
   ChevronDown,
@@ -14,7 +13,6 @@ import {
   Waves,
   Music,
 } from "lucide-react";
-import { soundscape } from "@/lib/audio/soundscape";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 
@@ -27,7 +25,6 @@ interface JourneyStage {
   story: string;
   metrics: { label: string; value: string }[];
   visualIcon: "waves" | "flame" | "shave" | "fountain";
-  audioAction: () => void;
 }
 
 export function MangroveJourneyTimeline() {
@@ -74,7 +71,6 @@ export function MangroveJourneyTimeline() {
         { label: "Ecosystem Impact", value: "100% Sustainable" },
       ],
       visualIcon: "waves",
-      audioAction: () => soundscape.playSyrupDrizzle(),
     },
     {
       step: "02",
@@ -90,7 +86,6 @@ export function MangroveJourneyTimeline() {
         { label: "Flavor Profile", value: "Smoky Butterscotch" },
       ],
       visualIcon: "flame",
-      audioAction: () => soundscape.playSyrupDrizzle(),
     },
     {
       step: "03",
@@ -106,7 +101,6 @@ export function MangroveJourneyTimeline() {
         { label: "Melt Dynamic", value: "Instant Creamy Blend" },
       ],
       visualIcon: "shave",
-      audioAction: () => soundscape.playIceShave(),
     },
     {
       step: "04",
@@ -122,7 +116,6 @@ export function MangroveJourneyTimeline() {
         { label: "Heritage Era", value: "Since 2019" },
       ],
       visualIcon: "fountain",
-      audioAction: () => soundscape.playRiverWater(),
     },
   ];
 
@@ -130,7 +123,6 @@ export function MangroveJourneyTimeline() {
 
   const handleStepChange = (idx: number) => {
     setActiveStep(idx);
-    stages[idx].audioAction();
   };
 
   return (
@@ -388,14 +380,6 @@ export function MangroveJourneyTimeline() {
                   </p>
                 </div>
               )}
-
-              <button
-                onClick={() => current.audioAction()}
-                className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-900 border border-amber-500/40 text-amber-300 text-xs font-semibold hover:bg-stone-800 transition-colors"
-              >
-                <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                <span>Hear Artisanal Essence</span>
-              </button>
             </div>
           </div>
         </div>

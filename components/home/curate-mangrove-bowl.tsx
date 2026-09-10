@@ -3,8 +3,6 @@
 import * as React from "react";
 import {
   Sparkles,
-  Volume2,
-  VolumeX,
   RotateCcw,
   ArrowRight,
   Check,
@@ -22,7 +20,6 @@ import {
   Cookie,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { soundscape } from "@/lib/audio/soundscape";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
 
@@ -180,7 +177,6 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
     "red-beans": 1,
     "roasted-peanuts": 1,
   });
-  const [isSoundActive, setIsSoundActive] = React.useState(true);
   const [lastAdded, setLastAdded] = React.useState<string | null>(null);
   const [isExpandedOnMobile, setIsExpandedOnMobile] = React.useState<boolean>(false);
 
@@ -224,10 +220,6 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
 
     if (newCount > 0) {
       setLastAdded(topping.id);
-      if (isSoundActive) {
-        if (topping.soundType === "sweet") soundscape.playSyrupDrizzle();
-        else soundscape.playToppingDrop(topping.soundType);
-      }
       setTimeout(() => setLastAdded(null), 800);
     }
   };
@@ -261,7 +253,6 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
         "attap-seed": 1,
       });
     }
-    if (isSoundActive) soundscape.playIceShave();
   };
 
   // Calculate totals
@@ -367,7 +358,7 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
               Select artisanal ingredients to craft your bespoke shaved ice. Prepared with wild Borneo nipa palm molasses.
             </p>
 
-            {/* Presets & Audio Toggle (Disciplined Color Palette) */}
+            {/* Presets (Disciplined Color Palette) */}
             <div className="pt-2 flex flex-wrap items-center justify-center gap-2 font-sans text-xs">
               <span className="text-stone-500 mr-1">Presets:</span>
               <button
@@ -390,25 +381,6 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
                 className="px-3 py-1 rounded-full bg-stone-900/80 border border-stone-800 hover:border-stone-600 hover:text-white text-stone-300 transition-colors"
               >
                 Biscoff Crunch
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsSoundActive(!isSoundActive)}
-                className="px-3 py-1 rounded-full bg-stone-900/80 border border-stone-800 text-stone-400 hover:text-stone-200 hover:border-stone-600 transition-colors flex items-center gap-1.5 ml-2"
-                title="Toggle tactile sound effects"
-              >
-                {isSoundActive ? (
-                  <>
-                    <Volume2 className="h-3 w-3 text-amber-400" />
-                    <span>Audio On</span>
-                  </>
-                ) : (
-                  <>
-                    <VolumeX className="h-3 w-3 text-stone-500" />
-                    <span>Audio Off</span>
-                  </>
-                )}
               </button>
             </div>
 

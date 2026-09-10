@@ -3,32 +3,17 @@
 import * as React from "react";
 import Image from "next/image";
 import {
-  Sparkles,
-  Quote,
-  Flame,
   Award,
-  Volume2,
-  VolumeX,
   ArrowRight,
-  Heart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { soundscape } from "@/lib/audio/soundscape";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { cn } from "@/lib/utils";
 
 interface BourdainsCornerProps {
   onAddLaksaToOrder?: () => void;
 }
 
 export function BourdainsCorner({ onAddLaksaToOrder }: BourdainsCornerProps) {
-  const [isPlayingAudio, setIsPlayingAudio] = React.useState(false);
-
-  const toggleAudioTribute = () => {
-    soundscape.playVintageClick();
-    setIsPlayingAudio(!isPlayingAudio);
-  };
 
   const handleOrderLaksa = () => {
     if (onAddLaksaToOrder) {
@@ -106,31 +91,20 @@ export function BourdainsCorner({ onAddLaksaToOrder }: BourdainsCornerProps) {
                   </div>
                 </div>
 
-                {/* Audio Quote Playback Widget */}
-                <div className="w-full mt-4 flex items-center justify-between p-3 rounded-xl bg-amber-50/80 border border-amber-200">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={toggleAudioTribute}
-                      className="p-2 rounded-full bg-amber-700 hover:bg-amber-800 text-white transition-colors"
-                      aria-label="Play Bourdain tribute snippet"
-                    >
-                      {isPlayingAudio ? (
-                        <Volume2 className="h-4 w-4 animate-pulse" />
-                      ) : (
-                        <VolumeX className="h-4 w-4" />
-                      )}
-                    </button>
+                {/* Dish Highlights & Price Bar */}
+                <div className="w-full mt-4 flex items-center justify-between p-3.5 rounded-xl bg-amber-50/80 border border-amber-200">
+                  <div className="flex items-center gap-2.5">
+                    <Award className="h-4 w-4 text-amber-700 shrink-0" />
                     <div className="text-left">
                       <p className="text-xs font-bold text-stone-900">
-                        {isPlayingAudio ? "Playing Tasting Quote..." : "Listen to Bourdain's Tribute"}
+                        Signature Sarawak Laksa Gambier
                       </p>
                       <p className="text-[10px] text-stone-600">
-                        Vintage vinyl grain &amp; kopitiam ambiance
+                        Heritage prawn broth with 30 aromatics
                       </p>
                     </div>
                   </div>
-
-                  <span className="font-mono text-xs font-bold text-amber-900">
+                  <span className="font-mono text-xs font-bold text-amber-900 bg-amber-100/80 px-2.5 py-1 rounded-full border border-amber-300/60">
                     RM 11.50
                   </span>
                 </div>
