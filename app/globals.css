@@ -200,3 +200,440 @@ body {
     transition: none !important;
   }
 }
+
+/* Cuisine page bootstrapped from Little Heritage House inspiration */
+.cuisine-page {
+  min-height: 100vh;
+  color: var(--foreground);
+  background:
+    radial-gradient(circle at 75% 12%, rgba(245, 158, 11, 0.10), transparent 22%),
+    radial-gradient(circle at 25% 92%, rgba(93, 151, 112, 0.10), transparent 25%),
+    var(--cream-paper);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cuisine-hero {
+  width: min(1240px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 64px 0 40px;
+  min-height: 580px;
+  display: grid;
+  grid-template-columns: minmax(460px, 0.9fr) minmax(420px, 1fr);
+  gap: 54px;
+  align-items: center;
+}
+
+.cuisine-hero-copy {
+  max-width: 560px;
+}
+
+.cuisine-category {
+  color: var(--apong-amber);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-left: 3px solid var(--apong-amber);
+  padding-left: 14px;
+  margin-bottom: 16px;
+}
+
+.cuisine-hero-copy h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(72px, 7vw, 112px);
+  line-height: 0.88;
+  color: #34281e;
+  margin: 0 0 22px;
+  letter-spacing: -0.05em;
+}
+
+.cuisine-lede {
+  color: #6b4c2d;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+.cuisine-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 0 26px;
+}
+
+.cuisine-meta span {
+  background: rgba(255, 251, 235, 0.88);
+  border: 1px solid rgba(201, 122, 43, 0.4);
+  color: var(--apong-dark);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.cuisine-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.cuisine-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 172px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: 1px solid var(--apong-amber);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 280ms ease, box-shadow 280ms ease, background 280ms ease;
+}
+
+.cuisine-button:hover {
+  transform: translateY(-3px);
+}
+
+.cuisine-button-primary {
+  background: var(--apong-amber);
+  color: #fffefb;
+  box-shadow: 0 12px 30px rgba(201, 122, 43, 0.26);
+}
+
+.cuisine-button-ghost {
+  background: transparent;
+  color: var(--apong-dark);
+}
+
+.cuisine-proof {
+  display: flex;
+  gap: 30px;
+  margin-top: 34px;
+  border-top: 1px solid rgba(201, 122, 43, 0.34);
+  padding-top: 22px;
+}
+
+.cuisine-proof div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.proof-number {
+  color: var(--apong-amber);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
+}
+
+.proof-label {
+  color: #625342;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.cuisine-hero-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinning-bowl-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(460px, 50vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 45%, rgba(201, 122, 43, 0.12) 45%, transparent 62%),
+    repeating-radial-gradient(circle, transparent 0 14px, rgba(201, 122, 43, 0.08) 14px 15px);
+  border: 1px solid rgba(201, 122, 43, 0.45);
+  box-shadow: inset 0 0 0 22px rgba(251, 245, 237, 0.2), 0 30px 90px rgba(66, 39, 16, 0.16);
+}
+
+.orbit-ring {
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  border: 1px dashed rgba(201, 122, 43, 0.8);
+  transform: rotate(8deg);
+}
+
+.orbit-ring-two {
+  inset: -3%;
+  border-style: solid;
+  border-width: 2px;
+  opacity: 0.85;
+  transform: rotate(-14deg);
+}
+
+.spinning-bowl-wrap {
+  position: relative;
+  width: 290px;
+  height: 290px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinning-bowl {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #fffaf4 0%, #f8e8dc 36%, #b76f34 100%);
+  border: 10px solid var(--apong-amber);
+  box-shadow: inset 0 0 0 8px #fffdf9, 0 0 0 1px rgba(0,0,0,0.08), 0 40px 70px rgba(83, 47, 15, 0.34);
+  animation: spin-bowl 40s linear infinite;
+}
+
+.bowl-shadow {
+  position: absolute;
+  inset: 26%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 122, 43, 0.86), transparent 80%);
+  filter: blur(24px);
+  opacity: 0.4;
+}
+
+.bowl-rim {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 6px solid #eadcc6;
+  box-shadow: inset 0 0 0 8px rgba(121, 73, 34, 0.4);
+}
+
+.rim-spear {
+  position: absolute;
+  width: 8px;
+  height: 52px;
+  border-radius: 999px;
+  top: 8px;
+  left: 50%;
+  background: linear-gradient(180deg, #fff, var(--apong-amber));
+  transform-origin: center top;
+}
+
+.rim-spear-one { transform: translateX(-50%) rotate(0deg); }
+.rim-spear-two { transform: translateX(-50%) rotate(120deg); height: 42px; }
+.rim-spear-three { transform: translateX(-50%) rotate(240deg); height: 42px; }
+
+.bowl-food {
+  position: absolute;
+  inset: 42px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #8a4119 0%, #c97936 52%, #fff6e8 100%);
+  border: 2px solid #ffe7b7;
+  overflow: hidden;
+}
+
+.food-grain {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f5d2a2, #b86a2b);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.6);
+}
+
+.food-grain-one {
+  width: 34px;
+  height: 40px;
+  left: 30px;
+  top: 56px;
+}
+
+.food-grain-two {
+  width: 32px;
+  height: 32px;
+  right: 35px;
+  top: 36px;
+}
+
+.food-grain-three {
+  width: 30px;
+  height: 30px;
+  right: 26px;
+  bottom: 44px;
+}
+
+.food-grain-four {
+  width: 30px;
+  height: 30px;
+  left: 54px;
+  bottom: 34px;
+}
+
+.food-grain-five {
+  width: 80px;
+  height: 80px;
+  left: calc(50% - 40px);
+  top: calc(50% - 40px);
+  background: radial-gradient(circle, var(--apong-amber), var(--nyonya-rose));
+}
+
+.bowl-sauce {
+  position: absolute;
+  width: 70px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(190, 18, 60, 0.9);
+  left: 60px;
+  top: 110px;
+  transform: rotate(-22deg);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.5);
+}
+
+.bowl-sauce-two {
+  width: 70px;
+  height: 8px;
+  top: 150px;
+  left: 120px;
+  transform: rotate(28deg);
+  background: rgba(135, 118, 52, 0.9);
+}
+
+.visual-card {
+  margin-top: -16px;
+  width: min(340px, 80%);
+  border-radius: 30px;
+  padding: 20px 24px;
+  background: rgba(54, 36, 16, 0.86);
+  border: 1px solid rgba(255, 242, 228, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffeedd;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 60px rgba(33, 21, 8, 0.22);
+}
+
+.visual-card-label {
+  display: block;
+  color: #f6d19b;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+}
+
+.visual-card-title {
+  display: block;
+  margin-top: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  color: #fffaf3;
+}
+
+.visual-card-price {
+  color: #f9b56b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.cuisine-section {
+  width: min(1240px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 54px 0 80px;
+}
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section-kicker {
+  color: var(--apong-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(44px, 5vw, 60px);
+  color: #34281e;
+  margin: 14px 0 0;
+}
+
+.cuisine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.cuisine-tile {
+  padding: 30px 26px;
+  border-radius: 24px;
+  background: rgba(255, 250, 244, 0.68);
+  border: 1px solid rgba(201, 122, 43, 0.26);
+  box-shadow: 0 16px 40px rgba(66, 39, 16, 0.08);
+}
+
+.tile-index {
+  color: var(--apong-amber);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 48px;
+}
+
+.cuisine-tile h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30px;
+  color: var(--apong-dark);
+  margin: 16px 0 8px;
+}
+
+.cuisine-tile p {
+  color: #675b4e;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+@keyframes spin-bowl {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+  .cuisine-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 40px 0 30px;
+  }
+
+  .cuisine-hero-copy {
+    max-width: none;
+  }
+
+  .cuisine-hero-copy h1 {
+    font-size: clamp(56px, 14vw, 90px);
+  }
+
+  .cuisine-hero-visual {
+    width: 100%;
+  }
+
+  .spinning-bowl-stage {
+    width: min(420px, 90vw);
+  }
+
+  .cuisine-grid {
+    grid-template-columns: 1fr;
+  }
+}

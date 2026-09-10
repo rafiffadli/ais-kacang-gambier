@@ -6,7 +6,6 @@ import {
   Sparkles,
   Clock,
   ArrowRight,
-  Droplets,
   Award,
   Waves,
 } from "lucide-react";
@@ -22,14 +21,6 @@ interface CinematicHeroProps {
 
 export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
   const { kuchingTime } = useAmbientMode();
-  const [drizzleCount, setDrizzleCount] = React.useState(0);
-  const [isDrizzling, setIsDrizzling] = React.useState(false);
-
-  const triggerInteractiveDrizzle = () => {
-    setIsDrizzling(true);
-    setDrizzleCount((prev) => prev + 1);
-    setTimeout(() => setIsDrizzling(false), 1200);
-  };
 
   return (
     <section className="relative overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 border-b border-amber-900/10 transition-colors duration-700">
@@ -148,58 +139,11 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
                 {/* Cinemagraph Atmosphere Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent pointer-events-none" />
 
-                {/* Looping Viscous Gula Apong Syrup Drizzle Cascades */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                  <svg
-                    className="w-full h-full opacity-80"
-                    viewBox="0 0 400 500"
-                    preserveAspectRatio="none"
-                  >
-                    {/* Continuous Drizzle Stream 1 */}
-                    <path
-                      d="M 200 40 Q 195 180 185 340 Q 180 420 175 480"
-                      stroke="#C97A2B"
-                      strokeWidth="6"
-                      strokeDasharray="120 40"
-                      fill="none"
-                      strokeLinecap="round"
-                      className="animate-[dash_4s_linear_infinite]"
-                    />
-                    {/* Continuous Drizzle Stream 2 */}
-                    <path
-                      d="M 215 60 Q 230 190 240 330 Q 245 410 250 490"
-                      stroke="#92400E"
-                      strokeWidth="5"
-                      strokeDasharray="100 50"
-                      fill="none"
-                      strokeLinecap="round"
-                      className="animate-[dash_3.2s_linear_infinite]"
-                    />
-                  </svg>
-                </div>
-
-                {/* Rising Cool Condensation Vapor / Steam */}
-                <div className="absolute inset-x-0 bottom-16 flex justify-center pointer-events-none">
-                  <div className="w-48 h-36 bg-white/15 blur-2xl rounded-full animate-[pulse_3s_ease-in-out_infinite]" />
-                </div>
-
-                {/* Interactive Drizzle Overlay Indicator */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
+                {/* Badge Overlay */}
+                <div className="absolute top-4 left-4 z-20">
                   <Badge variant="signature" className="text-xs px-3 py-1 shadow-md">
                     👑 Waterfront Crown Jewel
                   </Badge>
-
-                  <button
-                    onClick={triggerInteractiveDrizzle}
-                    className={cn(
-                      "flex items-center gap-1 px-3 py-1 rounded-full bg-stone-950/80 text-amber-300 border border-amber-400/60 text-xs font-bold hover:bg-stone-900 transition-all shadow-md active:scale-95",
-                      isDrizzling && "scale-105 border-amber-300 text-amber-200"
-                    )}
-                    title="Click to add more golden Gula Apong drizzle"
-                  >
-                    <Droplets className="h-3.5 w-3.5 text-amber-400" />
-                    <span>Drizzle Syrup ({drizzleCount})</span>
-                  </button>
                 </div>
 
                 {/* Bottom Card Spotlight */}
