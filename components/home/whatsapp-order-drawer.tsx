@@ -285,21 +285,41 @@ Hello IG Ais Krim team! Please confirm my order ticket.`;
 
           {/* Quick Add Menu Favorites */}
           <div className="space-y-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-400 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400/90 block">
               Quick Add Kuching Favorites:
             </span>
             <div className="flex flex-wrap gap-1.5">
-              {MENU_ITEMS.slice(0, 4).map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => addItemFromMenu(m)}
-                  className="text-xs px-2.5 py-1 rounded-full bg-stone-900 border border-stone-800 hover:border-amber-500/50 hover:bg-stone-800 text-stone-300 transition-colors flex items-center gap-1"
-                >
-                  <Plus className="h-3 w-3 text-amber-400" />
-                  <span>{m.name.split(" ")[0]}</span>
-                  <span className="text-amber-400/90">{m.price}</span>
-                </button>
-              ))}
+              {MENU_ITEMS.map((m) => {
+                const shortTitle =
+                  m.id === "gula-apong-ais-kacang"
+                    ? "Ais Kacang (ABC)"
+                    : m.id === "gula-apong-soft-serve"
+                    ? "Soft Serve"
+                    : m.id === "chendol-gula-apong"
+                    ? "Cendol"
+                    : m.id === "sarawak-laksa-special"
+                    ? "Sarawak Laksa"
+                    : m.id === "teh-c-peng-special"
+                    ? "Teh C Peng"
+                    : m.id === "gula-apong-boba-milk"
+                    ? "Boba Milk"
+                    : m.id === "durian-ais-kacang"
+                    ? "Durian ABC"
+                    : m.name.split(" ").slice(0, 2).join(" ");
+
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => addItemFromMenu(m)}
+                    className="text-xs px-2.5 py-1.5 rounded-full bg-stone-900 border border-stone-800 hover:border-amber-500/60 hover:bg-stone-800/90 text-stone-200 transition-colors flex items-center gap-1.5 active:scale-95"
+                    title={`Add ${m.name} (${m.price})`}
+                  >
+                    <Plus className="h-3 w-3 text-amber-400 shrink-0" />
+                    <span>{shortTitle}</span>
+                    <span className="text-amber-400 font-mono text-[11px] font-semibold">{m.price}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 

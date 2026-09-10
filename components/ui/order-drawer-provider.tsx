@@ -16,6 +16,7 @@ interface OrderDrawerContextType {
   updateQuantity: (id: string, delta: number) => void;
   addItemFromMenu: (menuItem: MenuItem) => void;
   removeItem: (id: string) => void;
+  clearOrder: () => void;
 }
 
 const OrderDrawerContext = React.createContext<OrderDrawerContextType | null>(
@@ -34,13 +35,31 @@ export function OrderDrawerProvider({
 
   const openOrderDrawer = React.useCallback((newItems?: OrderItem[]) => {
     if (newItems && newItems.length > 0) {
-      setItems(newItems);
+      setItems((prev) => {
+        const updated = [...prev];
+        for (const item of newItems) {
+          const existingIndex = updated.findIndex((i) => i.id === item.id);
+          if (existingIndex > -1) {
+            updated[existingIndex] = {
+              ...updated[existingIndex],
+              quantity: updated[existingIndex].quantity + (item.quantity || 1),
+            };
+          } else {
+            updated.push(item);
+          }
+        }
+        return updated;
+      });
     }
     setIsOpen(true);
   }, []);
 
   const closeOrderDrawer = React.useCallback(() => {
     setIsOpen(false);
+  }, []);
+
+  const clearOrder = React.useCallback(() => {
+    setItems([]);
   }, []);
 
   const updateQuantity = React.useCallback((id: string, delta: number) => {
@@ -93,6 +112,7 @@ export function OrderDrawerProvider({
       updateQuantity,
       addItemFromMenu,
       removeItem,
+      clearOrder,
     }),
     [
       isOpen,
@@ -102,6 +122,7 @@ export function OrderDrawerProvider({
       updateQuantity,
       addItemFromMenu,
       removeItem,
+      clearOrder,
     ]
   );
 
@@ -132,6 +153,7 @@ export function useOrderDrawer() {
       updateQuantity: () => {},
       addItemFromMenu: () => {},
       removeItem: () => {},
+      clearOrder: () => {},
     };
   }
   return context;
