@@ -10,7 +10,6 @@ import {
   Waves,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { useAmbientMode } from "@/components/ui/ambient-mode-provider";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { cn } from "@/lib/utils";
@@ -122,45 +121,31 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
             </ScrollReveal>
           </div>
 
-          {/* Right Column: Rich Cinemagraph / Interactive Gula Apong Drizzle Experience */}
-          <div className="lg:col-span-5 relative flex flex-col items-center">
+          {/* Right Column: Top-Down Spinning Signature Ais Kacang Experience (Little Heritage House style) */}
+          <div className="lg:col-span-5 relative flex flex-col items-center justify-center pt-8 lg:pt-0">
             <ScrollReveal duration={1000} distance={32} delay={100}>
-              <div className="relative w-full max-w-md aspect-4/5 rounded-3xl overflow-hidden border-2 border-amber-800/30 shadow-2xl shadow-stone-950/20 group">
-                {/* Visual Image */}
-                <Image
-                  src="/images/ais-kacang.jpg"
-                  alt="Signature Gula Apong Ais Kacang saturated in dark golden Borneo palm sugar syrup"
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 448px"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
+              <div className="relative w-64 sm:w-80 md:w-[380px] lg:w-[440px] xl:w-[490px] aspect-square group">
+                {/* Soft Amber Halo Backdrop Glow */}
+                <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-400/30 via-amber-600/20 to-transparent blur-3xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
 
-                {/* Cinemagraph Atmosphere Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent pointer-events-none" />
-
-                {/* Badge Overlay */}
-                <div className="absolute top-4 left-4 z-20">
-                  <Badge variant="signature" className="text-xs px-3 py-1 shadow-md">
-                    👑 Waterfront Crown Jewel
-                  </Badge>
+                {/* Spinning Circular Antique Porcelain Bowl (Top-down Bird's-Eye View) */}
+                <div className="relative aspect-square w-full filter drop-shadow-[0_30px_40px_rgba(70,30,10,0.28)] drop-shadow-[0_12px_18px_rgba(0,0,0,0.18)]">
+                  <div className="w-full h-full animate-spin-plate">
+                    <Image
+                      src="/images/ais-kacang-topdown.png"
+                      alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
+                      fill
+                      sizes="(max-width: 640px) 256px, (max-width: 1024px) 380px, 490px"
+                      className="object-contain select-none"
+                      priority
+                    />
+                  </div>
                 </div>
 
-                {/* Bottom Card Spotlight */}
-                <div className="absolute bottom-4 inset-x-4 p-4 rounded-2xl bg-stone-950/85 backdrop-blur-md border border-amber-500/30 text-white z-20">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-serif text-lg font-bold">
-                        Signature Gula Apong Ais Kacang
-                      </h3>
-                      <p className="text-xs text-amber-300 font-medium">
-                        Adzuki Beans • Attap Chee • Roasted Peanuts
-                      </p>
-                    </div>
-                    <span className="font-serif text-2xl font-black text-amber-400">
-                      RM 8.50
-                    </span>
-                  </div>
+                {/* Floating Tethered Interactive Badge */}
+                <div className="absolute -bottom-3 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-amber-300 shadow-xl flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-950 whitespace-nowrap z-20 group-hover:border-amber-400 group-hover:scale-105 transition-all">
+                  <Sparkles className="h-4 w-4 text-amber-600 shrink-0" />
+                  <span>Signature Ais Kacang • RM 8.50</span>
                 </div>
               </div>
             </ScrollReveal>

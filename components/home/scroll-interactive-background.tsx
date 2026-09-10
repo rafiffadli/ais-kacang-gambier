@@ -2,10 +2,9 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Sparkles, MapPin, Heart } from "lucide-react";
+import { MapPin, Heart } from "lucide-react";
 
 export function ScrollInteractiveBackground() {
-  const p1Ref = React.useRef<HTMLDivElement>(null);
   const p3Ref = React.useRef<HTMLDivElement>(null);
   const p4Ref = React.useRef<HTMLDivElement>(null);
 
@@ -42,12 +41,6 @@ export function ScrollInteractiveBackground() {
       if (Math.abs(diff) > 0.05) {
         currentScrollY += diff * 0.12;
 
-        // 1. Dish 1: Authentic Signature Ais Kacang (Top-down & Spinning, steady in place)
-        if (p1Ref.current) {
-          const p1Y = currentScrollY * -0.12;
-          p1Ref.current.style.transform = `translate3d(0, ${p1Y.toFixed(1)}px, 0)`;
-        }
-
         // 2. Dish 3: Authentic Sarawak Laksa (steady vertical parallax)
         if (p3Ref.current) {
           const p3Y = (currentScrollY - 1400) * -0.12;
@@ -82,41 +75,6 @@ export function ScrollInteractiveBackground() {
       <div className="absolute top-0 right-0 w-[600px] lg:w-[900px] h-[600px] lg:h-[900px] rounded-full bg-radial from-amber-400/15 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-[1100px] -left-32 w-[500px] lg:w-[750px] h-[500px] lg:h-[750px] rounded-full bg-radial from-amber-500/10 via-rose-300/5 to-transparent blur-3xl pointer-events-none -z-10" />
       <div className="absolute top-[2100px] -right-32 w-[600px] lg:w-[850px] h-[600px] lg:h-[850px] rounded-full bg-radial from-amber-400/12 via-amber-600/5 to-transparent blur-3xl pointer-events-none -z-10" />
-
-      {/* =========================================================================
-          PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down, Centered & Spinning)
-          Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
-      ========================================================================= */}
-      <div className="absolute top-[640px] sm:top-[460px] lg:top-[440px] -translate-y-1/2 right-0 sm:right-4 lg:right-8 xl:right-16 pointer-events-auto">
-        <div
-          ref={p1Ref}
-          style={{ willChange: "transform" }}
-          className="relative w-[276px] sm:w-[432px] md:w-[480px] lg:w-[537px] xl:w-[596px] group"
-        >
-          {/* Soft Amber Halo Backdrop Glow */}
-          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-400/30 via-amber-600/20 to-transparent blur-3xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
-
-          {/* Spinning Circular Antique Porcelain Bowl (Top-down Bird's-Eye View) */}
-          <div className="relative aspect-square w-full filter drop-shadow-[0_30px_40px_rgba(70,30,10,0.28)] drop-shadow-[0_12px_18px_rgba(0,0,0,0.18)]">
-            <div className="w-full h-full animate-spin-plate">
-              <Image
-                src="/images/ais-kacang-topdown.png"
-                alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
-                fill
-                sizes="(max-width: 640px) 276px, (max-width: 1024px) 480px, 596px"
-                className="object-contain select-none pointer-events-none"
-                priority
-              />
-            </div>
-          </div>
-
-          {/* Floating Tethered Interactive Badge */}
-          <div className="absolute -bottom-3 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-amber-300 shadow-xl flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-950 whitespace-nowrap z-20 group-hover:border-amber-400 group-hover:scale-105 transition-all">
-            <Sparkles className="h-4 w-4 text-amber-600 shrink-0" />
-            <span>Signature Ais Kacang • RM 8.50</span>
-          </div>
-        </div>
-      </div>
 
 
 
