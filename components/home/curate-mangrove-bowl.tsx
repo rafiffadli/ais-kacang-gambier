@@ -12,6 +12,8 @@ import {
   Check,
   Plus,
   Minus,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -150,6 +152,29 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
   });
   const [isSoundActive, setIsSoundActive] = React.useState(true);
   const [lastAdded, setLastAdded] = React.useState<string | null>(null);
+  const [isExpandedOnMobile, setIsExpandedOnMobile] = React.useState<boolean>(false);
+
+  // Auto-expand on mobile if user explicitly navigates to #bowl-builder
+  React.useEffect(() => {
+    const handleCheckHash = () => {
+      if (typeof window !== "undefined" && window.location.hash === "#bowl-builder") {
+        setIsExpandedOnMobile(true);
+      }
+    };
+    handleCheckHash();
+    window.addEventListener("hashchange", handleCheckHash);
+    return () => window.removeEventListener("hashchange", handleCheckHash);
+  }, []);
+
+  const handleCollapseCustomizer = () => {
+    setIsExpandedOnMobile(false);
+    const bowlElem = document.getElementById("bowl-builder");
+    if (bowlElem) {
+      const navOffset = 85;
+      const y = bowlElem.getBoundingClientRect().top + window.pageYOffset - navOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   const BASE_PRICE = 4.5; // Base crystal shaved snow + evaporated milk
 
@@ -328,11 +353,99 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
                 )}
               </button>
             </div>
+
+            {/* Mobile Quick Fold Toggle Pill */}
+            <div className="md:hidden pt-2 flex justify-center">
+              <button
+                onClick={() => setIsExpandedOnMobile(!isExpandedOnMobile)}
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold bg-amber-600 hover:bg-amber-500 text-stone-950 shadow-md active:scale-95 transition-all"
+              >
+                {isExpandedOnMobile ? (
+                  <>
+                    <span>Fold Customizer</span>
+                    <ChevronUp className="h-3.5 w-3.5" />
+                  </>
+                ) : (
+                  <>
+                    <span>Unfold 3D Customizer</span>
+                    <ChevronDown className="h-3.5 w-3.5" />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </ScrollReveal>
 
-        {/* Builder Workstation */}
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Mobile Compact Teaser Card (When Bowl Builder is Folded) */}
+        {!isExpandedOnMobile && (
+          <div className="md:hidden mt-8">
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-stone-900 via-stone-900/95 to-amber-950/40 border border-amber-500/30 text-center space-y-4 shadow-xl">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                  <span>Curated Bowl Preview</span>
+                </span>
+                <span className="font-serif text-xl font-bold text-amber-400 bg-amber-500/10 px-3 py-0.5 rounded-xl border border-amber-500/20">
+                  RM {totalPrice.toFixed(2)}
+                </span>
+              </div>
+
+              <div className="space-y-1 text-left">
+                <h3 className="font-serif text-lg font-bold text-white">
+                  Bespoke Mountain of Crystal Snow
+                </h3>
+                <p className="text-xs text-stone-300 leading-relaxed">
+                  Crafted with wild Borneo Gula Apong and fresh condiments. Unfold on your phone to customize toppings in 3D.
+                </p>
+              </div>
+
+              {/* Selected Toppings Chips */}
+              <div className="flex flex-wrap gap-1.5 justify-start">
+                {Object.keys(selectedToppings).map((id) => {
+                  const topping = TOPPINGS.find((t) => t.id === id);
+                  if (!topping) return null;
+                  return (
+                    <span
+                      key={id}
+                      className="text-[11px] font-semibold bg-amber-950/80 text-amber-200 border border-amber-500/40 px-2.5 py-1 rounded-full flex items-center gap-1"
+                    >
+                      <Check className="h-3 w-3 text-amber-400" />
+                      <span>{topping.name}</span>
+                    </span>
+                  );
+                })}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-2 pt-2">
+                <Button
+                  onClick={() => setIsExpandedOnMobile(true)}
+                  className="w-full rounded-full font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-lg shadow-amber-950/40 justify-center gap-2 py-3.5"
+                >
+                  <Sparkles className="h-4 w-4" />
+                  <span>Unfold 3D Bowl Customizer ({TOPPINGS.length} Toppings)</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+
+                <button
+                  onClick={handleOrderCustomBowl}
+                  className="w-full py-2 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors flex items-center justify-center gap-1"
+                >
+                  <span>Quick Order This Bowl (RM {totalPrice.toFixed(2)}) via WhatsApp</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Builder Workstation (Always visible on desktop, toggleable on mobile) */}
+        <div
+          className={cn(
+            "mt-8 sm:mt-14 grid-cols-1 lg:grid-cols-12 gap-8 items-start",
+            !isExpandedOnMobile ? "hidden md:grid" : "grid"
+          )}
+        >
           {/* Left Column: Interactive Visual Shaved Ice Bowl Canvas */}
           <div className="lg:col-span-6 rounded-3xl bg-gradient-to-b from-stone-900 via-stone-900/90 to-stone-950 border border-amber-500/20 p-6 sm:p-8 flex flex-col items-center justify-between relative shadow-2xl overflow-hidden min-h-[440px]">
             {/* Ambient Bowl Glow */}
@@ -610,6 +723,19 @@ export function CurateMangroveBowl({ onOpenOrderDrawer }: CurateMangroveBowlProp
             </div>
           </div>
         </div>
+
+        {/* Mobile Collapse Button (When Customizer is Unfolded) */}
+        {isExpandedOnMobile && (
+          <div className="md:hidden mt-8 text-center">
+            <button
+              onClick={handleCollapseCustomizer}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-xs font-bold bg-stone-900 hover:bg-stone-800 text-amber-300 border border-amber-500/30 shadow-md active:scale-95 transition-all w-full"
+            >
+              <span>Fold Bowl Customizer (Show Less)</span>
+              <ChevronUp className="h-4 w-4" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
