@@ -116,7 +116,6 @@ export function ContactForm() {
             <Input
               id="email"
               type="email"
-              placeholder="e.g. name@example.com"
               hasError={Boolean(errors.email)}
               {...register("email")}
             />
@@ -138,7 +137,6 @@ export function ContactForm() {
             <Input
               id="phone"
               type="tel"
-              placeholder="e.g. 016-8859657"
               hasError={Boolean(errors.phone)}
               {...register("phone")}
             />
@@ -191,7 +189,6 @@ export function ContactForm() {
               </label>
               <Input
                 id="estimatedGuests"
-                placeholder="e.g. 25 pax"
                 {...register("estimatedGuests")}
               />
             </div>
@@ -224,7 +221,6 @@ export function ContactForm() {
           <Textarea
             id="message"
             rows={4}
-            placeholder="Tell us what you'd like to ask or special arrangements you need..."
             hasError={Boolean(errors.message)}
             {...register("message")}
           />
