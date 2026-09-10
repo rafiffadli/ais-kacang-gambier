@@ -9,10 +9,6 @@ export function ScrollInteractiveBackground() {
   const p3Ref = React.useRef<HTMLDivElement>(null);
   const p4Ref = React.useRef<HTMLDivElement>(null);
 
-  const syrupGlowRef = React.useRef<SVGPathElement>(null);
-  const syrupCoreRef = React.useRef<SVGPathElement>(null);
-  const syrupHighlightRef = React.useRef<SVGPathElement>(null);
-
   React.useEffect(() => {
     let targetScrollY =
       window.pageYOffset ||
@@ -63,14 +59,6 @@ export function ScrollInteractiveBackground() {
           const p4Y = (currentScrollY - 2100) * 0.14;
           p4Ref.current.style.transform = `translate3d(0, ${p4Y.toFixed(1)}px, 0)`;
         }
-
-        // 5. Liquid light shimmer gliding along the Gula Apong syrup drizzle when scrolling
-        if (syrupHighlightRef.current) {
-          syrupHighlightRef.current.setAttribute(
-            "stroke-dashoffset",
-            `${(-currentScrollY * 0.4).toFixed(1)}`
-          );
-        }
       }
 
       animFrameId = requestAnimationFrame(tick);
@@ -90,136 +78,10 @@ export function ScrollInteractiveBackground() {
       aria-hidden="true"
       className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none"
     >
-      {/* =========================================================================
-          CASCADING PURE BORNEO GULA APONG SYRUP DRIZZLE (Artisanal Nectar Stream)
-          Viscous liquid palm sugar with deep molasses core, warm golden nectar & glistening specular highlights
-      ========================================================================= */}
-      <svg
-        className="absolute inset-0 w-full h-full opacity-65 pointer-events-none"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        viewBox="0 0 1200 3800"
-      >
-        <defs>
-          {/* Rich Borneo Gula Apong Molasses & Caramel Liquid Gradient */}
-          <linearGradient id="gulaApongSyrup" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.9" />
-            <stop offset="25%" stopColor="#D97706" stopOpacity="0.95" />
-            <stop offset="50%" stopColor="#B45309" stopOpacity="0.95" />
-            <stop offset="80%" stopColor="#78350F" stopOpacity="0.98" />
-            <stop offset="100%" stopColor="#451A03" stopOpacity="0.85" />
-          </linearGradient>
-
-          {/* Warm Ambient Honeyed Syrup Aura */}
-          <linearGradient id="syrupGlow" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#FDE68A" stopOpacity="0.35" />
-            <stop offset="35%" stopColor="#F59E0B" stopOpacity="0.3" />
-            <stop offset="70%" stopColor="#D97706" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#78350F" stopOpacity="0.1" />
-          </linearGradient>
-
-          {/* Glistening Specular Light Ridge on Viscous Syrup */}
-          <linearGradient id="syrupHighlight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#FFFBEB" stopOpacity="0.9" />
-            <stop offset="40%" stopColor="#FEF3C7" stopOpacity="0.8" />
-            <stop offset="70%" stopColor="#FDE68A" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#FFFBEB" stopOpacity="0.9" />
-          </linearGradient>
-
-          {/* Spherical Liquid Caramel / Nectar Droplet Radial Gradient */}
-          <radialGradient id="amberDroplet" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#FEF3C7" stopOpacity="0.95" />
-            <stop offset="30%" stopColor="#F59E0B" stopOpacity="0.9" />
-            <stop offset="70%" stopColor="#B45309" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#451A03" stopOpacity="0.75" />
-          </radialGradient>
-        </defs>
-
-        {/* 1. Warm Ambient Syrup Glow (Soft Outer Spread) */}
-        <path
-          ref={syrupGlowRef}
-          d="M 1100,150 Q 650,700 100,1300 T 950,2200 T 250,3400"
-          fill="none"
-          stroke="url(#syrupGlow)"
-          strokeWidth="120"
-          strokeLinecap="round"
-        />
-
-        {/* 2. Deep Viscous Molasses Syrup Base (Rich Body) */}
-        <path
-          ref={syrupCoreRef}
-          d="M 1100,150 Q 650,700 100,1300 T 950,2200 T 250,3400"
-          fill="none"
-          stroke="url(#gulaApongSyrup)"
-          strokeWidth="60"
-          strokeLinecap="round"
-        />
-
-        {/* 3. Golden Nectar Inner Core (Luminous Depth) */}
-        <path
-          d="M 1100,150 Q 650,700 100,1300 T 950,2200 T 250,3400"
-          fill="none"
-          stroke="#F59E0B"
-          strokeWidth="24"
-          strokeOpacity="0.65"
-          strokeLinecap="round"
-        />
-
-        {/* 4. Glistening Specular Liquid Reflection (Silky Gleam that Shimmers with Scroll) */}
-        <path
-          ref={syrupHighlightRef}
-          d="M 1100,150 Q 650,700 100,1300 T 950,2200 T 250,3400"
-          fill="none"
-          stroke="url(#syrupHighlight)"
-          strokeWidth="5"
-          strokeLinecap="round"
-          strokeDasharray="180 140"
-        />
-
-        {/* 5. Glistening Suspended Palm Nectar Droplets & Caramel Beads */}
-        {/* Droplets near Top Right (Hero & Spinning Bowl) */}
-        <circle cx="1060" cy="260" r="14" fill="url(#amberDroplet)" />
-        <circle cx="1056" cy="256" r="3.5" fill="#FFFDF0" opacity="0.85" />
-
-        <circle cx="1090" cy="380" r="9" fill="url(#amberDroplet)" />
-        <circle cx="1087" cy="378" r="2" fill="#FFFDF0" opacity="0.85" />
-
-        {/* Droplets along the upper cascade */}
-        <circle cx="760" cy="620" r="13" fill="url(#amberDroplet)" />
-        <circle cx="756" cy="616" r="3" fill="#FFFDF0" opacity="0.85" />
-
-        <circle cx="520" cy="850" r="10" fill="url(#amberDroplet)" />
-        <circle cx="517" cy="848" r="2.5" fill="#FFFDF0" opacity="0.85" />
-
-        {/* Droplets near Laksa curve (Left side) */}
-        <circle cx="170" cy="1180" r="16" fill="url(#amberDroplet)" />
-        <circle cx="165" cy="1175" r="4" fill="#FFFDF0" opacity="0.9" />
-
-        <circle cx="70" cy="1440" r="11" fill="url(#amberDroplet)" />
-        <circle cx="67" cy="1438" r="2.5" fill="#FFFDF0" opacity="0.85" />
-
-        {/* Droplets along mid-page transition */}
-        <circle cx="560" cy="1780" r="13" fill="url(#amberDroplet)" />
-        <circle cx="556" cy="1776" r="3" fill="#FFFDF0" opacity="0.85" />
-
-        {/* Droplets near Waterfront Sunset curve (Right side) */}
-        <circle cx="890" cy="2040" r="15" fill="url(#amberDroplet)" />
-        <circle cx="885" cy="2035" r="3.5" fill="#FFFDF0" opacity="0.9" />
-
-        <circle cx="1020" cy="2340" r="10" fill="url(#amberDroplet)" />
-        <circle cx="1017" cy="2338" r="2.5" fill="#FFFDF0" opacity="0.85" />
-
-        {/* Droplets along lower cascade */}
-        <circle cx="630" cy="2750" r="14" fill="url(#amberDroplet)" />
-        <circle cx="626" cy="2746" r="3.5" fill="#FFFDF0" opacity="0.85" />
-
-        {/* Droplets near bottom */}
-        <circle cx="330" cy="3180" r="16" fill="url(#amberDroplet)" />
-        <circle cx="325" cy="3175" r="4" fill="#FFFDF0" opacity="0.9" />
-
-        <circle cx="210" cy="3480" r="12" fill="url(#amberDroplet)" />
-        <circle cx="207" cy="3478" r="3" fill="#FFFDF0" opacity="0.85" />
-      </svg>
+      {/* Soft, luxurious ambient dessert atmosphere glows (Clean, modern, zero clunky lines) */}
+      <div className="absolute top-0 right-0 w-[600px] lg:w-[900px] h-[600px] lg:h-[900px] rounded-full bg-radial from-amber-400/15 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-[1100px] -left-32 w-[500px] lg:w-[750px] h-[500px] lg:h-[750px] rounded-full bg-radial from-amber-500/10 via-rose-300/5 to-transparent blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-[2100px] -right-32 w-[600px] lg:w-[850px] h-[600px] lg:h-[850px] rounded-full bg-radial from-amber-400/12 via-amber-600/5 to-transparent blur-3xl pointer-events-none -z-10" />
 
       {/* =========================================================================
           PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down, Centered & Spinning)
