@@ -149,32 +149,38 @@ export function ScrollInteractiveBackground() {
           PICTURE 1: Authentic Signature Ais Kacang Dish (Top-down & Spinning)
           Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
       ========================================================================= */}
-      <div
-        ref={p1Ref}
-        style={{ willChange: "transform" }}
-        className="absolute top-[560px] sm:top-24 right-1 sm:right-6 lg:right-12 w-52 sm:w-80 lg:w-[380px] pointer-events-auto group"
-      >
-        {/* Soft Amber Halo Backdrop Glow */}
-        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-amber-400/20 via-amber-600/15 to-transparent blur-2xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
+      {/* =========================================================================
+          PICTURE 1: Authentic Signature Ais Kacang Dish (Enlarged, Vertically Centered & Spinning)
+          Inspired by Little Heritage House (https://littleheritagehouse.com.my/cuisine/)
+      ========================================================================= */}
+      <div className="absolute top-[600px] sm:top-[420px] lg:top-[380px] -translate-y-1/2 right-0 sm:right-4 lg:right-8 xl:right-16 pointer-events-auto">
+        <div
+          ref={p1Ref}
+          style={{ willChange: "transform" }}
+          className="relative w-72 sm:w-[450px] md:w-[500px] lg:w-[560px] xl:w-[620px] group"
+        >
+          {/* Soft Amber Halo Backdrop Glow */}
+          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-400/30 via-amber-600/20 to-transparent blur-3xl pointer-events-none -z-10 group-hover:scale-110 transition-transform duration-700" />
 
-        {/* Spinning Circular Antique Porcelain Bowl (Top-down Bird's-Eye View) */}
-        <div className="relative aspect-square w-full filter drop-shadow-[0_22px_28px_rgba(70,30,10,0.22)] drop-shadow-[0_8px_12px_rgba(0,0,0,0.14)]">
-          <div className="w-full h-full animate-spin-plate">
-            <Image
-              src="/images/ais-kacang-topdown.png"
-              alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
-              fill
-              sizes="(max-width: 640px) 208px, (max-width: 1024px) 320px, 380px"
-              className="object-contain select-none pointer-events-none"
-              priority
-            />
+          {/* Spinning Circular Antique Porcelain Bowl (Top-down Bird's-Eye View) */}
+          <div className="relative aspect-square w-full filter drop-shadow-[0_30px_40px_rgba(70,30,10,0.28)] drop-shadow-[0_12px_18px_rgba(0,0,0,0.18)]">
+            <div className="w-full h-full animate-spin-plate">
+              <Image
+                src="/images/ais-kacang-topdown.png"
+                alt="Authentic Sarawak Gula Apong Ais Kacang in antique Straits Chinese Nyonya porcelain bowl, shot from above and spinning"
+                fill
+                sizes="(max-width: 640px) 288px, (max-width: 1024px) 500px, 620px"
+                className="object-contain select-none pointer-events-none"
+                priority
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Floating Tethered Interactive Badge */}
-        <div className="absolute -bottom-3 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-amber-300 shadow-xl flex items-center gap-1.5 text-[10px] sm:text-xs font-bold text-amber-950 whitespace-nowrap z-20 group-hover:border-amber-400 group-hover:scale-105 transition-all">
-          <Sparkles className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-          <span>Signature Ais Kacang • RM 8.50</span>
+          {/* Floating Tethered Interactive Badge */}
+          <div className="absolute -bottom-3 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-amber-300 shadow-xl flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-950 whitespace-nowrap z-20 group-hover:border-amber-400 group-hover:scale-105 transition-all">
+            <Sparkles className="h-4 w-4 text-amber-600 shrink-0" />
+            <span>Signature Ais Kacang • RM 8.50</span>
+          </div>
         </div>
       </div>
 
