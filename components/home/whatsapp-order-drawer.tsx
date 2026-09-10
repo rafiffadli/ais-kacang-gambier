@@ -42,14 +42,7 @@ export function WhatsAppOrderDrawer({
 }: WhatsAppOrderDrawerProps) {
   const [internalItems, setInternalItems] = React.useState<OrderItem[]>(() => {
     if (initialItems && initialItems.length > 0) return initialItems;
-    return [
-      {
-        id: "gula-apong-ais-kacang",
-        name: "Signature Gula Apong Ais Kacang",
-        price: 8.5,
-        quantity: 1,
-      },
-    ];
+    return [];
   });
 
   const isControlled = controlledItems !== undefined;

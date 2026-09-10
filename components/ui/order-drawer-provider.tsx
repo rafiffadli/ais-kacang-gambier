@@ -22,14 +22,7 @@ const OrderDrawerContext = React.createContext<OrderDrawerContextType | null>(
   null
 );
 
-const DEFAULT_ORDER_ITEMS: OrderItem[] = [
-  {
-    id: "gula-apong-ais-kacang",
-    name: "Signature Gula Apong Ais Kacang",
-    price: 8.5,
-    quantity: 1,
-  },
-];
+const DEFAULT_ORDER_ITEMS: OrderItem[] = [];
 
 export function OrderDrawerProvider({
   children,
@@ -42,8 +35,6 @@ export function OrderDrawerProvider({
   const openOrderDrawer = React.useCallback((newItems?: OrderItem[]) => {
     if (newItems && newItems.length > 0) {
       setItems(newItems);
-    } else {
-      setItems((prev) => (prev.length > 0 ? prev : DEFAULT_ORDER_ITEMS));
     }
     setIsOpen(true);
   }, []);
