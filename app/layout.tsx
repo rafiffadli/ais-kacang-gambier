@@ -126,6 +126,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${jakartaSans.variable} ${playfairDisplay.variable}`}
+      suppressHydrationWarning
     >
       <head>
         <script
@@ -145,7 +146,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased min-h-screen flex flex-col transition-colors duration-500">
+      <body
+        className="font-sans antialiased min-h-screen flex flex-col transition-colors duration-500"
+        suppressHydrationWarning
+      >
         <ScrollToTopOnReload />
         <AmbientModeProvider>
           <ArtisanCursor />

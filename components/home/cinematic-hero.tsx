@@ -146,6 +146,7 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
                   alt="Signature Gula Apong Ais Kacang saturated in dark golden Borneo palm sugar syrup"
                   fill
                   priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 448px"
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
 
