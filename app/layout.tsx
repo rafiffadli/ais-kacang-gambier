@@ -6,7 +6,6 @@ import { Footer } from "@/components/layout/footer";
 import { AmbientModeProvider } from "@/components/ui/ambient-mode-provider";
 import { ArtisanCursor } from "@/components/ui/artisan-cursor";
 import { ScrollToTopOnReload } from "@/components/ui/scroll-to-top-on-reload";
-import { FloatingSensoryBar } from "@/components/ui/floating-sensory-bar";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -153,7 +152,6 @@ export default function RootLayout({
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
-          <FloatingSensoryBar />
         </AmbientModeProvider>
       </body>
     </html>
