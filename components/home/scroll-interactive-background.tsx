@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Sparkles, Flame, MapPin, Heart } from "lucide-react";
+import { Sparkles, MapPin, Heart } from "lucide-react";
 
 export function ScrollInteractiveBackground() {
   const p1Ref = React.useRef<HTMLDivElement>(null);
-  const p2Ref = React.useRef<HTMLDivElement>(null);
   const p3Ref = React.useRef<HTMLDivElement>(null);
   const p4Ref = React.useRef<HTMLDivElement>(null);
 
@@ -53,13 +52,7 @@ export function ScrollInteractiveBackground() {
           p1Ref.current.style.transform = `translate3d(0, ${p1Y.toFixed(1)}px, 0)`;
         }
 
-        // 2. Dish 2: Artisanal Gula Apong Soft Serve (steady vertical parallax)
-        if (p2Ref.current) {
-          const p2Y = (currentScrollY - 700) * 0.14;
-          p2Ref.current.style.transform = `translate3d(0, ${p2Y.toFixed(1)}px, 0)`;
-        }
-
-        // 3. Dish 3: Authentic Sarawak Laksa (steady vertical parallax)
+        // 2. Dish 3: Authentic Sarawak Laksa (steady vertical parallax)
         if (p3Ref.current) {
           const p3Y = (currentScrollY - 1400) * -0.12;
           p3Ref.current.style.transform = `translate3d(0, ${p3Y.toFixed(1)}px, 0)`;
@@ -185,32 +178,7 @@ export function ScrollInteractiveBackground() {
         </div>
       </div>
 
-      {/* =========================================================================
-          PICTURE 2: Artisanal Gula Apong Soft Serve Cone
-      ========================================================================= */}
-      <div
-        ref={p2Ref}
-        style={{ willChange: "transform" }}
-        className="absolute top-[1250px] sm:top-[460px] left-0 sm:left-6 lg:left-10 w-44 sm:w-72 lg:w-84 rounded-3xl p-2.5 sm:p-3.5 shadow-2xl backdrop-blur-md bg-gradient-to-br from-amber-400/60 via-amber-200/50 to-amber-600/60 ring-4 ring-amber-400/50 opacity-95"
-      >
-        <div className="relative aspect-square w-full rounded-2xl overflow-hidden border-2 sm:border-4 border-white shadow-2xl">
-          <Image
-            src="/images/gula-apong-cone.jpg"
-            alt="Artisanal Gula Apong Soft Serve"
-            fill
-            sizes="(max-width: 640px) 176px, (max-width: 1024px) 288px, 336px"
-            className="object-cover scale-105"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-amber-950/30 via-transparent to-transparent" />
-        </div>
 
-        {/* Floating Tethered Badge */}
-        <div className="absolute -top-2.5 -right-1 sm:-top-3 sm:-right-3 bg-stone-900/90 text-amber-300 backdrop-blur-md px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-amber-400/40 shadow-xl flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[11px] font-bold">
-          <Flame className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-amber-400" />
-          <span>Warm Molasses • Churned Daily</span>
-        </div>
-      </div>
 
       {/* =========================================================================
           PICTURE 3: Authentic Sarawak Laksa Bowl
