@@ -223,28 +223,8 @@ export function MangroveJourneyTimeline() {
                 </p>
               </div>
 
-              {/* 4 Stages Mini Stepper Badges */}
-              <div className="grid grid-cols-2 gap-2 text-left">
-                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
-                  <span className="text-[10px] font-mono text-amber-400 block font-bold">01 • Tapping</span>
-                  <p className="text-[11px] text-stone-300 font-medium">Asajaya Mangroves</p>
-                </div>
-                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
-                  <span className="text-[10px] font-mono text-amber-400 block font-bold">02 • Boiling</span>
-                  <p className="text-[11px] text-stone-300 font-medium">6-Hour Woodfire</p>
-                </div>
-                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
-                  <span className="text-[10px] font-mono text-amber-400 block font-bold">03 • Shaving</span>
-                  <p className="text-[11px] text-stone-300 font-medium">0.25mm Micro-Snow</p>
-                </div>
-                <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 space-y-0.5">
-                  <span className="text-[10px] font-mono text-amber-400 block font-bold">04 • Darul Hana</span>
-                  <p className="text-[11px] text-stone-300 font-medium">8:30 PM Fountain</p>
-                </div>
-              </div>
-
               {/* Unfold Action Button */}
-              <div className="pt-1">
+              <div className="pt-2">
                 <button
                   onClick={() => setIsExpandedOnMobile(true)}
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full font-bold text-xs bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-lg shadow-amber-950/40 transition-all active:scale-95"

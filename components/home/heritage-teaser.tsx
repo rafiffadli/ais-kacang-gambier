@@ -140,61 +140,37 @@ export function HeritageTeaser() {
             {/* Mobile Compact Teaser Card (When Steps are Folded) */}
             {!isExpandedOnMobile && (
               <div className="md:hidden mb-6">
-                <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-xs space-y-3.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1.5">
-                      <Compass className="h-3.5 w-3.5 text-amber-600" />
-                      <span>4 Artisanal Steps</span>
-                    </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-100/70 text-amber-900 border border-amber-300/60 font-bold">
-                      01 → 04
-                    </span>
+                <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-center justify-between gap-3 shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-amber-200/60 flex items-center justify-center text-amber-800 shrink-0">
+                      <Compass className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-stone-900">
+                        4-Stage Artisanal Craft Journey
+                      </p>
+                      <p className="text-[11px] text-stone-600">
+                        Tap unfold to reveal the steps
+                      </p>
+                    </div>
                   </div>
-
-                  <div className="space-y-1">
-                    <h4 className="font-serif text-base font-bold text-stone-900">
-                      From Estuary Palms to Waterfront Joy
-                    </h4>
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      Discover the 4 traditional steps behind our 100% pure Gula Apong and micro-calibrated shaved ice.
-                    </p>
-                  </div>
-
-                  {/* 4 Mini Stepper Chips */}
-                  <div className="grid grid-cols-2 gap-2 text-left">
-                    {craftSteps.map((step) => (
-                      <div
-                        key={step.number}
-                        className="p-2.5 rounded-xl bg-amber-50/50 border border-amber-200/50 space-y-0.5"
-                      >
-                        <span className="text-[10px] font-mono font-bold text-amber-700 block">
-                          {step.number} • Step
-                        </span>
-                        <p className="text-[11px] font-medium text-stone-800 truncate">
-                          {step.title}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Unfold Action Button */}
                   <button
                     type="button"
                     onClick={() => setIsExpandedOnMobile(true)}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full font-bold text-xs bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition-all active:scale-95"
+                    className="flex items-center gap-1 text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white px-3.5 py-1.5 rounded-full shadow-xs active:scale-95 transition-all shrink-0"
                   >
-                    <span>Unfold 4 Shaved Ice Journey Steps</span>
-                    <ChevronDown className="h-4 w-4" />
+                    <span>Unfold</span>
+                    <ChevronDown className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* 4 Cards: Always shown on desktop, toggleable on mobile */}
+            {/* 4 Cards: Always shown on desktop, only shown when unfolded on mobile */}
             <div
               className={cn(
-                !isExpandedOnMobile && "hidden md:grid",
-                "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                !isExpandedOnMobile ? "hidden md:grid" : "grid",
+                "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
               )}
             >
               {craftSteps.map((step, idx) => (
