@@ -85,7 +85,7 @@ export function CinematicHero({ onOpenOrderDrawer }: CinematicHeroProps) {
                     onClick={onOpenOrderDrawer}
                     className="rounded-full px-7 bg-white/80 hover:bg-white border-amber-800/30 text-stone-900 font-bold"
                   >
-                    <span>Quick Order Drawer</span>
+                    <span>Order Now</span>
                     <ArrowRight className="h-4 w-4 ml-1" />
                   </Button>
                 ) : (
